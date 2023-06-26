@@ -15,7 +15,9 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.CELO,
   ChainId.BNB,
   ChainId.AVALANCHE,
-  // Gnosis and Moonbeam don't yet have contracts deployed yet
+  ChainId.MOONBEAM,
+  ChainId.BOBA,
+  // Gnosis don't yet have contracts deployed yet
 ];
 
 export const V2_SUPPORTED = [
@@ -93,6 +95,7 @@ export enum ChainName {
   MOONBEAM = 'moonbeam-mainnet',
   BNB = 'bnb-mainnet',
   AVALANCHE = 'avalanche-mainnet',
+  BOBA = 'boba-mainnet',
 }
 
 
@@ -105,6 +108,7 @@ export enum NativeCurrencyName {
   MOONBEAM = 'GLMR',
   BNB = "BNB",
   AVALANCHE = 'AVAX',
+  BOBA = 'BOBA',
 }
 export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.MAINNET]: [
@@ -163,6 +167,9 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
     'AVALANCHE',
     '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
   ],
+  [ChainId.BOBA]: [
+    'BOBA',
+  ],
 };
 
 export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
@@ -181,6 +188,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.BNB]: NativeCurrencyName.BNB,
   [ChainId.AVALANCHE]: NativeCurrencyName.AVALANCHE,
+  [ChainId.BOBA]: NativeCurrencyName.BOBA,
 };
 
 export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
@@ -213,6 +221,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.GNOSIS;
     case 1284:
       return ChainName.MOONBEAM;
+    case 288:
+      return ChainName.BOBA;
     case 43114:
       return ChainName.AVALANCHE;
     default:
@@ -250,6 +260,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_CELO_ALFAJORES!;
     case ChainId.BNB:
       return process.env.JSON_RPC_PROVIDER_BNB!;
+    case ChainId.BOBA:
+      return process.env.JSON_RPC_PROVIDER_BOBA!;
     case ChainId.AVALANCHE:
       return process.env.JSON_RPC_PROVIDER_AVALANCHE!;
     default:
@@ -364,6 +376,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'WAVAX',
     'Wrapped AVAX'
+  ),
+  [ChainId.BOBA]: new Token(
+    ChainId.BOBA,
+    '0xa18bF3994C0Cc6E3b63ac420308E5383f53120D7',
+    18,
+    'BOBA',
+    'Boba native asset'
   ),
 };
 
@@ -515,6 +534,32 @@ class AvalancheNativeCurrency extends NativeCurrency {
   }
 }
 
+function isBoba(
+  chainId: number
+): chainId is ChainId.CELO | ChainId.CELO_ALFAJORES {
+  return chainId === ChainId.CELO_ALFAJORES || chainId === ChainId.CELO;
+}
+
+class BobaNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isBoba(this.chainId)) throw new Error('Not boba');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isBoba(chainId)) throw new Error('Not boba');
+    super(chainId, 18, 'BOBA', 'Boba');
+  }
+}
+
 export class ExtendedEther extends Ether {
   public get wrapped(): Token {
     if (this.chainId in WRAPPED_NATIVE_CURRENCY)
@@ -549,6 +594,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new BnbNativeCurrency(chainId);
   else if (isAvax(chainId))
     cachedNativeCurrency[chainId] = new AvalancheNativeCurrency(chainId);
+  else if (isBoba(chainId))
+    cachedNativeCurrency[chainId] = new BobaNativeCurrency(chainId);
   else cachedNativeCurrency[chainId] = ExtendedEther.onChain(chainId);
 
   return cachedNativeCurrency[chainId]!;

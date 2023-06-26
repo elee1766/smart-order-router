@@ -26,6 +26,7 @@ import {
   USDC_ARBITRUM_GOERLI,
   USDC_AVAX,
   USDC_BNB,
+  USDC_BOBA,
   USDC_ETHEREUM_GNOSIS,
   USDC_MAINNET,
   USDC_MOONBEAM,
@@ -171,6 +172,9 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
     DAI_AVAX,
     USDC_AVAX,
   ],
+  [ChainId.BOBA]: [
+    USDC_BOBA,
+  ]
 };
 
 export async function getV3CandidatePools({
