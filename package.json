@@ -34,11 +34,11 @@
   },
   "overrides": {
     "@uniswap/sdk-core": "git+https://github.com/elee1766/uni-sdk-core#main",
-    "@uniswap/universal-router-sdk": "https://github.com/elee1766/universal-router-sdk#main"
+    "@uniswap/universal-router-sdk": "git+https://github.com/elee1766/universal-router-sdk#main"
   },
   "resolutions": {
     "@uniswap/sdk-core": "git+https://github.com/elee1766/uni-sdk-core#main",
-    "@uniswap/universal-router-sdk": "https://github.com/elee1766/universal-router-sdk#main"
+    "@uniswap/universal-router-sdk": "git+https://github.com/elee1766/universal-router-sdk#main"
   },
   "dependencies": {
     "@uniswap/default-token-list": "^11.2.0",
