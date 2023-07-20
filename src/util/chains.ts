@@ -31,6 +31,7 @@ export const HAS_L1_FEE = [
   ChainId.OPTIMISM_GOERLI,
   ChainId.ARBITRUM_ONE,
   ChainId.ARBITRUM_GOERLI,
+  ChainId.BOBA,
 ];
 
 export const NETWORKS_WITH_SAME_UNISWAP_ADDRESSES = [
