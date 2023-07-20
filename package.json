@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@uniswap/default-token-list": "^11.2.0",
+    "@uniswap/sdk-core": "git+https://github.com/elee1766/uni-sdk-core#main",
     "@uniswap/universal-router-sdk": "git+https://github.com/elee1766/universal-router-sdk#main",
     "@uniswap/permit2-sdk": "^1.2.0",
     "@uniswap/router-sdk": "^1.6.0",
