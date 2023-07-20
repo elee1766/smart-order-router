@@ -54,6 +54,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.BNB;
     case 10:
       return ChainId.OPTIMISM;
+    case 288:
+      return ChainId.BOBA;
     case 420:
       return ChainId.OPTIMISM_GOERLI;
     case 42161:
