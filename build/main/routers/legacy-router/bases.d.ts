@@ -50,13 +50,13 @@ export declare const ADDITIONAL_BASES: (tokenProvider: ITokenProvider) => Promis
     43114?: {
         [tokenAddress: string]: Token[];
     } | undefined;
-    288?: {
+    84531?: {
         [tokenAddress: string]: Token[];
     } | undefined;
     8453?: {
         [tokenAddress: string]: Token[];
     } | undefined;
-    84531?: {
+    288?: {
         [tokenAddress: string]: Token[];
     } | undefined;
 }>;
@@ -110,13 +110,13 @@ export declare const CUSTOM_BASES: (tokenProvider: ITokenProvider) => Promise<{
     43114?: {
         [tokenAddress: string]: Token[];
     } | undefined;
-    288?: {
+    84531?: {
         [tokenAddress: string]: Token[];
     } | undefined;
     8453?: {
         [tokenAddress: string]: Token[];
     } | undefined;
-    84531?: {
+    288?: {
         [tokenAddress: string]: Token[];
     } | undefined;
 }>;
