@@ -740,6 +740,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_GOERLI;
     case ChainId.SEPOLIA:
       return USDC_SEPOLIA;
+    case ChainId.BOBA:
+      return USDC_BOBA;
     case ChainId.OPTIMISM:
       return USDC_OPTIMISM;
     case ChainId.OPTIMISM_GOERLI:
