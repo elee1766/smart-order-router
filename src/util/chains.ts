@@ -54,6 +54,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.BNB;
     case 10:
       return ChainId.OPTIMISM;
+    case 288:
+      return ChainId.BOBA;
     case 420:
       return ChainId.OPTIMISM_GOERLI;
     case 42161:
@@ -384,6 +386,20 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     'BOBA',
     'Boba native asset'
   ),
+  [ChainId.BASE]: new Token(
+    ChainId.BASE,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'WETH',
+    'Wrapped Ether'
+  ),
+  [ChainId.BASE_GOERLI]: new Token(
+    ChainId.BASE_GOERLI,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'WETH',
+    'Wrapped Ether'
+  )
 };
 
 function isMatic(
