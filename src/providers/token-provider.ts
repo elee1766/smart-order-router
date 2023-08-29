@@ -474,10 +474,18 @@ export const WBTC_GNOSIS = new Token(
 // Moonbeam Tokens
 export const USDC_MOONBEAM = new Token(
   ChainId.MOONBEAM,
-  '0x931715FEE2d06333043d11F658C8CE934aC61D0c',
+  '0x931715fee2d06333043d11f658c8ce934ac61d0c',
   6,
   'USDC',
   'USD Coin bridged using Wormhole',
+);
+
+export const USDC_MC_MOONBEAM = new Token(
+  ChainId.MOONBEAM,
+  '0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b',
+  6,
+  'USDC',
+  'USD Coin bridged using Multichain',
 );
 
 export const WGLMR_MOONBEAM = new Token(

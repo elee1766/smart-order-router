@@ -23,6 +23,7 @@ import {
   USDC_ETHEREUM_GNOSIS,
   USDC_GOERLI,
   USDC_MAINNET,
+  USDC_MC_MOONBEAM,
   USDC_MOONBEAM,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
@@ -37,7 +38,11 @@ import {
   WBTC_GOERLI,
 } from '../../../providers/token-provider';
 import { IV2PoolProvider } from '../../../providers/v2/pool-provider';
-import { ArbitrumGasData, IL2GasDataProvider, OptimismGasData, } from '../../../providers/v3/gas-data-provider';
+import {
+  ArbitrumGasData,
+  IL2GasDataProvider,
+  OptimismGasData,
+} from '../../../providers/v3/gas-data-provider';
 import { CurrencyAmount } from '../../../util/amounts';
 import {
   MixedRouteWithValidQuote,
@@ -45,7 +50,6 @@ import {
   V2RouteWithValidQuote,
   V3RouteWithValidQuote,
 } from '../entities/route-with-valid-quote';
-
 
 export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.MAINNET]: [DAI_MAINNET, USDC_MAINNET, USDT_MAINNET],
@@ -64,7 +68,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.CELO]: [CUSD_CELO],
   [ChainId.CELO_ALFAJORES]: [CUSD_CELO_ALFAJORES],
   [ChainId.GNOSIS]: [USDC_ETHEREUM_GNOSIS],
-  [ChainId.MOONBEAM]: [USDC_MOONBEAM],
+  [ChainId.MOONBEAM]: [USDC_MOONBEAM, USDC_MC_MOONBEAM],
   [ChainId.BNB]: [USDT_BNB, USDC_BNB, DAI_BNB],
   [ChainId.AVALANCHE]: [USDC_AVAX, DAI_AVAX],
   [ChainId.BOBA]: [USDC_BOBA],
@@ -97,10 +101,10 @@ export type BuildV2GasModelFactoryType = {
 };
 
 export type LiquidityCalculationPools = {
-  usdPool: Pool
-  nativeQuoteTokenV3Pool: Pool | null
-  nativeAmountTokenV3Pool: Pool | null
-}
+  usdPool: Pool;
+  nativeQuoteTokenV3Pool: Pool | null;
+  nativeAmountTokenV3Pool: Pool | null;
+};
 
 /**
  * Contains functions for generating gas estimates for given routes.
