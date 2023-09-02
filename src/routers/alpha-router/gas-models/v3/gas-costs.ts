@@ -26,7 +26,6 @@ export const BASE_SWAP_COST = (id: ChainId): BigNumber => {
     case ChainId.POLYGON:
     case ChainId.POLYGON_MUMBAI:
       return BigNumber.from(2000);
-
     case ChainId.CELO:
     case ChainId.CELO_ALFAJORES:
       return BigNumber.from(2000);
@@ -35,6 +34,8 @@ export const BASE_SWAP_COST = (id: ChainId): BigNumber => {
     case ChainId.GNOSIS:
       return BigNumber.from(2000);
     case ChainId.MOONBEAM:
+      return BigNumber.from(2000);
+    case ChainId.BOBA:
       return BigNumber.from(2000);
   }
 };
@@ -64,6 +65,8 @@ export const COST_PER_INIT_TICK = (id: ChainId): BigNumber => {
       return BigNumber.from(31000);
     case ChainId.MOONBEAM:
       return BigNumber.from(31000);
+    case ChainId.BOBA:
+      return BigNumber.from(31000);
   }
 };
 
@@ -91,6 +94,8 @@ export const COST_PER_HOP = (id: ChainId): BigNumber => {
     case ChainId.GNOSIS:
       return BigNumber.from(80000);
     case ChainId.MOONBEAM:
+      return BigNumber.from(80000);
+    case ChainId.BOBA:
       return BigNumber.from(80000);
   }
 };

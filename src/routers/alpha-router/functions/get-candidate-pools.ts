@@ -27,6 +27,7 @@ import {
   USDC_AVAX,
   USDC_BASE,
   USDC_BNB,
+  USDC_BOBA,
   USDC_ETHEREUM_GNOSIS,
   USDC_MAINNET,
   USDC_MOONBEAM,
@@ -168,6 +169,9 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.AVALANCHE]: [
     DAI_AVAX,
     USDC_AVAX,
+  ],
+  [ChainId.BOBA]: [
+    USDC_BOBA,
   ],
   [ChainId.BASE]: [
     USDC_BASE,

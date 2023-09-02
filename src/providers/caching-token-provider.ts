@@ -5,6 +5,7 @@ import { log, WRAPPED_NATIVE_CURRENCY } from '../util';
 
 import { ICache } from './cache';
 import {
+    BOBA,
   BTC_BNB,
   BUSD_BNB,
   CELO,
@@ -30,6 +31,7 @@ import {
   USDC_AVAX,
   USDC_BASE,
   USDC_BNB,
+  USDC_BOBA,
   USDC_ETHEREUM_GNOSIS,
   USDC_MAINNET,
   USDC_MOONBEAM,
@@ -140,10 +142,14 @@ export const CACHE_SEED_TOKENS: {
     DAI: DAI_AVAX,
     WAVAX: WRAPPED_NATIVE_CURRENCY[ChainId.AVALANCHE],
   },
+  [ChainId.BOBA]: {
+    USDC: USDC_BOBA,
+    BOBA: BOBA,
+  },
   [ChainId.BASE]: {
     USDC: USDC_BASE,
     WETH: WRAPPED_NATIVE_CURRENCY[ChainId.BASE],
-  }
+  },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis testnet
 };
 
@@ -183,7 +189,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
     const symbolToToken: { [symbol: string]: Token } = {};
 
     const addresses = _(_addresses)
-      .map((address) => address.toLowerCase())
+      .map((address:any) => address.toLowerCase())
       .uniq()
       .value();
 
