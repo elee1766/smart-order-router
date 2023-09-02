@@ -84,6 +84,35 @@ export const USDC_WETH_MEDIUM = new Pool(
   0
 );
 
+// Mock USDC weth pools with different liquidity
+
+export const USDC_WETH_LOW_LIQ_LOW = new Pool(
+  USDC,
+  WRAPPED_NATIVE_CURRENCY[1]!,
+  FeeAmount.LOW,
+  encodeSqrtRatioX96(1, 1),
+  100,
+  0
+);
+
+export const USDC_WETH_MED_LIQ_MEDIUM = new Pool(
+  USDC,
+  WRAPPED_NATIVE_CURRENCY[1]!,
+  FeeAmount.MEDIUM,
+  encodeSqrtRatioX96(1, 1),
+  500,
+  0
+);
+
+export const USDC_WETH_HIGH_LIQ_HIGH = new Pool(
+  USDC,
+  WRAPPED_NATIVE_CURRENCY[1]!,
+  FeeAmount.HIGH,
+  encodeSqrtRatioX96(1, 1),
+  1000,
+  0
+);
+
 export const WETH9_USDT_LOW = new Pool(
   WRAPPED_NATIVE_CURRENCY[1]!,
   USDT,
@@ -161,6 +190,11 @@ export const USDC_WETH = new Pair(
   CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1]!, 10000000000)
 );
 
+export const USDC_USDT = new Pair(
+  CurrencyAmount.fromRawAmount(USDC, 10000000000),
+  CurrencyAmount.fromRawAmount(USDT, 10000000000)
+);
+
 export const WETH_USDT = new Pair(
   CurrencyAmount.fromRawAmount(USDT, 10000000000),
   CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1]!, 10000000000)
@@ -169,6 +203,11 @@ export const WETH_USDT = new Pair(
 export const USDC_DAI = new Pair(
   CurrencyAmount.fromRawAmount(USDC, 10000000000),
   CurrencyAmount.fromRawAmount(DAI, 10000000000)
+);
+
+export const WETH_DAI = new Pair(
+  CurrencyAmount.fromRawAmount(DAI, 10000000000),
+  CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1]!, 10000000000)
 );
 
 export const WBTC_WETH = new Pair(

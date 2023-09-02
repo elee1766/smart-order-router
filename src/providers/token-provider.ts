@@ -80,6 +80,22 @@ export const UNI_MAINNET = new Token(
   'Uniswap',
 );
 
+export const AAVE_MAINNET = new Token(
+  ChainId.MAINNET,
+  '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
+  18,
+  'AAVE',
+  'Aave Token'
+);
+
+export const LIDO_MAINNET = new Token(
+  ChainId.MAINNET,
+  '0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32',
+  18,
+  'LDO',
+  'Lido DAO Token'
+);
+
 export const USDC_SEPOLIA = new Token(
   ChainId.SEPOLIA,
   '0x6f14C02Fc1F78322cFd7d707aB90f18baD3B54f5',
@@ -446,6 +462,24 @@ export const USDC_AVAX = new Token(
   'USDC Token',
 );
 
+// Base Tokens
+export const USDC_BASE = new Token(
+  ChainId.BASE,
+  '0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA',
+  6,
+  'USDbC',
+  'USD Base Coin'
+)
+
+// Base Goerli Tokens
+export const USDC_BASE_GOERLI = new Token(
+  ChainId.BASE_GOERLI,
+  '0x853154e2A5604E5C74a2546E2871Ad44932eB92C',
+  6,
+  'USDbC',
+  'USD Base Coin'
+)
+
 // Gnosis Tokens
 export const USDC_ETHEREUM_GNOSIS = new Token(
   ChainId.GNOSIS,
@@ -561,7 +595,7 @@ export class TokenProvider implements ITokenProvider {
     } catch (error) {
       log.error(
         { addresses },
-        `TokenProvider.getTokenSymbol[string] failed with error ${error}. Trying with bytes32.`,
+        `TokenProvider.getTokenSymbol[string] failed with error ${error}. Trying with bytes32.`
       );
 
       const bytes32Interface = new Interface([
@@ -595,11 +629,11 @@ export class TokenProvider implements ITokenProvider {
       } catch (error) {
         log.fatal(
           { addresses },
-          `TokenProvider.getTokenSymbol[bytes32] failed with error ${error}.`,
+          `TokenProvider.getTokenSymbol[bytes32] failed with error ${error}.`
         );
 
         throw new Error(
-          '[TokenProvider.getTokenSymbol] Impossible to fetch token symbol.',
+          '[TokenProvider.getTokenSymbol] Impossible to fetch token symbol.'
         );
       }
     }
@@ -783,8 +817,10 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_BNB;
     case ChainId.AVALANCHE:
       return USDC_AVAX;
-    // TODO ROUTE-41: Add BASE and BASE_GOERLI support once the stablecoin is minted:
-    // https://uniswapteam.slack.com/archives/C054S2HKD44/p1689699537928619
+    case ChainId.BASE:
+      return USDC_BASE;
+    case ChainId.BASE_GOERLI:
+      return USDC_BASE_GOERLI;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }

@@ -8,14 +8,13 @@ import {
   SwapType,
   WRAPPED_NATIVE_CURRENCY,
 } from '../../../..';
+import { ProviderConfig } from '../../../../providers/provider';
 import {
   ArbitrumGasData,
   OptimismGasData,
 } from '../../../../providers/v3/gas-data-provider';
 import { CurrencyAmount } from '../../../../util/amounts';
-import {
-  getL2ToL1GasUsed,
-} from '../../../../util/gas-factory-helpers';
+import { getL2ToL1GasUsed } from '../../../../util/gas-factory-helpers';
 import { log } from '../../../../util/log';
 import {
   buildSwapMethodParameters,
@@ -33,6 +32,8 @@ import {
   COST_PER_HOP,
   COST_PER_INIT_TICK,
   COST_PER_UNINIT_TICK,
+  SINGLE_HOP_OVERHEAD,
+  TOKEN_OVERHEAD,
 } from './gas-costs';
 
 /**
@@ -64,7 +65,8 @@ export class V3HeuristicGasModelFactory extends IOnChainGasModelFactory {
     pools,
     amountToken,
     quoteToken,
-    l2GasDataProvider
+    l2GasDataProvider,
+    providerConfig,
   }: BuildOnChainGasModelFactoryType): Promise<
     IGasModel<V3RouteWithValidQuote>
   > {
@@ -89,10 +91,13 @@ export class V3HeuristicGasModelFactory extends IOnChainGasModelFactory {
       };
       let l1Used = BigNumber.from(0);
       let l1FeeInWei = BigNumber.from(0);
-      if (
-        chainId == ChainId.OPTIMISM ||
-        chainId == ChainId.OPTIMISM_GOERLI
-      ) {
+      const opStackChains = [
+        ChainId.OPTIMISM,
+        ChainId.OPTIMISM_GOERLI,
+        ChainId.BASE,
+        ChainId.BASE_GOERLI,
+      ];
+      if (opStackChains.includes(chainId)) {
         [l1Used, l1FeeInWei] = this.calculateOptimismToL1SecurityFee(
           route,
           swapOptions,
@@ -166,7 +171,8 @@ export class V3HeuristicGasModelFactory extends IOnChainGasModelFactory {
         const { totalGasCostNativeCurrency, baseGasUse } = this.estimateGas(
           routeWithValidQuote,
           gasPriceWei,
-          chainId
+          chainId,
+          providerConfig
         );
 
         const token0 = usdPool.token0.address == nativeCurrency.address;
@@ -216,7 +222,8 @@ export class V3HeuristicGasModelFactory extends IOnChainGasModelFactory {
       const { totalGasCostNativeCurrency, baseGasUse } = this.estimateGas(
         routeWithValidQuote,
         gasPriceWei,
-        chainId
+        chainId,
+        providerConfig
       );
 
       let gasCostInTermsOfQuoteToken: CurrencyAmount | null = null;
@@ -360,14 +367,27 @@ export class V3HeuristicGasModelFactory extends IOnChainGasModelFactory {
   private estimateGas(
     routeWithValidQuote: V3RouteWithValidQuote,
     gasPriceWei: BigNumber,
-    chainId: ChainId
+    chainId: ChainId,
+    providerConfig?: ProviderConfig
   ) {
     const totalInitializedTicksCrossed = BigNumber.from(
       Math.max(1, _.sum(routeWithValidQuote.initializedTicksCrossedList))
     );
     const totalHops = BigNumber.from(routeWithValidQuote.route.pools.length);
 
-    const hopsGasUse = COST_PER_HOP(chainId).mul(totalHops);
+    let hopsGasUse = COST_PER_HOP(chainId).mul(totalHops);
+
+    // We have observed that this algorithm tends to underestimate single hop swaps.
+    // We add a buffer in the case of a single hop swap.
+    if (totalHops.eq(1)) {
+      hopsGasUse = hopsGasUse.add(SINGLE_HOP_OVERHEAD(chainId));
+    }
+
+    // Some tokens have extremely expensive transferFrom functions, which causes
+    // us to underestimate them by a large amount. For known tokens, we apply an
+    // adjustment.
+    const tokenOverhead = TOKEN_OVERHEAD(chainId, routeWithValidQuote.route);
+
     const tickGasUse = COST_PER_INIT_TICK(chainId).mul(
       totalInitializedTicksCrossed
     );
@@ -376,8 +396,10 @@ export class V3HeuristicGasModelFactory extends IOnChainGasModelFactory {
     // base estimate gas used based on chainId estimates for hops and ticks gas useage
     const baseGasUse = BASE_SWAP_COST(chainId)
       .add(hopsGasUse)
+      .add(tokenOverhead)
       .add(tickGasUse)
-      .add(uninitializedTickGasUse);
+      .add(uninitializedTickGasUse)
+      .add(providerConfig?.additionalGasOverhead ?? BigNumber.from(0));
 
     const baseGasCostWei = gasPriceWei.mul(baseGasUse);
 
