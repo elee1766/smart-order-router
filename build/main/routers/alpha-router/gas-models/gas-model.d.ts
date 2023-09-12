@@ -29,6 +29,7 @@ export type BuildV2GasModelFactoryType = {
     gasPriceWei: BigNumber;
     poolProvider: IV2PoolProvider;
     token: Token;
+    providerConfig?: ProviderConfig;
 };
 export type LiquidityCalculationPools = {
     usdPool: Pool;
@@ -71,7 +72,7 @@ export type IGasModel<TRouteWithValidQuote extends RouteWithValidQuote> = {
  * @class IV2GasModelFactory
  */
 export declare abstract class IV2GasModelFactory {
-    abstract buildGasModel({ chainId, gasPriceWei, poolProvider, token, }: BuildV2GasModelFactoryType): Promise<IGasModel<V2RouteWithValidQuote>>;
+    abstract buildGasModel({ chainId, gasPriceWei, poolProvider, token, providerConfig, }: BuildV2GasModelFactoryType): Promise<IGasModel<V2RouteWithValidQuote>>;
 }
 /**
  * Factory for building gas models that can be used with any route to generate

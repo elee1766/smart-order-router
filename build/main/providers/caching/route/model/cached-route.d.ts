@@ -14,6 +14,7 @@ interface CachedRouteParams<Route extends V3Route | V2Route | MixedRoute> {
 export declare class CachedRoute<Route extends V3Route | V2Route | MixedRoute> {
     readonly route: Route;
     readonly percent: number;
+    private hashCode;
     /**
      * @param route
      * @param percent
@@ -22,5 +23,7 @@ export declare class CachedRoute<Route extends V3Route | V2Route | MixedRoute> {
     get protocol(): Protocol;
     get tokenIn(): Token;
     get tokenOut(): Token;
+    get routePath(): string;
+    get routeId(): number;
 }
 export {};

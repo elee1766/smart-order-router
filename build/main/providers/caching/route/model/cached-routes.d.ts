@@ -60,7 +60,8 @@ export declare class CachedRoutes {
      * Function to determine if, given a block number, the CachedRoute is expired or not.
      *
      * @param currentBlockNumber
+     * @param optimistic
      */
-    notExpired(currentBlockNumber: number): boolean;
+    notExpired(currentBlockNumber: number, optimistic?: boolean): boolean;
 }
 export {};

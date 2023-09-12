@@ -47,31 +47,31 @@ export type V2GetCandidatePoolsParams = {
     chainId: ChainId;
 };
 export type MixedRouteGetCandidatePoolsParams = {
-    tokenIn: Token;
-    tokenOut: Token;
-    routeType: TradeType;
+    v3CandidatePools: V3CandidatePools;
+    v2CandidatePools: V2CandidatePools;
     routingConfig: AlphaRouterConfig;
-    v2subgraphProvider: IV2SubgraphProvider;
-    v3subgraphProvider: IV3SubgraphProvider;
     tokenProvider: ITokenProvider;
     v2poolProvider: IV2PoolProvider;
     v3poolProvider: IV3PoolProvider;
     blockedTokenListProvider?: ITokenListProvider;
     chainId: ChainId;
 };
-export declare function getV3CandidatePools({ tokenIn, tokenOut, routeType, routingConfig, subgraphProvider, tokenProvider, poolProvider, blockedTokenListProvider, chainId, }: V3GetCandidatePoolsParams): Promise<{
+export type V3CandidatePools = {
     poolAccessor: V3PoolAccessor;
     candidatePools: CandidatePoolsBySelectionCriteria;
     subgraphPools: V3SubgraphPool[];
-}>;
-export declare function getV2CandidatePools({ tokenIn, tokenOut, routeType, routingConfig, subgraphProvider, tokenProvider, poolProvider, blockedTokenListProvider, chainId, }: V2GetCandidatePoolsParams): Promise<{
+};
+export declare function getV3CandidatePools({ tokenIn, tokenOut, routeType, routingConfig, subgraphProvider, tokenProvider, poolProvider, blockedTokenListProvider, chainId, }: V3GetCandidatePoolsParams): Promise<V3CandidatePools>;
+export type V2CandidatePools = {
     poolAccessor: V2PoolAccessor;
     candidatePools: CandidatePoolsBySelectionCriteria;
     subgraphPools: V2SubgraphPool[];
-}>;
-export declare function getMixedRouteCandidatePools({ tokenIn, tokenOut, routeType, routingConfig, v3subgraphProvider, v2subgraphProvider, tokenProvider, v3poolProvider, v2poolProvider, blockedTokenListProvider, chainId, }: MixedRouteGetCandidatePoolsParams): Promise<{
+};
+export declare function getV2CandidatePools({ tokenIn, tokenOut, routeType, routingConfig, subgraphProvider, tokenProvider, poolProvider, blockedTokenListProvider, chainId, }: V2GetCandidatePoolsParams): Promise<V2CandidatePools>;
+export type MixedCandidatePools = {
     V2poolAccessor: V2PoolAccessor;
     V3poolAccessor: V3PoolAccessor;
     candidatePools: CandidatePoolsBySelectionCriteria;
     subgraphPools: (V2SubgraphPool | V3SubgraphPool)[];
-}>;
+};
+export declare function getMixedRouteCandidatePools({ v3CandidatePools, v2CandidatePools, routingConfig, tokenProvider, v3poolProvider, v2poolProvider, }: MixedRouteGetCandidatePoolsParams): Promise<MixedCandidatePools>;

@@ -22,6 +22,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.BNB,
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
+  ChainId.ZKSYNC,
   ChainId.BOBA,
   ChainId.BASE,
   // Gnosis don't yet have contracts deployed yet
@@ -80,6 +81,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.GNOSIS;
     case 1284:
       return ChainId.MOONBEAM;
+    case 324:
+      return ChainId.ZKSYNC;
     case 43114:
       return ChainId.AVALANCHE;
     case 8453:
@@ -105,6 +108,7 @@ export enum ChainName {
   CELO_ALFAJORES = 'celo-alfajores',
   GNOSIS = 'gnosis-mainnet',
   MOONBEAM = 'moonbeam-mainnet',
+  ZKSYNC = 'zksync',
   BNB = 'bnb-mainnet',
   AVALANCHE = 'avalanche-mainnet',
   BOBA = 'boba-mainnet',
@@ -119,6 +123,7 @@ export enum NativeCurrencyName {
   CELO = 'CELO',
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
+  ZKSYNC = 'ETH',
   BNB = 'BNB',
   AVALANCHE = 'AVAX',
   BOBA = 'BOBA',
@@ -169,6 +174,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.CELO_ALFAJORES]: ['CELO'],
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
+  [ChainId.ZKSYNC]: ['ETH'],
   [ChainId.BNB]: ['BNB', 'BNB', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   [ChainId.AVALANCHE]: [
     'AVAX',
@@ -197,6 +203,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.CELO_ALFAJORES]: NativeCurrencyName.CELO,
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
+  [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
   [ChainId.BNB]: NativeCurrencyName.BNB,
   [ChainId.AVALANCHE]: NativeCurrencyName.AVALANCHE,
   [ChainId.BOBA]: NativeCurrencyName.BOBA,
@@ -233,6 +240,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.GNOSIS;
     case 1284:
       return ChainName.MOONBEAM;
+    case 324:
+      return ChainName.ZKSYNC;
     case 288:
       return ChainName.BOBA;
     case 43114:
@@ -282,6 +291,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_AVALANCHE!;
     case ChainId.MOONBEAM:
       return process.env.JSON_RPC_PROVIDER_MOONBEAM!;
+    case ChainId.ZKSYNC:
+      return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
     case ChainId.BASE:
       return process.env.JSON_RPC_PROVIDER_BASE!;
     default:
@@ -389,6 +400,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'WGLMR',
     'Wrapped GLMR',
+  ),
+  [ChainId.ZKSYNC]: new Token(
+    ChainId.ZKSYNC,
+    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+    18,
+    'WETH',
+    'Wrapped ETH',
   ),
   [ChainId.AVALANCHE]: new Token(
     ChainId.AVALANCHE,
@@ -544,6 +562,30 @@ class MoonbeamNativeCurrency extends NativeCurrency {
   }
 }
 
+function isZksync(chainId: number): chainId is ChainId.ZKSYNC {
+  return chainId === ChainId.ZKSYNC;
+}
+
+class ZksyncNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isZksync(this.chainId)) throw new Error('Not zksync');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isZksync(chainId)) throw new Error('Not zksync');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
 function isAvax(chainId: number): chainId is ChainId.AVALANCHE {
   return chainId === ChainId.AVALANCHE;
 }
@@ -627,6 +669,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new GnosisNativeCurrency(chainId);
   } else if (isMoonbeam(chainId)) {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
+  } else if (isZksync(chainId)) {
+    cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
   } else if (isBnb(chainId)) {
     cachedNativeCurrency[chainId] = new BnbNativeCurrency(chainId);
   } else if (isAvax(chainId)) {

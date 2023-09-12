@@ -218,6 +218,25 @@ export type AlphaRouterConfig = {
      * 40% of input => Route 3
      */
     distributionPercent: number;
+    /**
+     * Flag to indicate whether to use the cached routes or not.
+     * By default, the cached routes will be used.
+     */
+    useCachedRoutes?: boolean;
+    /**
+     * Flag to indicate whether to write to the cached routes or not.
+     * By default, the cached routes will be written to.
+     */
+    writeToCachedRoutes?: boolean;
+    /**
+     * Flag to indicate whether to use the CachedRoutes in optimistic mode.
+     * Optimistic mode means that we will allow blocksToLive greater than 1.
+     */
+    optimisticCachedRoutes?: boolean;
+    /**
+     * Debug param that helps to see the short-term latencies improvements without impacting the main path.
+     */
+    debugRouting?: boolean;
 };
 export declare class AlphaRouter implements IRouter<AlphaRouterConfig>, ISwapToRatio<AlphaRouterConfig, SwapAndAddConfig> {
     protected chainId: ChainId;

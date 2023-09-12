@@ -8,7 +8,7 @@ import {
   DAI_MAINNET,
   USDC_MAINNET,
   USDT_MAINNET,
-  WBTC_MAINNET
+  WBTC_MAINNET,
 } from '../token-provider';
 
 import { IV2SubgraphProvider, V2SubgraphPool } from './subgraph-provider';
@@ -23,11 +23,11 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     DAI_MAINNET,
     USDC_MAINNET,
     USDT_MAINNET,
-    WBTC_MAINNET
+    WBTC_MAINNET,
   ],
   [ChainId.GOERLI]: [WRAPPED_NATIVE_CURRENCY[ChainId.GOERLI]!],
   [ChainId.SEPOLIA]: [WRAPPED_NATIVE_CURRENCY[ChainId.SEPOLIA]!],
-  //v2 not deployed on [optimism, arbitrum, polygon, celo, gnosis, moonbeam, bnb, avalanche] and their testnets
+  //v2 not deployed on [optimism, arbitrum, polygon, celo, gnosis, moonbeam, bnb, avalanche, zksync] and their testnets
   [ChainId.OPTIMISM]: [],
   [ChainId.ARBITRUM_ONE]: [],
   [ChainId.ARBITRUM_GOERLI]: [],
@@ -38,11 +38,12 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.CELO_ALFAJORES]: [],
   [ChainId.GNOSIS]: [],
   [ChainId.MOONBEAM]: [],
+  [ChainId.ZKSYNC]: [],
   [ChainId.BNB]: [],
   [ChainId.AVALANCHE]: [],
   [ChainId.BOBA]: [],
   [ChainId.BASE_GOERLI]: [],
-  [ChainId.BASE]: []
+  [ChainId.BASE]: [],
 };
 
 /**
@@ -62,31 +63,31 @@ export class StaticV2SubgraphProvider implements IV2SubgraphProvider {
 
   public async getPools(
     tokenIn?: Token,
-    tokenOut?: Token
+    tokenOut?: Token,
   ): Promise<V2SubgraphPool[]> {
     log.info('In static subgraph provider for V2');
     const bases = BASES_TO_CHECK_TRADES_AGAINST[this.chainId];
 
     const basePairs: [Token, Token][] = _.flatMap(
       bases,
-      (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase])
+      (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase]),
     );
 
     if (tokenIn && tokenOut) {
       basePairs.push(
         [tokenIn, tokenOut],
         ...bases.map((base): [Token, Token] => [tokenIn, base]),
-        ...bases.map((base): [Token, Token] => [tokenOut, base])
+        ...bases.map((base): [Token, Token] => [tokenOut, base]),
       );
     }
 
     const pairs: [Token, Token][] = _(basePairs)
       .filter((tokens): tokens is [Token, Token] =>
-        Boolean(tokens[0] && tokens[1])
+        Boolean(tokens[0] && tokens[1]),
       )
       .filter(
         ([tokenA, tokenB]) =>
-          tokenA.address !== tokenB.address && !tokenA.equals(tokenB)
+          tokenA.address !== tokenB.address && !tokenA.equals(tokenB),
       )
       .value();
 
@@ -109,14 +110,14 @@ export class StaticV2SubgraphProvider implements IV2SubgraphProvider {
           id: poolAddress,
           liquidity: '100',
           token0: {
-            id: token0.address
+            id: token0.address,
           },
           token1: {
-            id: token1.address
+            id: token1.address,
           },
           supply: 100,
           reserve: 100,
-          reserveUSD: 100
+          reserveUSD: 100,
         };
       })
       .compact()

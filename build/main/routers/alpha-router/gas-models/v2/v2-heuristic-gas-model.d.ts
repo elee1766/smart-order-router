@@ -22,7 +22,7 @@ export declare const COST_PER_EXTRA_HOP: BigNumber;
  */
 export declare class V2HeuristicGasModelFactory extends IV2GasModelFactory {
     constructor();
-    buildGasModel({ chainId, gasPriceWei, poolProvider, token, }: BuildV2GasModelFactoryType): Promise<IGasModel<V2RouteWithValidQuote>>;
+    buildGasModel({ chainId, gasPriceWei, poolProvider, token, providerConfig, }: BuildV2GasModelFactoryType): Promise<IGasModel<V2RouteWithValidQuote>>;
     private estimateGas;
     private getEthPool;
     private getHighestLiquidityUSDPool;

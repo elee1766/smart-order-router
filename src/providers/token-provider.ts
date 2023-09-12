@@ -85,7 +85,7 @@ export const AAVE_MAINNET = new Token(
   '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
   18,
   'AAVE',
-  'Aave Token'
+  'Aave Token',
 );
 
 export const LIDO_MAINNET = new Token(
@@ -93,7 +93,7 @@ export const LIDO_MAINNET = new Token(
   '0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32',
   18,
   'LDO',
-  'Lido DAO Token'
+  'Lido DAO Token',
 );
 
 export const USDC_SEPOLIA = new Token(
@@ -468,8 +468,8 @@ export const USDC_BASE = new Token(
   '0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA',
   6,
   'USDbC',
-  'USD Base Coin'
-)
+  'USD Base Coin',
+);
 
 // Base Goerli Tokens
 export const USDC_BASE_GOERLI = new Token(
@@ -477,8 +477,8 @@ export const USDC_BASE_GOERLI = new Token(
   '0x853154e2A5604E5C74a2546E2871Ad44932eB92C',
   6,
   'USDbC',
-  'USD Base Coin'
-)
+  'USD Base Coin',
+);
 
 // Gnosis Tokens
 export const USDC_ETHEREUM_GNOSIS = new Token(
@@ -546,6 +546,39 @@ export const WBTC_MOONBEAM = new Token(
   'Wrapped BTC bridged using Multichain',
 );
 
+// zkSync
+export const USDC_ZKSYNC = new Token(
+  ChainId.ZKSYNC,
+  '0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4',
+  6,
+  'USDC',
+  'USD Coin',
+);
+
+export const USDT_ZKSYNC = new Token(
+  ChainId.ZKSYNC,
+  '0x493257fD37EDB34451f62EDf8D2a0C418852bA4C',
+  6,
+  'USDC',
+  'Tether USD',
+);
+
+export const WBTC_ZKSYNC = new Token(
+  ChainId.ZKSYNC,
+  '0xBBeB516fb02a01611cBBE0453Fe3c580D7281011',
+  8,
+  'WBTC',
+  'Wrapped BTC',
+);
+
+export const WETH_ZKSYNC = new Token(
+  ChainId.ZKSYNC,
+  '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+  18,
+  'WETH',
+  'Wrapped ETH',
+);
+
 // BOBA Tokens
 export const BOBA = new Token(
   ChainId.BOBA,
@@ -595,7 +628,7 @@ export class TokenProvider implements ITokenProvider {
     } catch (error) {
       log.error(
         { addresses },
-        `TokenProvider.getTokenSymbol[string] failed with error ${error}. Trying with bytes32.`
+        `TokenProvider.getTokenSymbol[string] failed with error ${error}. Trying with bytes32.`,
       );
 
       const bytes32Interface = new Interface([
@@ -629,11 +662,11 @@ export class TokenProvider implements ITokenProvider {
       } catch (error) {
         log.fatal(
           { addresses },
-          `TokenProvider.getTokenSymbol[bytes32] failed with error ${error}.`
+          `TokenProvider.getTokenSymbol[bytes32] failed with error ${error}.`,
         );
 
         throw new Error(
-          '[TokenProvider.getTokenSymbol] Impossible to fetch token symbol.'
+          '[TokenProvider.getTokenSymbol] Impossible to fetch token symbol.',
         );
       }
     }
@@ -782,6 +815,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_ARBITRUM;
     case ChainId.BNB:
       return USDT_BNB;
+    case ChainId.ZKSYNC:
+      return USDT_ZKSYNC;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -813,6 +848,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_ETHEREUM_GNOSIS;
     case ChainId.MOONBEAM:
       return USDC_MOONBEAM;
+    case ChainId.ZKSYNC:
+      return USDC_ZKSYNC;
     case ChainId.BNB:
       return USDC_BNB;
     case ChainId.AVALANCHE:

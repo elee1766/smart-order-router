@@ -20,7 +20,7 @@ import { BuildOnChainGasModelFactoryType, IGasModel, IOnChainGasModelFactory } f
  */
 export declare class V3HeuristicGasModelFactory extends IOnChainGasModelFactory {
     constructor();
-    buildGasModel({ chainId, gasPriceWei, pools, amountToken, quoteToken, l2GasDataProvider }: BuildOnChainGasModelFactoryType): Promise<IGasModel<V3RouteWithValidQuote>>;
+    buildGasModel({ chainId, gasPriceWei, pools, amountToken, quoteToken, l2GasDataProvider, providerConfig, }: BuildOnChainGasModelFactoryType): Promise<IGasModel<V3RouteWithValidQuote>>;
     private estimateGas;
     /**
      * To avoid having a call to optimism's L1 security fee contract for every route and amount combination,

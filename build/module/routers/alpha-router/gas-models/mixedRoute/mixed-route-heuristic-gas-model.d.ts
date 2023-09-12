@@ -20,6 +20,6 @@ import { BuildOnChainGasModelFactoryType, IGasModel, IOnChainGasModelFactory } f
  */
 export declare class MixedRouteHeuristicGasModelFactory extends IOnChainGasModelFactory {
     constructor();
-    buildGasModel({ chainId, gasPriceWei, pools, quoteToken, v2poolProvider: V2poolProvider, }: BuildOnChainGasModelFactoryType): Promise<IGasModel<MixedRouteWithValidQuote>>;
+    buildGasModel({ chainId, gasPriceWei, pools, quoteToken, v2poolProvider: V2poolProvider, providerConfig, }: BuildOnChainGasModelFactoryType): Promise<IGasModel<MixedRouteWithValidQuote>>;
     private estimateGas;
 }

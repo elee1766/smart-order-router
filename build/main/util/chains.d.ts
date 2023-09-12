@@ -18,9 +18,12 @@ export declare enum ChainName {
     CELO_ALFAJORES = "celo-alfajores",
     GNOSIS = "gnosis-mainnet",
     MOONBEAM = "moonbeam-mainnet",
+    ZKSYNC = "zksync",
     BNB = "bnb-mainnet",
     AVALANCHE = "avalanche-mainnet",
-    BOBA = "boba-mainnet"
+    BOBA = "boba-mainnet",
+    BASE = "base-mainnet",
+    BASE_GOERLI = "base-goerli"
 }
 export declare enum NativeCurrencyName {
     ETHER = "ETH",
@@ -28,6 +31,7 @@ export declare enum NativeCurrencyName {
     CELO = "CELO",
     GNOSIS = "XDAI",
     MOONBEAM = "GLMR",
+    ZKSYNC = "ETH",
     BNB = "BNB",
     AVALANCHE = "AVAX",
     BOBA = "BOBA"
