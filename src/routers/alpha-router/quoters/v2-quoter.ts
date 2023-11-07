@@ -12,17 +12,27 @@ import {
   IV2SubgraphProvider,
   TokenValidationResult,
 } from '../../../providers';
-import { CurrencyAmount, log, metric, MetricLoggerUnit, routeToString, } from '../../../util';
+import {
+  CurrencyAmount,
+  log,
+  metric,
+  MetricLoggerUnit,
+  routeToString,
+} from '../../../util';
 import { V2Route } from '../../router';
 import { AlphaRouterConfig } from '../alpha-router';
 import { V2RouteWithValidQuote } from '../entities';
 import { computeAllV2Routes } from '../functions/compute-all-routes';
-import { CandidatePoolsBySelectionCriteria, V2CandidatePools, } from '../functions/get-candidate-pools';
+import {
+  CandidatePoolsBySelectionCriteria,
+  V2CandidatePools,
+} from '../functions/get-candidate-pools';
 import { IGasModel, IV2GasModelFactory } from '../gas-models';
 
 import { BaseQuoter } from './base-quoter';
 import { GetQuotesResult } from './model/results/get-quotes-result';
 import { GetRoutesResult } from './model/results/get-routes-result';
+import { NATIVE_OVERHEAD } from '../gas-models/v3/gas-costs';
 
 export class V2Quoter extends BaseQuoter<V2CandidatePools, V2Route> {
   protected v2SubgraphProvider: IV2SubgraphProvider;
@@ -131,6 +141,13 @@ export class V2Quoter extends BaseQuoter<V2CandidatePools, V2Route> {
     if (gasPriceWei === undefined) {
       throw new Error('GasPriceWei for V2Routes is required to getQuotes');
     }
+    // throw if we have no amounts or if there are different tokens in the amounts
+    if (amounts.length == 0 || !amounts.every((amount) => amount.currency.equals(amounts[0]!.currency))) {
+      throw new Error('Amounts must have at least one amount and must be same token');
+    }
+    // safe to force unwrap here because we throw if there are no amounts
+    const amountToken = amounts[0]!.currency;
+    
     if (routes.length == 0) {
       return { routesWithValidQuotes: [], candidatePools };
     }
@@ -146,14 +163,17 @@ export class V2Quoter extends BaseQuoter<V2CandidatePools, V2Route> {
     log.info(
       `Getting quotes for V2 for ${routes.length} routes with ${amounts.length} amounts per route.`
     );
-    const { routesWithQuotes } = await quoteFn(amounts, routes);
+    const { routesWithQuotes } = await quoteFn(amounts, routes, _routingConfig);
 
     const v2GasModel = await this.v2GasModelFactory.buildGasModel({
       chainId: this.chainId,
       gasPriceWei,
       poolProvider: this.v2PoolProvider,
       token: quoteToken,
-      // TODO: implement wrap overhead for v2 routes
+      providerConfig: {
+        ..._routingConfig,
+        additionalGasOverhead: NATIVE_OVERHEAD(this.chainId, amountToken, quoteToken)
+      },
     });
 
     metric.putMetric(
