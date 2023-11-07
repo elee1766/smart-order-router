@@ -182,6 +182,7 @@ export abstract class IOnChainGasModelFactory {
     quoteToken,
     v2poolProvider,
     l2GasDataProvider,
+    providerConfig,
   }: BuildOnChainGasModelFactoryType): Promise<
     IGasModel<V3RouteWithValidQuote | MixedRouteWithValidQuote>
   >;
