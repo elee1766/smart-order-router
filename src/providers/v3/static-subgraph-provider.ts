@@ -38,6 +38,7 @@ import {
   USDC_BNB,
   USDC_BOBA,
   USDC_ETHEREUM_GNOSIS,
+  USDC_FILECOIN,
   USDC_GOERLI,
   USDC_MAINNET,
   USDC_MOONBEAM,
@@ -48,12 +49,14 @@ import {
   USDC_ZKSYNC,
   USDT_ARBITRUM,
   USDT_BNB,
+  USDT_FILECOIN,
   USDT_GOERLI,
   USDT_MAINNET,
   USDT_OPTIMISM,
   USDT_OPTIMISM_GOERLI,
   USDT_ZKSYNC,
   WBTC_ARBITRUM,
+  WBTC_FILECOIN,
   WBTC_GNOSIS,
   WBTC_GOERLI,
   WBTC_MAINNET,
@@ -61,6 +64,7 @@ import {
   WBTC_OPTIMISM,
   WBTC_OPTIMISM_GOERLI,
   WBTC_ZKSYNC,
+  WETH_FILECOIN,
   WETH_POLYGON,
   WMATIC_POLYGON,
   WMATIC_POLYGON_MUMBAI,
@@ -162,6 +166,13 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     USDC_ZKSYNC,
     WBTC_ZKSYNC,
   ],
+  [ChainId.FILECOIN]: [
+    WRAPPED_NATIVE_CURRENCY[ChainId.FILECOIN],
+    USDT_FILECOIN,
+    USDC_FILECOIN,
+    WBTC_FILECOIN,
+    WETH_FILECOIN,
+  ],
   [ChainId.BOBA]: [WRAPPED_NATIVE_CURRENCY[ChainId.BOBA], USDC_BOBA],
   [ChainId.BASE_GOERLI]: [WRAPPED_NATIVE_CURRENCY[ChainId.BASE_GOERLI]],
   [ChainId.BASE]: [WRAPPED_NATIVE_CURRENCY[ChainId.BASE], USDC_BASE],
@@ -181,37 +192,37 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
 export class StaticV3SubgraphProvider implements IV3SubgraphProvider {
   constructor(
     private chainId: ChainId,
-    private poolProvider: IV3PoolProvider,
+    private poolProvider: IV3PoolProvider
   ) {}
 
   public async getPools(
     tokenIn?: Token,
     tokenOut?: Token,
-    providerConfig?: ProviderConfig,
+    providerConfig?: ProviderConfig
   ): Promise<V3SubgraphPool[]> {
     log.info('In static subgraph provider for V3');
     const bases = BASES_TO_CHECK_TRADES_AGAINST[this.chainId];
 
     const basePairs: [Token, Token][] = _.flatMap(
       bases,
-      (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase]),
+      (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase])
     );
 
     if (tokenIn && tokenOut) {
       basePairs.push(
         [tokenIn, tokenOut],
         ...bases.map((base): [Token, Token] => [tokenIn, base]),
-        ...bases.map((base): [Token, Token] => [tokenOut, base]),
+        ...bases.map((base): [Token, Token] => [tokenOut, base])
       );
     }
 
     const pairs: [Token, Token, FeeAmount][] = _(basePairs)
       .filter((tokens): tokens is [Token, Token] =>
-        Boolean(tokens[0] && tokens[1]),
+        Boolean(tokens[0] && tokens[1])
       )
       .filter(
         ([tokenA, tokenB]) =>
-          tokenA.address !== tokenB.address && !tokenA.equals(tokenB),
+          tokenA.address !== tokenB.address && !tokenA.equals(tokenB)
       )
       .flatMap<[Token, Token, FeeAmount]>(([tokenA, tokenB]) => {
         return [
@@ -224,11 +235,11 @@ export class StaticV3SubgraphProvider implements IV3SubgraphProvider {
       .value();
 
     log.info(
-      `V3 Static subgraph provider about to get ${pairs.length} pools on-chain`,
+      `V3 Static subgraph provider about to get ${pairs.length} pools on-chain`
     );
     const poolAccessor = await this.poolProvider.getPools(
       pairs,
-      providerConfig,
+      providerConfig
     );
     const pools = poolAccessor.getAllPools();
 

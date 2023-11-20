@@ -23,6 +23,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
+  ChainId.FILECOIN,
   ChainId.BOBA,
   ChainId.BASE,
   // Gnosis don't yet have contracts deployed yet
@@ -83,6 +84,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.MOONBEAM;
     case 324:
       return ChainId.ZKSYNC;
+    case 314:
+      return ChainId.FILECOIN;
     case 43114:
       return ChainId.AVALANCHE;
     case 8453:
@@ -109,6 +112,7 @@ export enum ChainName {
   GNOSIS = 'gnosis-mainnet',
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
+  FILECOIN = 'filecoin',
   BNB = 'bnb-mainnet',
   AVALANCHE = 'avalanche-mainnet',
   BOBA = 'boba-mainnet',
@@ -124,6 +128,7 @@ export enum NativeCurrencyName {
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
+  FILECOIN = 'FIL',
   BNB = 'BNB',
   AVALANCHE = 'AVAX',
   BOBA = 'BOBA',
@@ -175,6 +180,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
+  [ChainId.FILECOIN]: ['FIL'],
   [ChainId.BNB]: ['BNB', 'BNB', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   [ChainId.AVALANCHE]: [
     'AVAX',
@@ -204,6 +210,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
+  [ChainId.FILECOIN]: NativeCurrencyName.FILECOIN,
   [ChainId.BNB]: NativeCurrencyName.BNB,
   [ChainId.AVALANCHE]: NativeCurrencyName.AVALANCHE,
   [ChainId.BOBA]: NativeCurrencyName.BOBA,
@@ -242,6 +249,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.MOONBEAM;
     case 324:
       return ChainName.ZKSYNC;
+    case 314:
+      return ChainName.FILECOIN;
     case 288:
       return ChainName.BOBA;
     case 43114:
@@ -256,7 +265,7 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
 };
 
 export const CHAIN_IDS_LIST = Object.values(ChainId).map((c) =>
-  c.toString(),
+  c.toString()
 ) as string[];
 
 export const ID_TO_PROVIDER = (id: ChainId): string => {
@@ -293,6 +302,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_MOONBEAM!;
     case ChainId.ZKSYNC:
       return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
+    case ChainId.FILECOIN:
+      return process.env.JSON_RPC_PROVIDER_FILECOIN!;
     case ChainId.BASE:
       return process.env.JSON_RPC_PROVIDER_BASE!;
     default:
@@ -306,70 +317,70 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.GOERLI]: new Token(
     5,
     '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.SEPOLIA]: new Token(
     11155111,
     '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.BNB]: new Token(
     56,
     '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
     18,
     'WBNB',
-    'Wrapped BNB',
+    'Wrapped BNB'
   ),
   [ChainId.OPTIMISM]: new Token(
     ChainId.OPTIMISM,
     '0x4200000000000000000000000000000000000006',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.OPTIMISM_GOERLI]: new Token(
     ChainId.OPTIMISM_GOERLI,
     '0x4200000000000000000000000000000000000006',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.ARBITRUM_ONE]: new Token(
     ChainId.ARBITRUM_ONE,
     '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.ARBITRUM_GOERLI]: new Token(
     ChainId.ARBITRUM_GOERLI,
     '0xe39Ab88f8A4777030A534146A9Ca3B52bd5D43A3',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.POLYGON]: new Token(
     ChainId.POLYGON,
     '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
     18,
     'WMATIC',
-    'Wrapped MATIC',
+    'Wrapped MATIC'
   ),
   [ChainId.POLYGON_MUMBAI]: new Token(
     ChainId.POLYGON_MUMBAI,
     '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
     18,
     'WMATIC',
-    'Wrapped MATIC',
+    'Wrapped MATIC'
   ),
 
   // The Celo native currency 'CELO' implements the erc-20 token standard
@@ -378,68 +389,75 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     '0x471EcE3750Da237f93B8E339c536989b8978a438',
     18,
     'CELO',
-    'Celo native asset',
+    'Celo native asset'
   ),
   [ChainId.CELO_ALFAJORES]: new Token(
     ChainId.CELO_ALFAJORES,
     '0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9',
     18,
     'CELO',
-    'Celo native asset',
+    'Celo native asset'
   ),
   [ChainId.GNOSIS]: new Token(
     ChainId.GNOSIS,
     '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
     18,
     'WXDAI',
-    'Wrapped XDAI on Gnosis',
+    'Wrapped XDAI on Gnosis'
   ),
   [ChainId.MOONBEAM]: new Token(
     ChainId.MOONBEAM,
     '0xAcc15dC74880C9944775448304B263D191c6077F',
     18,
     'WGLMR',
-    'Wrapped GLMR',
+    'Wrapped GLMR'
   ),
   [ChainId.ZKSYNC]: new Token(
     ChainId.ZKSYNC,
     '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
     18,
     'WETH',
-    'Wrapped ETH',
+    'Wrapped ETH'
+  ),
+  [ChainId.FILECOIN]: new Token(
+    ChainId.FILECOIN,
+    '0x60E1773636CF5E4A227d9AC24F20fEca034ee25A',
+    18,
+    'WFIL',
+    'Wrapped FIL'
   ),
   [ChainId.AVALANCHE]: new Token(
     ChainId.AVALANCHE,
     '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
     18,
     'WAVAX',
-    'Wrapped AVAX',
+    'Wrapped AVAX'
   ),
   [ChainId.BOBA]: new Token(
     ChainId.BOBA,
     '0xa18bF3994C0Cc6E3b63ac420308E5383f53120D7',
     18,
     'BOBA',
-    'Boba native asset',
+    'Boba native asset'
   ),
   [ChainId.BASE]: new Token(
     ChainId.BASE,
     '0x4200000000000000000000000000000000000006',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.BASE_GOERLI]: new Token(
     ChainId.BASE_GOERLI,
     '0x4200000000000000000000000000000000000006',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
 };
 
 function isMatic(
-  chainId: number,
+  chainId: number
 ): chainId is ChainId.POLYGON | ChainId.POLYGON_MUMBAI {
   return chainId === ChainId.POLYGON_MUMBAI || chainId === ChainId.POLYGON;
 }
@@ -465,7 +483,7 @@ class MaticNativeCurrency extends NativeCurrency {
 }
 
 function isCelo(
-  chainId: number,
+  chainId: number
 ): chainId is ChainId.CELO | ChainId.CELO_ALFAJORES {
   return chainId === ChainId.CELO_ALFAJORES || chainId === ChainId.CELO;
 }
@@ -586,6 +604,30 @@ class ZksyncNativeCurrency extends NativeCurrency {
   }
 }
 
+function isFilecoin(chainId: number): chainId is ChainId.FILECOIN {
+  return chainId === ChainId.FILECOIN;
+}
+
+class FilecoinNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isFilecoin(this.chainId)) throw new Error('Not filecoin');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isFilecoin(chainId)) throw new Error('Not filecoin');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
 function isAvax(chainId: number): chainId is ChainId.AVALANCHE {
   return chainId === ChainId.AVALANCHE;
 }
@@ -611,7 +653,7 @@ class AvalancheNativeCurrency extends NativeCurrency {
 }
 
 function isBoba(
-  chainId: number,
+  chainId: number
 ): chainId is ChainId.CELO | ChainId.CELO_ALFAJORES {
   return chainId === ChainId.CELO_ALFAJORES || chainId === ChainId.CELO;
 }
@@ -671,6 +713,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
   } else if (isZksync(chainId)) {
     cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
+  } else if (isFilecoin(chainId)) {
+    cachedNativeCurrency[chainId] = new FilecoinNativeCurrency(chainId);
   } else if (isBnb(chainId)) {
     cachedNativeCurrency[chainId] = new BnbNativeCurrency(chainId);
   } else if (isAvax(chainId)) {

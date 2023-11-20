@@ -37,6 +37,8 @@ export const BASE_SWAP_COST = (id: ChainId): BigNumber => {
       return BigNumber.from(2000);
     case ChainId.ZKSYNC:
       return BigNumber.from(2000);
+    case ChainId.FILECOIN:
+      return BigNumber.from(2000);
     case ChainId.BOBA:
       return BigNumber.from(2000);
   }
@@ -69,6 +71,8 @@ export const COST_PER_INIT_TICK = (id: ChainId): BigNumber => {
       return BigNumber.from(31000);
     case ChainId.ZKSYNC:
       return BigNumber.from(31000);
+    case ChainId.FILECOIN:
+      return BigNumber.from(31000);
     case ChainId.BOBA:
       return BigNumber.from(31000);
   }
@@ -100,6 +104,8 @@ export const COST_PER_HOP = (id: ChainId): BigNumber => {
     case ChainId.MOONBEAM:
       return BigNumber.from(80000);
     case ChainId.ZKSYNC:
+      return BigNumber.from(80000);
+    case ChainId.FILECOIN:
       return BigNumber.from(80000);
     case ChainId.BOBA:
       return BigNumber.from(80000);
@@ -149,7 +155,7 @@ export const NATIVE_UNWRAP_OVERHEAD = (id: ChainId): BigNumber => {
 export const NATIVE_OVERHEAD = (
   chainId: ChainId,
   amount: Currency,
-  quote: Currency,
+  quote: Currency
 ): BigNumber => {
   if (amount.isNative) {
     // need to wrap eth in

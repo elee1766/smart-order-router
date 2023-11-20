@@ -30,6 +30,8 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.MOONBEAM]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].v3CoreFactoryAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].v3CoreFactoryAddress,
+  [ChainId.FILECOIN]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.FILECOIN].v3CoreFactoryAddress,
   // [ChainId.BASE_GOERLI]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].v3CoreFactoryAddress
   [ChainId.BASE_GOERLI]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].v3CoreFactoryAddress,
@@ -51,6 +53,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.AVALANCHE]: CHAIN_TO_ADDRESSES_MAP[ChainId.AVALANCHE].quoterAddress,
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].quoterAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].quoterAddress,
+  [ChainId.FILECOIN]: CHAIN_TO_ADDRESSES_MAP[ChainId.FILECOIN].quoterAddress,
   [ChainId.BOBA]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOBA].quoterAddress,
   //[ChainId.BASE_GOERLI]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].quoterAddress
   // TODO: Gnosis contracts to be deployed
@@ -82,6 +85,7 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.AVALANCHE].multicallAddress,
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].multicallAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].multicallAddress,
+  [ChainId.FILECOIN]: CHAIN_TO_ADDRESSES_MAP[ChainId.FILECOIN].multicallAddress,
   [ChainId.BOBA]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOBA].multicallAddress,
   // [ChainId.BASE_GOERLI]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].multicallAddress,
   [ChainId.BASE_GOERLI]:
@@ -112,10 +116,10 @@ export type AddressMap = { [chainId: number]: string | undefined };
 
 export function constructSameAddressMap<T extends string>(
   address: T,
-  additionalNetworks: ChainId[] = [],
+  additionalNetworks: ChainId[] = []
 ): { [chainId: number]: T } {
   return NETWORKS_WITH_SAME_UNISWAP_ADDRESSES.concat(
-    additionalNetworks,
+    additionalNetworks
   ).reduce<{
     [chainId: number]: T;
   }>((memo, chainId) => {
@@ -134,6 +138,7 @@ export const WETH9: {
     | ChainId.GNOSIS
     | ChainId.MOONBEAM
     | ChainId.ZKSYNC
+    | ChainId.FILECOIN
     | ChainId.BNB
     | ChainId.AVALANCHE
   >]: Token;
@@ -143,76 +148,76 @@ export const WETH9: {
     '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.BOBA]: new Token(
     ChainId.BOBA,
     '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.BOBA]: new Token(
     ChainId.BOBA,
     '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.GOERLI]: new Token(
     ChainId.GOERLI,
     '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.SEPOLIA]: new Token(
     ChainId.SEPOLIA,
     '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.OPTIMISM]: new Token(
     ChainId.OPTIMISM,
     '0x4200000000000000000000000000000000000006',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.OPTIMISM_GOERLI]: new Token(
     ChainId.OPTIMISM_GOERLI,
     '0x4200000000000000000000000000000000000006',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.ARBITRUM_ONE]: new Token(
     ChainId.ARBITRUM_ONE,
     '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.ARBITRUM_GOERLI]: new Token(
     ChainId.ARBITRUM_GOERLI,
     '0xe39Ab88f8A4777030A534146A9Ca3B52bd5D43A3',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.BASE_GOERLI]: new Token(
     ChainId.BASE_GOERLI,
     '0x4200000000000000000000000000000000000006',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
   [ChainId.BASE]: new Token(
     ChainId.BASE,
     '0x4200000000000000000000000000000000000006',
     18,
     'WETH',
-    'Wrapped Ether',
+    'Wrapped Ether'
   ),
 };

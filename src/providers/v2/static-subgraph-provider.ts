@@ -27,7 +27,7 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   ],
   [ChainId.GOERLI]: [WRAPPED_NATIVE_CURRENCY[ChainId.GOERLI]!],
   [ChainId.SEPOLIA]: [WRAPPED_NATIVE_CURRENCY[ChainId.SEPOLIA]!],
-  //v2 not deployed on [optimism, arbitrum, polygon, celo, gnosis, moonbeam, bnb, avalanche, zksync] and their testnets
+  //v2 not deployed on [optimism, arbitrum, polygon, celo, gnosis, moonbeam, bnb, avalanche, zksync, filecoin] and their testnets
   [ChainId.OPTIMISM]: [],
   [ChainId.ARBITRUM_ONE]: [],
   [ChainId.ARBITRUM_GOERLI]: [],
@@ -39,6 +39,7 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.GNOSIS]: [],
   [ChainId.MOONBEAM]: [],
   [ChainId.ZKSYNC]: [],
+  [ChainId.FILECOIN]: [],
   [ChainId.BNB]: [],
   [ChainId.AVALANCHE]: [],
   [ChainId.BOBA]: [],
@@ -63,31 +64,31 @@ export class StaticV2SubgraphProvider implements IV2SubgraphProvider {
 
   public async getPools(
     tokenIn?: Token,
-    tokenOut?: Token,
+    tokenOut?: Token
   ): Promise<V2SubgraphPool[]> {
     log.info('In static subgraph provider for V2');
     const bases = BASES_TO_CHECK_TRADES_AGAINST[this.chainId];
 
     const basePairs: [Token, Token][] = _.flatMap(
       bases,
-      (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase]),
+      (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase])
     );
 
     if (tokenIn && tokenOut) {
       basePairs.push(
         [tokenIn, tokenOut],
         ...bases.map((base): [Token, Token] => [tokenIn, base]),
-        ...bases.map((base): [Token, Token] => [tokenOut, base]),
+        ...bases.map((base): [Token, Token] => [tokenOut, base])
       );
     }
 
     const pairs: [Token, Token][] = _(basePairs)
       .filter((tokens): tokens is [Token, Token] =>
-        Boolean(tokens[0] && tokens[1]),
+        Boolean(tokens[0] && tokens[1])
       )
       .filter(
         ([tokenA, tokenB]) =>
-          tokenA.address !== tokenB.address && !tokenA.equals(tokenB),
+          tokenA.address !== tokenB.address && !tokenA.equals(tokenB)
       )
       .value();
 

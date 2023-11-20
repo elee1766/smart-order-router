@@ -33,6 +33,7 @@ import {
   USDC_BNB,
   USDC_BOBA,
   USDC_ETHEREUM_GNOSIS,
+  USDC_FILECOIN,
   USDC_MAINNET,
   USDC_MOONBEAM,
   USDC_OPTIMISM,
@@ -42,11 +43,13 @@ import {
   USDC_ZKSYNC,
   USDT_ARBITRUM,
   USDT_BNB,
+  USDT_FILECOIN,
   USDT_MAINNET,
   USDT_OPTIMISM,
   USDT_OPTIMISM_GOERLI,
   USDT_ZKSYNC,
   WBTC_ARBITRUM,
+  WBTC_FILECOIN,
   WBTC_MAINNET,
   WBTC_MOONBEAM,
   WBTC_OPTIMISM,
@@ -74,7 +77,7 @@ export const CACHE_SEED_TOKENS: {
       '0x9469D013805bFfB7D3DEBe5E7839237e535ec483',
       18,
       'RING',
-      'RING',
+      'RING'
     ),
   },
   [ChainId.SEPOLIA]: {
@@ -137,6 +140,12 @@ export const CACHE_SEED_TOKENS: {
     WBTC: WBTC_ZKSYNC,
     WETH: WRAPPED_NATIVE_CURRENCY[ChainId.ZKSYNC],
   },
+  [ChainId.FILECOIN]: {
+    USDC: USDC_FILECOIN,
+    USDT: USDT_FILECOIN,
+    WBTC: WBTC_FILECOIN,
+    WETH: WRAPPED_NATIVE_CURRENCY[ChainId.FILECOIN],
+  },
   [ChainId.BNB]: {
     USDC: USDC_BNB,
     USDT: USDT_BNB,
@@ -181,7 +190,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
     // checksumming.
     private tokenCache: ICache<Token>,
     protected primaryTokenProvider: ITokenProvider,
-    protected fallbackTokenProvider?: ITokenProvider,
+    protected fallbackTokenProvider?: ITokenProvider
   ) {}
 
   public async getTokens(_addresses: string[]): Promise<TokenAccessor> {
@@ -191,7 +200,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
       for (const token of Object.values(seedTokens)) {
         await this.tokenCache.set(
           this.CACHE_KEY(this.chainId, token.address.toLowerCase()),
-          token,
+          token
         );
       }
     }
@@ -210,7 +219,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
     for (const address of addresses) {
       if (await this.tokenCache.has(this.CACHE_KEY(this.chainId, address))) {
         addressToToken[address.toLowerCase()] = (await this.tokenCache.get(
-          this.CACHE_KEY(this.chainId, address),
+          this.CACHE_KEY(this.chainId, address)
         ))!;
         symbolToToken[addressToToken[address]!.symbol!] =
           (await this.tokenCache.get(this.CACHE_KEY(this.chainId, address)))!;
@@ -228,12 +237,12 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
           ? `Checking primary token provider for ${addressesToFindInPrimary.length} tokens`
           : ``
       }
-      `,
+      `
     );
 
     if (addressesToFindInPrimary.length > 0) {
       const primaryTokenAccessor = await this.primaryTokenProvider.getTokens(
-        addressesToFindInPrimary,
+        addressesToFindInPrimary
       );
 
       for (const address of addressesToFindInPrimary) {
@@ -244,7 +253,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
           symbolToToken[addressToToken[address]!.symbol!] = token;
           await this.tokenCache.set(
             this.CACHE_KEY(this.chainId, address.toLowerCase()),
-            addressToToken[address]!,
+            addressToToken[address]!
           );
         } else {
           addressesToFindInSecondary.push(address);
@@ -259,13 +268,13 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
           this.fallbackTokenProvider
             ? `Checking secondary token provider for ${addressesToFindInSecondary.length} tokens`
             : `No fallback token provider specified. About to return.`
-        }`,
+        }`
       );
     }
 
     if (this.fallbackTokenProvider && addressesToFindInSecondary.length > 0) {
       const secondaryTokenAccessor = await this.fallbackTokenProvider.getTokens(
-        addressesToFindInSecondary,
+        addressesToFindInSecondary
       );
 
       for (const address of addressesToFindInSecondary) {
@@ -275,7 +284,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
           symbolToToken[addressToToken[address]!.symbol!] = token;
           await this.tokenCache.set(
             this.CACHE_KEY(this.chainId, address.toLowerCase()),
-            addressToToken[address]!,
+            addressToToken[address]!
           );
         }
       }
