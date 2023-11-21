@@ -620,15 +620,7 @@ export const WFIL_FILECOIN = new Token(
   'Wrapped FIL'
 );
 
-// rootstock
-// export const USDRIF_ROOTSTOCK = new Token(
-//   ChainId.ROOTSTOCK,
-//   '0x3A15461d8AE0f0Fb5fA2629e9dA7D66A794a6E37',
-//   18,
-//   'USDRIF',
-//   'RIF US Dollar'
-// );
-
+//rootstock
 export const USDT_ROOTSTOCK = new Token(
   ChainId.ROOTSTOCK,
   '0xef213441a85df4d7acbdae0cf78004e1e486bb96',
