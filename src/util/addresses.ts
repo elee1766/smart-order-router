@@ -32,6 +32,8 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].v3CoreFactoryAddress,
   [ChainId.FILECOIN]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.FILECOIN].v3CoreFactoryAddress,
+  [ChainId.ROOTSTOCK]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.ROOTSTOCK].v3CoreFactoryAddress,
   // [ChainId.BASE_GOERLI]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].v3CoreFactoryAddress
   [ChainId.BASE_GOERLI]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].v3CoreFactoryAddress,
@@ -54,6 +56,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].quoterAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].quoterAddress,
   [ChainId.FILECOIN]: CHAIN_TO_ADDRESSES_MAP[ChainId.FILECOIN].quoterAddress,
+  [ChainId.ROOTSTOCK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ROOTSTOCK].quoterAddress,
   [ChainId.BOBA]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOBA].quoterAddress,
   //[ChainId.BASE_GOERLI]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].quoterAddress
   // TODO: Gnosis contracts to be deployed
@@ -86,6 +89,8 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].multicallAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].multicallAddress,
   [ChainId.FILECOIN]: CHAIN_TO_ADDRESSES_MAP[ChainId.FILECOIN].multicallAddress,
+  [ChainId.ROOTSTOCK]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.ROOTSTOCK].multicallAddress,
   [ChainId.BOBA]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOBA].multicallAddress,
   // [ChainId.BASE_GOERLI]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].multicallAddress,
   [ChainId.BASE_GOERLI]:
@@ -139,6 +144,7 @@ export const WETH9: {
     | ChainId.MOONBEAM
     | ChainId.ZKSYNC
     | ChainId.FILECOIN
+    | ChainId.ROOTSTOCK
     | ChainId.BNB
     | ChainId.AVALANCHE
   >]: Token;

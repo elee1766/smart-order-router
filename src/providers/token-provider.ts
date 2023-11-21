@@ -620,6 +620,39 @@ export const WFIL_FILECOIN = new Token(
   'Wrapped FIL'
 );
 
+// rootstock
+// export const USDRIF_ROOTSTOCK = new Token(
+//   ChainId.ROOTSTOCK,
+//   '0x3A15461d8AE0f0Fb5fA2629e9dA7D66A794a6E37',
+//   18,
+//   'USDRIF',
+//   'RIF US Dollar'
+// );
+
+export const USDT_ROOTSTOCK = new Token(
+  ChainId.ROOTSTOCK,
+  '0xef213441a85df4d7acbdae0cf78004e1e486bb96',
+  18,
+  'RUSDT',
+  'Rootstock USDT'
+);
+
+export const RIF_ROOTSTOCK = new Token(
+  ChainId.ROOTSTOCK,
+  '0x2acc95758f8b5f583470ba265eb685a8f45fc9d5',
+  18,
+  'RIF',
+  'RIF'
+);
+
+export const WRBTC_ROOTSTOCK = new Token(
+  ChainId.ROOTSTOCK,
+  '0x967f8799af07df1534d48a95a5c9febe92c53ae0',
+  18,
+  'WRBTC',
+  'Wrapped RBTC'
+);
+
 // BOBA Tokens
 export const BOBA = new Token(
   ChainId.BOBA,
@@ -860,6 +893,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_ZKSYNC;
     case ChainId.FILECOIN:
       return USDT_FILECOIN;
+    case ChainId.ROOTSTOCK:
+      return USDT_ROOTSTOCK;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }

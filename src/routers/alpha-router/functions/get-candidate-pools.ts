@@ -26,6 +26,7 @@ import {
   DAI_SEPOLIA,
   FEI_MAINNET,
   ITokenProvider,
+  RIF_ROOTSTOCK,
   USDC_ARBITRUM,
   USDC_ARBITRUM_GOERLI,
   USDC_AVAX,
@@ -47,6 +48,7 @@ import {
   USDT_MAINNET,
   USDT_OPTIMISM,
   USDT_OPTIMISM_GOERLI,
+  USDT_ROOTSTOCK,
   USDT_ZKSYNC,
   WBTC_ARBITRUM,
   WBTC_FILECOIN,
@@ -62,6 +64,7 @@ import {
   WGLMR_MOONBEAM,
   WMATIC_POLYGON,
   WMATIC_POLYGON_MUMBAI,
+  WRBTC_ROOTSTOCK,
   WXDAI_GNOSIS,
 } from '../../../providers/token-provider';
 import {
@@ -188,6 +191,7 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
     WETH_FILECOIN,
     WFIL_FILECOIN,
   ],
+  [ChainId.ROOTSTOCK]: [USDT_ROOTSTOCK, RIF_ROOTSTOCK, WRBTC_ROOTSTOCK],
   [ChainId.BNB]: [DAI_BNB, USDC_BNB, USDT_BNB],
   [ChainId.AVALANCHE]: [DAI_AVAX, USDC_AVAX],
   [ChainId.BOBA]: [USDC_BOBA],

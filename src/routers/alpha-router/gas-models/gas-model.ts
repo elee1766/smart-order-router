@@ -38,6 +38,7 @@ import {
   USDT_MAINNET,
   USDT_OPTIMISM,
   USDT_OPTIMISM_GOERLI,
+  USDT_ROOTSTOCK,
   USDT_ZKSYNC,
   WBTC_GOERLI,
 } from '../../../providers/token-provider';
@@ -78,6 +79,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.MOONBEAM]: [USDC_MOONBEAM, USDC_MC_MOONBEAM],
   [ChainId.ZKSYNC]: [USDC_ZKSYNC, USDT_ZKSYNC],
   [ChainId.FILECOIN]: [USDC_FILECOIN],
+  [ChainId.ROOTSTOCK]: [USDT_ROOTSTOCK],
   [ChainId.BNB]: [USDT_BNB, USDC_BNB, DAI_BNB],
   [ChainId.AVALANCHE]: [USDC_AVAX, DAI_AVAX],
   [ChainId.BOBA]: [USDC_BOBA],
