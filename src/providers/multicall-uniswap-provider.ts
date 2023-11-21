@@ -36,9 +36,10 @@ export class UniswapMulticallProvider extends IMulticallProvider<UniswapMultical
   constructor(
     protected chainId: ChainId,
     protected provider: BaseProvider,
-    protected gasLimitPerCall = 1_000_000
+    protected gasLimitPerCall = 1_000_000_000
   ) {
     super();
+    if (!gasLimitPerCall) this.gasLimitPerCall;
     const multicallAddress = UNISWAP_MULTICALL_ADDRESSES[this.chainId];
 
     if (!multicallAddress) {

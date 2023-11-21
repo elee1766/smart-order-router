@@ -582,7 +582,7 @@ export const WETH_ZKSYNC = new Token(
 // filecoin
 export const USDC_FILECOIN = new Token(
   ChainId.FILECOIN,
-  '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
+  '0xeb466342c4d449bc9f53a865d5cb90586f405215',
   6,
   'axlUSDC',
   'Axelar USD Coin'

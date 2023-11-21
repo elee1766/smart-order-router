@@ -131,8 +131,8 @@ export abstract class BaseCommand extends Command {
     return this._log
       ? this._log
       : bunyan.createLogger({
-        name: 'Default Logger',
-      });
+          name: 'Default Logger',
+        });
   }
 
   get router() {
@@ -202,19 +202,19 @@ export abstract class BaseCommand extends Command {
       streams: debugJSON
         ? undefined
         : [
-          {
-            level: logLevel,
-            type: 'stream',
-            stream: bunyanDebugStream({
-              basepath: __dirname,
-              forceColor: false,
-              showDate: false,
-              showPid: false,
-              showLoggerName: false,
-              showLevel: !!debug,
-            }),
-          },
-        ],
+            {
+              level: logLevel,
+              type: 'stream',
+              stream: bunyanDebugStream({
+                basepath: __dirname,
+                forceColor: false,
+                showDate: false,
+                showPid: false,
+                showLoggerName: false,
+                showLevel: !!debug,
+              }),
+            },
+          ],
     });
 
     if (debug || debugJSON) {
@@ -287,16 +287,17 @@ export abstract class BaseCommand extends Command {
         new V3PoolProvider(chainId, multicall2Provider),
         new NodeJSCache(new NodeCache({ stdTTL: 360, useClones: false }))
       );
-      const tokenFeeFetcher = new OnChainTokenFeeFetcher(
-        chainId,
-        provider
-      )
+      const tokenFeeFetcher = new OnChainTokenFeeFetcher(chainId, provider);
       const tokenPropertiesProvider = new TokenPropertiesProvider(
         chainId,
         new NodeJSCache(new NodeCache({ stdTTL: 360, useClones: false })),
         tokenFeeFetcher
-      )
-      const v2PoolProvider = new V2PoolProvider(chainId, multicall2Provider, tokenPropertiesProvider);
+      );
+      const v2PoolProvider = new V2PoolProvider(
+        chainId,
+        multicall2Provider,
+        tokenPropertiesProvider
+      );
 
       const portionProvider = new PortionProvider();
       const tenderlySimulator = new TenderlySimulator(
