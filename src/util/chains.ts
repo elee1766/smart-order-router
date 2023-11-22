@@ -439,10 +439,10 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
   ),
   [ChainId.ROOTSTOCK]: new Token(
     ChainId.ROOTSTOCK,
-    '0x967f8799af07df1534d48a95a5c9febe92c53ae0',
+    '0x542fDA317318eBF1d3DEAf76E0b632741A7e677d',
     18,
     'WRBTC',
-    'Wrapped RBTC'
+    'Wrapped BTC'
   ),
   [ChainId.AVALANCHE]: new Token(
     ChainId.AVALANCHE,
