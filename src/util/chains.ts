@@ -25,6 +25,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.ZKSYNC,
   ChainId.FILECOIN,
   ChainId.ROOTSTOCK,
+  ChainId.SCROLL,
   ChainId.BOBA,
   ChainId.BASE,
   // Gnosis don't yet have contracts deployed yet
@@ -89,6 +90,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.FILECOIN;
     case 30:
       return ChainId.ROOTSTOCK;
+    case 534352:
+      return ChainId.SCROLL;
     case 43114:
       return ChainId.AVALANCHE;
     case 8453:
@@ -117,6 +120,7 @@ export enum ChainName {
   ZKSYNC = 'zksync',
   FILECOIN = 'filecoin',
   ROOTSTOCK = 'rootstock',
+  SCROLL = 'scroll',
   BNB = 'bnb-mainnet',
   AVALANCHE = 'avalanche-mainnet',
   BOBA = 'boba-mainnet',
@@ -134,6 +138,7 @@ export enum NativeCurrencyName {
   ZKSYNC = 'ETH',
   FILECOIN = 'FIL',
   ROOTSTOCK = 'RBTC',
+  SCROLL = 'ETH',
   BNB = 'BNB',
   AVALANCHE = 'AVAX',
   BOBA = 'BOBA',
@@ -187,6 +192,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.ZKSYNC]: ['ETH'],
   [ChainId.FILECOIN]: ['FIL'],
   [ChainId.ROOTSTOCK]: ['RBTC'],
+  [ChainId.SCROLL]: ['ETH'],
   [ChainId.BNB]: ['BNB', 'BNB', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   [ChainId.AVALANCHE]: [
     'AVAX',
@@ -218,6 +224,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
   [ChainId.FILECOIN]: NativeCurrencyName.FILECOIN,
   [ChainId.ROOTSTOCK]: NativeCurrencyName.ROOTSTOCK,
+  [ChainId.SCROLL]: NativeCurrencyName.SCROLL,
   [ChainId.BNB]: NativeCurrencyName.BNB,
   [ChainId.AVALANCHE]: NativeCurrencyName.AVALANCHE,
   [ChainId.BOBA]: NativeCurrencyName.BOBA,
@@ -260,6 +267,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.FILECOIN;
     case 30:
       return ChainName.ROOTSTOCK;
+    case 534352:
+      return ChainName.SCROLL;
     case 288:
       return ChainName.BOBA;
     case 43114:
@@ -315,6 +324,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_FILECOIN!;
     case ChainId.ROOTSTOCK:
       return process.env.JSON_RPC_PROVIDER_ROOTSTOCK!;
+    case ChainId.SCROLL:
+      return process.env.JSON_RPC_PROVIDER_SCROLL!;
     case ChainId.BASE:
       return process.env.JSON_RPC_PROVIDER_BASE!;
     default:
@@ -443,6 +454,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'WRBTC',
     'Wrapped BTC'
+  ),
+  [ChainId.SCROLL]: new Token(
+    ChainId.SCROLL,
+    '0x5300000000000000000000000000000000000004',
+    18,
+    'WETH',
+    'Wrapped Ether'
   ),
   [ChainId.AVALANCHE]: new Token(
     ChainId.AVALANCHE,
@@ -670,6 +688,30 @@ class RootstockNativeCurrency extends NativeCurrency {
   }
 }
 
+function isScroll(chainId: number): chainId is ChainId.SCROLL {
+  return chainId === ChainId.ROOTSTOCK;
+}
+
+class ScrollNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isScroll(this.chainId)) throw new Error('Not scroll');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isScroll(chainId)) throw new Error('Not scroll');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
 function isAvax(chainId: number): chainId is ChainId.AVALANCHE {
   return chainId === ChainId.AVALANCHE;
 }
@@ -759,6 +801,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new FilecoinNativeCurrency(chainId);
   } else if (isRootstock(chainId)) {
     cachedNativeCurrency[chainId] = new RootstockNativeCurrency(chainId);
+  } else if (isScroll(chainId)) {
+    cachedNativeCurrency[chainId] = new ScrollNativeCurrency(chainId);
   } else if (isBnb(chainId)) {
     cachedNativeCurrency[chainId] = new BnbNativeCurrency(chainId);
   } else if (isAvax(chainId)) {

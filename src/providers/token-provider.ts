@@ -645,6 +645,47 @@ export const WRBTC_ROOTSTOCK = new Token(
   'Wrapped BTC'
 );
 
+//scroll
+export const USDT_SCROLL = new Token(
+  ChainId.SCROLL,
+  '0xf55bec9cafdbe8730f096aa55dad6d22d44099df',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
+export const USDC_SCROLL = new Token(
+  ChainId.SCROLL,
+  '0x06efdbff2a14a7c8e15944d1f4a48f9f95f663a4',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const WBTC_SCROLL = new Token(
+  ChainId.SCROLL,
+  '0x3c1bca5a656e69edcd0d4e36bebb3fcdaca60cf1',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+);
+
+export const DAI_SCROLL = new Token(
+  ChainId.SCROLL,
+  '0xca77eb3fefe3725dc33bccb54edefc3d9f764f97',
+  18,
+  'DAI',
+  'Dai Stablecoin'
+);
+
+export const LUSD_SCROLL = new Token(
+  ChainId.SCROLL,
+  '0xedeabc3a1e7d21fe835ffa6f83a710c70bb1a051',
+  18,
+  'LUSD',
+  'LUSD Stablecoin'
+);
+
 // BOBA Tokens
 export const BOBA = new Token(
   ChainId.BOBA,
