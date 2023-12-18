@@ -23,6 +23,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
+  ChainId.POLYGON_ZKEVM,
   ChainId.FILECOIN,
   ChainId.ROOTSTOCK,
   ChainId.SCROLL,
@@ -86,6 +87,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.MOONBEAM;
     case 324:
       return ChainId.ZKSYNC;
+    case 1101:
+      return ChainId.POLYGON_ZKEVM;
     case 314:
       return ChainId.FILECOIN;
     case 30:
@@ -118,6 +121,7 @@ export enum ChainName {
   GNOSIS = 'gnosis-mainnet',
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
+  POLYGON_ZKEVM = 'polygon-zkevm',
   FILECOIN = 'filecoin',
   ROOTSTOCK = 'rootstock',
   SCROLL = 'scroll',
@@ -136,6 +140,7 @@ export enum NativeCurrencyName {
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
+  POLYGON_ZKEVM = 'ETH',
   FILECOIN = 'FIL',
   ROOTSTOCK = 'RBTC',
   SCROLL = 'ETH',
@@ -190,6 +195,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
+  [ChainId.POLYGON_ZKEVM]: ['ETH'],
   [ChainId.FILECOIN]: ['FIL'],
   [ChainId.ROOTSTOCK]: ['RBTC'],
   [ChainId.SCROLL]: ['ETH'],
@@ -222,6 +228,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
+  [ChainId.POLYGON_ZKEVM]: NativeCurrencyName.POLYGON_ZKEVM,
   [ChainId.FILECOIN]: NativeCurrencyName.FILECOIN,
   [ChainId.ROOTSTOCK]: NativeCurrencyName.ROOTSTOCK,
   [ChainId.SCROLL]: NativeCurrencyName.SCROLL,
@@ -263,6 +270,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.MOONBEAM;
     case 324:
       return ChainName.ZKSYNC;
+    case 1101:
+      return ChainName.POLYGON_ZKEVM;
     case 314:
       return ChainName.FILECOIN;
     case 30:
@@ -320,6 +329,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_MOONBEAM!;
     case ChainId.ZKSYNC:
       return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
+    case ChainId.POLYGON_ZKEVM:
+      return process.env.JSON_RPC_PROVIDER_POLYGON_ZKEVM!;
     case ChainId.FILECOIN:
       return process.env.JSON_RPC_PROVIDER_FILECOIN!;
     case ChainId.ROOTSTOCK:
@@ -437,6 +448,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
   [ChainId.ZKSYNC]: new Token(
     ChainId.ZKSYNC,
     '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+    18,
+    'WETH',
+    'Wrapped ETH'
+  ),
+  [ChainId.POLYGON_ZKEVM]: new Token(
+    ChainId.POLYGON_ZKEVM,
+    '0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9',
     18,
     'WETH',
     'Wrapped ETH'
@@ -640,6 +658,30 @@ class ZksyncNativeCurrency extends NativeCurrency {
   }
 }
 
+function isPolygonZkevm(chainId: number): chainId is ChainId.POLYGON_ZKEVM {
+  return chainId === ChainId.POLYGON_ZKEVM;
+}
+
+class PolygonZkevmNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isPolygonZkevm(this.chainId)) throw new Error('Not polygon-zkevm');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isPolygonZkevm(chainId)) throw new Error('Not polygon-zkevm');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
 function isFilecoin(chainId: number): chainId is ChainId.FILECOIN {
   return chainId === ChainId.FILECOIN;
 }
@@ -797,6 +839,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
   } else if (isZksync(chainId)) {
     cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
+  } else if (isPolygonZkevm(chainId)) {
+    cachedNativeCurrency[chainId] = new PolygonZkevmNativeCurrency(chainId);
   } else if (isFilecoin(chainId)) {
     cachedNativeCurrency[chainId] = new FilecoinNativeCurrency(chainId);
   } else if (isRootstock(chainId)) {

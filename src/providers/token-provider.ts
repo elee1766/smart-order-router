@@ -559,7 +559,7 @@ export const USDT_ZKSYNC = new Token(
   ChainId.ZKSYNC,
   '0x493257fD37EDB34451f62EDf8D2a0C418852bA4C',
   6,
-  'USDC',
+  'USDT',
   'Tether USD'
 );
 
@@ -577,6 +577,55 @@ export const WETH_ZKSYNC = new Token(
   18,
   'WETH',
   'Wrapped ETH'
+);
+
+// polylgon zkevm
+export const USDC_POLYGON_ZKEVM = new Token(
+  ChainId.POLYGON_ZKEVM,
+  '0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const DAI_POLYGON_ZKEVM = new Token(
+  ChainId.POLYGON_ZKEVM,
+  '0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4',
+  18,
+  'DAI',
+  'Dai Stablecoin'
+);
+
+export const USDT_POLYGON_ZKEVM = new Token(
+  ChainId.POLYGON_ZKEVM,
+  '0x1E4a5963aBFD975d8c9021ce480b42188849D41d',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
+export const WBTC_POLYGON_ZKEVM = new Token(
+  ChainId.POLYGON_ZKEVM,
+  '0xEA034fb02eB1808C2cc3adbC15f447B93CbE08e1',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+);
+
+export const WETH_POLYGON_ZKEVM = new Token(
+  ChainId.POLYGON_ZKEVM,
+  '0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9',
+  18,
+  'WETH',
+  'Wrapped ETH'
+);
+
+export const MATIC_POLYGON_ZKEVM = new Token(
+  ChainId.POLYGON_ZKEVM,
+  '0xa2036f0538221a77A3937F1379699f44945018d0',
+  18,
+  'MATIC',
+  'Matic Token'
 );
 
 // filecoin
