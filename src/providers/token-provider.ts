@@ -903,6 +903,8 @@ export const DAI_ON = (chainId: ChainId): Token => {
       return DAI_BNB;
     case ChainId.AVALANCHE:
       return DAI_AVAX;
+    case ChainId.SCROLL:
+      return DAI_SCROLL;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -928,6 +930,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_FILECOIN;
     case ChainId.ROOTSTOCK:
       return USDT_ROOTSTOCK;
+    case ChainId.SCROLL:
+      return USDT_SCROLL;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -971,6 +975,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_BASE;
     case ChainId.BASE_GOERLI:
       return USDC_BASE_GOERLI;
+    case ChainId.SCROLL:
+      return USDC_SCROLL;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
