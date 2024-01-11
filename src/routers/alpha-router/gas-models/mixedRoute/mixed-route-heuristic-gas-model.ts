@@ -111,11 +111,15 @@ export class MixedRouteHeuristicGasModelFactory extends IOnChainGasModelFactory 
     let nativeV2Pool: Pair | null;
     if (V2poolProvider) {
       /// MixedRoutes
+      try {
       nativeV2Pool = await getV2NativePool(
         quoteToken,
         V2poolProvider,
         providerConfig
       );
+      } catch (e:any) {
+        nativeV2Pool = null
+      }
     }
 
     const usdToken =

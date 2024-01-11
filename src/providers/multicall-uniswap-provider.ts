@@ -176,7 +176,6 @@ export class UniswapMulticallProvider extends IMulticallProvider<UniswapMultical
       { calls },
       `About to multicall for ${functionName} at address ${address} with ${functionParams.length} different sets of params`
     );
-
     const { blockNumber, returnData: aggregateResults } =
       await this.multicallContract.callStatic.multicall(calls, {
         blockTag: blockNumberOverride,

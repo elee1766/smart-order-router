@@ -23,6 +23,7 @@ import {
   SwapType,
   V2RouteWithValidQuote,
   V3RouteWithValidQuote,
+  log,
 } from '..';
 
 export function buildTrade<TTradeType extends TradeType>(
@@ -234,6 +235,8 @@ export function buildSwapMethodParameters(
   chainId: ChainId
 ): MethodParameters {
   if (swapConfig.type == SwapType.UNIVERSAL_ROUTER) {
+    log.info({swapConfig}, "building swap")
+
     return {
       ...UniveralRouter.swapERC20CallParameters(trade, swapConfig),
       to: UNIVERSAL_ROUTER_ADDRESS(chainId),
