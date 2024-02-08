@@ -579,6 +579,39 @@ export const WETH_ZKSYNC = new Token(
   'Wrapped ETH'
 );
 
+// manta
+export const USDC_MANTA = new Token(
+  ChainId.MANTA,
+  '0xb73603C5d87fA094B7314C74ACE2e64D165016fb',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const USDT_MANTA = new Token(
+  ChainId.MANTA,
+  '0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
+export const WBTC_MANTA = new Token(
+  ChainId.MANTA,
+  '0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+);
+
+export const MANTA_MANTA = new Token(
+  ChainId.MANTA,
+  '0x95CeF13441Be50d20cA4558CC0a27B601aC544E5',
+  18,
+  'MANTA',
+  'Manta'
+);
+
 // polylgon zkevm
 export const USDC_POLYGON_ZKEVM = new Token(
   ChainId.POLYGON_ZKEVM,
@@ -975,6 +1008,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_BNB;
     case ChainId.ZKSYNC:
       return USDT_ZKSYNC;
+    case ChainId.MANTA:
+      return USDT_MANTA;
     case ChainId.FILECOIN:
       return USDT_FILECOIN;
     case ChainId.ROOTSTOCK:
@@ -1014,6 +1049,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_MOONBEAM;
     case ChainId.ZKSYNC:
       return USDC_ZKSYNC;
+    case ChainId.MANTA:
+      return USDC_MANTA;
     case ChainId.FILECOIN:
       return USDC_FILECOIN;
     case ChainId.BNB:
