@@ -496,7 +496,7 @@ export class AlphaRouter
             {
               multicallChunk: 70,
               gasLimitPerCall: 705_000,
-              quoteMinSuccessRate: 0.15,
+              quoteMinSuccessRate: 0,
             }
           );
           break;
@@ -547,7 +547,7 @@ export class AlphaRouter
             {
               multicallChunk: 210,
               gasLimitPerCall: 1_000_000_000,
-              quoteMinSuccessRate: 0.15,
+              quoteMinSuccessRate: 0,
             },
             {
               gasLimitOverride: 1_000_000_000,
@@ -654,7 +654,7 @@ export class AlphaRouter
             {
               multicallChunk: 10,
               gasLimitPerCall: 750_000,
-              quoteMinSuccessRate: 0.1,
+              quoteMinSuccessRate: 0,
             },
             {
               gasLimitOverride: 1_000_000,
