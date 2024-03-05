@@ -17,6 +17,7 @@ import {
   DAI_POLYGON_ZKEVM,
   DAI_SCROLL,
   DAI_SEPOLIA,
+  USDB_BLAST,
   USDC_ARBITRUM,
   USDC_ARBITRUM_GOERLI,
   USDC_AVAX,
@@ -86,6 +87,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.GNOSIS]: [USDC_ETHEREUM_GNOSIS],
   [ChainId.MOONBEAM]: [USDC_MOONBEAM, USDC_MC_MOONBEAM],
   [ChainId.ZKSYNC]: [USDC_ZKSYNC, USDT_ZKSYNC],
+  [ChainId.BLAST]: [USDB_BLAST],
   [ChainId.MANTA]: [USDC_MANTA, USDT_MANTA],
   [ChainId.POLYGON_ZKEVM]: [
     USDC_POLYGON_ZKEVM,

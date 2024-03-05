@@ -23,6 +23,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
+  ChainId.BLAST,
   ChainId.MANTA,
   ChainId.POLYGON_ZKEVM,
   ChainId.FILECOIN,
@@ -88,6 +89,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.MOONBEAM;
     case 324:
       return ChainId.ZKSYNC;
+    case 81457:
+      return ChainId.BLAST;
     case 169:
       return ChainId.MANTA;
     case 1101:
@@ -124,6 +127,7 @@ export enum ChainName {
   GNOSIS = 'gnosis-mainnet',
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
+  BLAST = 'blast',
   MANTA = 'manta-pacific',
   POLYGON_ZKEVM = 'polygon-zkevm',
   FILECOIN = 'filecoin',
@@ -144,6 +148,7 @@ export enum NativeCurrencyName {
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
+  BLAST = 'ETH',
   MANTA = 'ETH',
   POLYGON_ZKEVM = 'ETH',
   FILECOIN = 'FIL',
@@ -200,6 +205,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
+  [ChainId.BLAST]: ['ETH'],
   [ChainId.MANTA]: ['ETH'],
   [ChainId.POLYGON_ZKEVM]: ['ETH'],
   [ChainId.FILECOIN]: ['FIL'],
@@ -234,6 +240,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
+  [ChainId.BLAST]: NativeCurrencyName.BLAST,
   [ChainId.MANTA]: NativeCurrencyName.MANTA,
   [ChainId.POLYGON_ZKEVM]: NativeCurrencyName.POLYGON_ZKEVM,
   [ChainId.FILECOIN]: NativeCurrencyName.FILECOIN,
@@ -277,6 +284,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.MOONBEAM;
     case 324:
       return ChainName.ZKSYNC;
+    case 81457:
+      return ChainName.BLAST;
     case 169:
       return ChainName.MANTA;
     case 1101:
@@ -338,6 +347,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_MOONBEAM!;
     case ChainId.ZKSYNC:
       return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
+    case ChainId.BLAST:
+      return process.env.JSON_RPC_PROVIDER_BLAST!;
     case ChainId.MANTA:
       return process.env.JSON_RPC_PROVIDER_MANTA!;
     case ChainId.POLYGON_ZKEVM:
@@ -459,6 +470,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
   [ChainId.ZKSYNC]: new Token(
     ChainId.ZKSYNC,
     '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+    18,
+    'WETH',
+    'Wrapped ETH'
+  ),
+  [ChainId.BLAST]: new Token(
+    ChainId.BLAST,
+    '0x4300000000000000000000000000000000000004',
     18,
     'WETH',
     'Wrapped ETH'
@@ -676,6 +694,30 @@ class ZksyncNativeCurrency extends NativeCurrency {
   }
 }
 
+function isBlast(chainId: number): chainId is ChainId.BLAST {
+  return chainId === ChainId.BLAST;
+}
+
+class BlastNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isBlast(this.chainId)) throw new Error('Not blast');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isBlast(chainId)) throw new Error('Not blast');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
 function isManta(chainId: number): chainId is ChainId.MANTA {
   return chainId === ChainId.MANTA;
 }
@@ -881,6 +923,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
   } else if (isZksync(chainId)) {
     cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
+  } else if (isBlast(chainId)) {
+    cachedNativeCurrency[chainId] = new BlastNativeCurrency(chainId);
   } else if (isManta(chainId)) {
     cachedNativeCurrency[chainId] = new MantaNativeCurrency(chainId);
   } else if (isPolygonZkevm(chainId)) {

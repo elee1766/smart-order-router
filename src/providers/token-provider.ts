@@ -579,6 +579,23 @@ export const WETH_ZKSYNC = new Token(
   'Wrapped ETH'
 );
 
+// blast
+export const USDB_BLAST = new Token(
+  ChainId.BLAST,
+  '0x4300000000000000000000000000000000000003',
+  18,
+  'USDB',
+  'USDB'
+);
+
+export const WETH_BLAST = new Token(
+  ChainId.BLAST,
+  '0x4300000000000000000000000000000000000004',
+  18,
+  'WETH',
+  'Wrapped ETH'
+);
+
 // manta
 export const USDC_MANTA = new Token(
   ChainId.MANTA,
@@ -1049,6 +1066,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_MOONBEAM;
     case ChainId.ZKSYNC:
       return USDC_ZKSYNC;
+    case ChainId.BLAST:
+      return USDB_BLAST;
     case ChainId.MANTA:
       return USDC_MANTA;
     case ChainId.FILECOIN:
