@@ -679,7 +679,7 @@ export class AlphaRouter
             },
             {
               gasLimitOverride: 2_000_000,
-              multicallChunk: 70,
+              multicallChunk: 60,
             }
           );
           break;
