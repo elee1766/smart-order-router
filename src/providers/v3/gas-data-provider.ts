@@ -4,7 +4,7 @@ import { ChainId } from '@uniswap/sdk-core';
 
 import { GasDataArbitrum__factory } from '../../types/other/factories/GasDataArbitrum__factory';
 import { GasPriceOracle__factory } from '../../types/other/factories/GasPriceOracle__factory';
-import { ARB_GASINFO_ADDRESS, log, OVM_GASPRICE_ADDRESS, } from '../../util';
+import { ARB_GASINFO_ADDRESS, log, OVM_GASPRICE_ADDRESS } from '../../util';
 import { IMulticallProvider } from '../multicall-provider';
 
 /**
@@ -29,7 +29,8 @@ export type OptimismGasData = {
 };
 
 export class OptimismGasDataProvider
-  implements IL2GasDataProvider<OptimismGasData> {
+  implements IL2GasDataProvider<OptimismGasData>
+{
   protected gasOracleAddress: string;
 
   constructor(
@@ -49,7 +50,7 @@ export class OptimismGasDataProvider
    * scalar, decimals, and overhead values.
    */
   public async getGasData(): Promise<OptimismGasData> {
-    const funcNames = ['l1BaseFee', 'scalar', 'decimals', 'overhead'];
+    const funcNames = ['l1BaseFee', 'decimals'];
     const tx =
       await this.multicall2Provider.callMultipleFunctionsOnSameContract<
         undefined,
@@ -60,12 +61,7 @@ export class OptimismGasDataProvider
         functionNames: funcNames,
       });
 
-    if (
-      !tx.results[0]?.success ||
-      !tx.results[1]?.success ||
-      !tx.results[2]?.success ||
-      !tx.results[3]?.success
-    ) {
+    if (!tx.results[0]?.success || !tx.results[1]?.success) {
       log.info(
         { results: tx.results },
         'Failed to get gas constants data from the optimism gas oracle'
@@ -76,15 +72,15 @@ export class OptimismGasDataProvider
     }
 
     const { result: l1BaseFee } = tx.results![0];
-    const { result: scalar } = tx.results![1];
-    const { result: decimals } = tx.results![2];
-    const { result: overhead } = tx.results![3];
+    const scalar = BigNumber.from(1);
+    const { result: decimals } = tx.results![1];
+    const overhead = BigNumber.from(0);
 
     return {
       l1BaseFee: l1BaseFee[0],
-      scalar: scalar[0],
+      scalar: scalar,
       decimals: decimals[0],
-      overhead: overhead[0],
+      overhead: overhead,
     };
   }
 }
@@ -101,7 +97,8 @@ export type ArbitrumGasData = {
 };
 
 export class ArbitrumGasDataProvider
-  implements IL2GasDataProvider<ArbitrumGasData> {
+  implements IL2GasDataProvider<ArbitrumGasData>
+{
   protected gasFeesAddress: string;
   protected blockNumberOverride: number | Promise<number> | undefined;
 
