@@ -217,7 +217,11 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
     'AVALANCHE',
     '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
   ],
-  [ChainId.BOBA]: ['BOBA'],
+  [ChainId.BOBA]: [
+    'ETH',
+    'ETHER',
+    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+  ],
   [ChainId.BASE]: [
     'ETH',
     'ETHER',
@@ -525,10 +529,10 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
   ),
   [ChainId.BOBA]: new Token(
     ChainId.BOBA,
-    '0xa18bF3994C0Cc6E3b63ac420308E5383f53120D7',
+    '0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000',
     18,
-    'BOBA',
-    'Boba native asset'
+    'WETH',
+    'Wrapped Ether'
   ),
   [ChainId.BASE]: new Token(
     ChainId.BASE,
@@ -864,8 +868,8 @@ class AvalancheNativeCurrency extends NativeCurrency {
 
 function isBoba(
   chainId: number
-): chainId is ChainId.CELO | ChainId.CELO_ALFAJORES {
-  return chainId === ChainId.CELO_ALFAJORES || chainId === ChainId.CELO;
+): chainId is ChainId.BOBA {
+  return chainId === ChainId.BOBA;
 }
 
 class BobaNativeCurrency extends NativeCurrency {
@@ -884,7 +888,7 @@ class BobaNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isBoba(chainId)) throw new Error('Not boba');
-    super(chainId, 18, 'BOBA', 'Boba');
+    super(chainId, 18, 'ETH', 'Ether');
   }
 }
 
