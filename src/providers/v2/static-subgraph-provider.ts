@@ -39,6 +39,7 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.GNOSIS]: [],
   [ChainId.MOONBEAM]: [],
   [ChainId.ZKSYNC]: [],
+  [ChainId.LINEA]: [],
   [ChainId.BLAST]: [],
   [ChainId.MANTA]: [],
   [ChainId.POLYGON_ZKEVM]: [],

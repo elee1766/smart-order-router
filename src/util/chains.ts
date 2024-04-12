@@ -23,6 +23,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
+  ChainId.LINEA,
   ChainId.BLAST,
   ChainId.MANTA,
   ChainId.POLYGON_ZKEVM,
@@ -89,6 +90,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.MOONBEAM;
     case 324:
       return ChainId.ZKSYNC;
+    case 59144:
+      return ChainId.LINEA;
     case 81457:
       return ChainId.BLAST;
     case 169:
@@ -127,6 +130,7 @@ export enum ChainName {
   GNOSIS = 'gnosis-mainnet',
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
+  LINEA = 'linea',
   BLAST = 'blast',
   MANTA = 'manta-pacific',
   POLYGON_ZKEVM = 'polygon-zkevm',
@@ -148,6 +152,7 @@ export enum NativeCurrencyName {
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
+  LINEA = 'ETH',
   BLAST = 'ETH',
   MANTA = 'ETH',
   POLYGON_ZKEVM = 'ETH',
@@ -205,6 +210,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
+  [ChainId.LINEA]: ['ETH'],
   [ChainId.BLAST]: ['ETH'],
   [ChainId.MANTA]: ['ETH'],
   [ChainId.POLYGON_ZKEVM]: ['ETH'],
@@ -244,6 +250,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
+  [ChainId.LINEA]: NativeCurrencyName.LINEA,
   [ChainId.BLAST]: NativeCurrencyName.BLAST,
   [ChainId.MANTA]: NativeCurrencyName.MANTA,
   [ChainId.POLYGON_ZKEVM]: NativeCurrencyName.POLYGON_ZKEVM,
@@ -288,6 +295,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.MOONBEAM;
     case 324:
       return ChainName.ZKSYNC;
+    case 59144:
+      return ChainName.LINEA;
     case 81457:
       return ChainName.BLAST;
     case 169:
@@ -351,6 +360,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_MOONBEAM!;
     case ChainId.ZKSYNC:
       return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
+    case ChainId.LINEA:
+      return process.env.JSON_RPC_PROVIDER_LINEA!;
     case ChainId.BLAST:
       return process.env.JSON_RPC_PROVIDER_BLAST!;
     case ChainId.MANTA:
@@ -474,6 +485,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
   [ChainId.ZKSYNC]: new Token(
     ChainId.ZKSYNC,
     '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+    18,
+    'WETH',
+    'Wrapped ETH'
+  ),
+  [ChainId.LINEA]: new Token(
+    ChainId.LINEA,
+    '0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f',
     18,
     'WETH',
     'Wrapped ETH'
@@ -698,6 +716,30 @@ class ZksyncNativeCurrency extends NativeCurrency {
   }
 }
 
+function isLinea(chainId: number): chainId is ChainId.LINEA {
+  return chainId === ChainId.LINEA;
+}
+
+class LineaNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isLinea(this.chainId)) throw new Error('Not linea');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isLinea(chainId)) throw new Error('Not linea');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
 function isBlast(chainId: number): chainId is ChainId.BLAST {
   return chainId === ChainId.BLAST;
 }
@@ -866,9 +908,7 @@ class AvalancheNativeCurrency extends NativeCurrency {
   }
 }
 
-function isBoba(
-  chainId: number
-): chainId is ChainId.BOBA {
+function isBoba(chainId: number): chainId is ChainId.BOBA {
   return chainId === ChainId.BOBA;
 }
 
@@ -927,6 +967,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
   } else if (isZksync(chainId)) {
     cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
+  } else if (isLinea(chainId)) {
+    cachedNativeCurrency[chainId] = new LineaNativeCurrency(chainId);
   } else if (isBlast(chainId)) {
     cachedNativeCurrency[chainId] = new BlastNativeCurrency(chainId);
   } else if (isManta(chainId)) {

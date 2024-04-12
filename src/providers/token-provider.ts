@@ -579,6 +579,39 @@ export const WETH_ZKSYNC = new Token(
   'Wrapped ETH'
 );
 
+// linea
+export const USDC_LINEA = new Token(
+  ChainId.LINEA,
+  '0x176211869ca2b568f2a7d4ee941e073a821ee1ff',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const DAI_LINEA = new Token(
+  ChainId.LINEA,
+  '0x4af15ec2a0bd43db75dd04e62faa3b8ef36b00d5',
+  18,
+  'DAI',
+  'Dai Stablecoin'
+);
+
+export const WBTC_LINEA = new Token(
+  ChainId.LINEA,
+  '0x3aab2285ddcddad8edf438c1bab47e1a9d05a9b4',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+);
+
+export const WETH_LINEA = new Token(
+  ChainId.LINEA,
+  '0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f',
+  18,
+  'WETH',
+  'Wrapped ETH'
+);
+
 // blast
 export const USDB_BLAST = new Token(
   ChainId.BLAST,
@@ -1002,6 +1035,8 @@ export const DAI_ON = (chainId: ChainId): Token => {
       return DAI_BNB;
     case ChainId.AVALANCHE:
       return DAI_AVAX;
+    case ChainId.LINEA:
+      return DAI_LINEA;
     case ChainId.SCROLL:
       return DAI_SCROLL;
     default:
@@ -1066,6 +1101,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_MOONBEAM;
     case ChainId.ZKSYNC:
       return USDC_ZKSYNC;
+    case ChainId.LINEA:
+      return USDC_LINEA;
     case ChainId.BLAST:
       return USDB_BLAST;
     case ChainId.MANTA:
