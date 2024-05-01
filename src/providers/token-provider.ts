@@ -579,6 +579,23 @@ export const WETH_ZKSYNC = new Token(
   'Wrapped ETH'
 );
 
+// sei testnet
+export const USDC_SEI_TESTNET = new Token(
+  ChainId.SEI_TESTNET,
+  '0xA09F3386E05CEAC547b02f223bF500a728BE7d77',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const WSEI_SEI_TESTNET = new Token(
+  ChainId.SEI_TESTNET,
+  '0x57eE725BEeB991c70c53f9642f36755EC6eb2139',
+  18,
+  'WSEI',
+  'Wrapped SEI'
+);
+
 // linea
 export const USDC_LINEA = new Token(
   ChainId.LINEA,
@@ -1101,6 +1118,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_MOONBEAM;
     case ChainId.ZKSYNC:
       return USDC_ZKSYNC;
+    case ChainId.SEI_TESTNET:
+      return USDC_SEI_TESTNET;
     case ChainId.LINEA:
       return USDC_LINEA;
     case ChainId.BLAST:

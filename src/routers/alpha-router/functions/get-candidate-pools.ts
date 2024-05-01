@@ -51,6 +51,7 @@ import {
   USDC_POLYGON,
   USDC_POLYGON_ZKEVM,
   USDC_SCROLL,
+  USDC_SEI_TESTNET,
   USDC_SEPOLIA,
   USDC_ZKSYNC,
   USDT_ARBITRUM,
@@ -84,6 +85,7 @@ import {
   WMATIC_POLYGON,
   WMATIC_POLYGON_MUMBAI,
   WRBTC_ROOTSTOCK,
+  WSEI_SEI_TESTNET,
   WXDAI_GNOSIS,
 } from '../../../providers/token-provider';
 import {
@@ -203,6 +205,7 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
     WGLMR_MOONBEAM,
   ],
   [ChainId.ZKSYNC]: [USDC_ZKSYNC, WBTC_ZKSYNC, USDT_ZKSYNC, WETH_ZKSYNC],
+  [ChainId.SEI_TESTNET]: [USDC_SEI_TESTNET, WSEI_SEI_TESTNET],
   [ChainId.LINEA]: [
     USDC_LINEA,
     WBTC_LINEA,

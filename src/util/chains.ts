@@ -23,6 +23,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
+  ChainId.SEI_TESTNET,
   ChainId.LINEA,
   ChainId.BLAST,
   ChainId.MANTA,
@@ -90,6 +91,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.MOONBEAM;
     case 324:
       return ChainId.ZKSYNC;
+    case 713715:
+      return ChainId.SEI_TESTNET;
     case 59144:
       return ChainId.LINEA;
     case 81457:
@@ -130,6 +133,7 @@ export enum ChainName {
   GNOSIS = 'gnosis-mainnet',
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
+  SEI_TESTNET = 'sei-testnet',
   LINEA = 'linea',
   BLAST = 'blast',
   MANTA = 'manta-pacific',
@@ -152,6 +156,7 @@ export enum NativeCurrencyName {
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
+  SEI_TESTNET = 'SEI',
   LINEA = 'ETH',
   BLAST = 'ETH',
   MANTA = 'ETH',
@@ -210,6 +215,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
+  [ChainId.SEI_TESTNET]: ['SEI'],
   [ChainId.LINEA]: ['ETH'],
   [ChainId.BLAST]: ['ETH'],
   [ChainId.MANTA]: ['ETH'],
@@ -250,6 +256,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
+  [ChainId.SEI_TESTNET]: NativeCurrencyName.SEI_TESTNET,
   [ChainId.LINEA]: NativeCurrencyName.LINEA,
   [ChainId.BLAST]: NativeCurrencyName.BLAST,
   [ChainId.MANTA]: NativeCurrencyName.MANTA,
@@ -295,6 +302,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.MOONBEAM;
     case 324:
       return ChainName.ZKSYNC;
+    case 713715:
+      return ChainName.SEI_TESTNET;
     case 59144:
       return ChainName.LINEA;
     case 81457:
@@ -360,6 +369,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_MOONBEAM!;
     case ChainId.ZKSYNC:
       return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
+    case ChainId.SEI_TESTNET:
+      return process.env.JSON_RPC_PROVIDER_SEI_TESTNET!;
     case ChainId.LINEA:
       return process.env.JSON_RPC_PROVIDER_LINEA!;
     case ChainId.BLAST:
@@ -488,6 +499,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'WETH',
     'Wrapped ETH'
+  ),
+  [ChainId.SEI_TESTNET]: new Token(
+    ChainId.SEI_TESTNET,
+    '0x57eE725BEeB991c70c53f9642f36755EC6eb2139',
+    18,
+    'WSEI',
+    'Wrapped SEI'
   ),
   [ChainId.LINEA]: new Token(
     ChainId.LINEA,
@@ -713,6 +731,30 @@ class ZksyncNativeCurrency extends NativeCurrency {
   public constructor(chainId: number) {
     if (!isZksync(chainId)) throw new Error('Not zksync');
     super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
+function isSeiTestnet(chainId: number): chainId is ChainId.SEI_TESTNET {
+  return chainId === ChainId.SEI_TESTNET;
+}
+
+class SeiTestnetNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isSeiTestnet(this.chainId)) throw new Error('Not sei testnet');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isSeiTestnet(chainId)) throw new Error('Not sei testnet');
+    super(chainId, 18, 'SEI', 'SEI');
   }
 }
 
@@ -967,6 +1009,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
   } else if (isZksync(chainId)) {
     cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
+  } else if (isSeiTestnet(chainId)) {
+    cachedNativeCurrency[chainId] = new SeiTestnetNativeCurrency(chainId);
   } else if (isLinea(chainId)) {
     cachedNativeCurrency[chainId] = new LineaNativeCurrency(chainId);
   } else if (isBlast(chainId)) {
