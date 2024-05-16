@@ -579,6 +579,31 @@ export const WETH_ZKSYNC = new Token(
   'Wrapped ETH'
 );
 
+// mantle
+export const USDC_MANTLE = new Token(
+  ChainId.MANTLE,
+  '0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const USDT_MANTLE = new Token(
+  ChainId.MANTLE,
+  '0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
+export const WETH_MANTLE = new Token(
+  ChainId.MANTLE,
+  '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
+  18,
+  'WMNT',
+  'Wrapped Mantle'
+);
+
 // sei testnet
 export const USDC_SEI_TESTNET = new Token(
   ChainId.SEI_TESTNET,
@@ -1077,6 +1102,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_BNB;
     case ChainId.ZKSYNC:
       return USDT_ZKSYNC;
+    case ChainId.MANTLE:
+      return USDT_MANTLE;
     case ChainId.MANTA:
       return USDT_MANTA;
     case ChainId.FILECOIN:
@@ -1118,6 +1145,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_MOONBEAM;
     case ChainId.ZKSYNC:
       return USDC_ZKSYNC;
+    case ChainId.MANTLE:
+      return USDC_MANTLE;
     case ChainId.SEI_TESTNET:
       return USDC_SEI_TESTNET;
     case ChainId.LINEA:

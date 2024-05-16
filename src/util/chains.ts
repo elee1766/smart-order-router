@@ -23,6 +23,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
+  ChainId.MANTLE,
   ChainId.SEI_TESTNET,
   ChainId.LINEA,
   ChainId.BLAST,
@@ -91,6 +92,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.MOONBEAM;
     case 324:
       return ChainId.ZKSYNC;
+    case 5000:
+      return ChainId.MANTLE;
     case 713715:
       return ChainId.SEI_TESTNET;
     case 59144:
@@ -133,6 +136,7 @@ export enum ChainName {
   GNOSIS = 'gnosis-mainnet',
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
+  MANTLE = 'mantle',
   SEI_TESTNET = 'sei-testnet',
   LINEA = 'linea',
   BLAST = 'blast',
@@ -156,6 +160,7 @@ export enum NativeCurrencyName {
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
+  MANTLE = 'MNT',
   SEI_TESTNET = 'SEI',
   LINEA = 'ETH',
   BLAST = 'ETH',
@@ -215,6 +220,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
+  [ChainId.MANTLE]: ['MNT'],
   [ChainId.SEI_TESTNET]: ['SEI'],
   [ChainId.LINEA]: ['ETH'],
   [ChainId.BLAST]: ['ETH'],
@@ -256,6 +262,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
+  [ChainId.MANTLE]: NativeCurrencyName.MANTLE,
   [ChainId.SEI_TESTNET]: NativeCurrencyName.SEI_TESTNET,
   [ChainId.LINEA]: NativeCurrencyName.LINEA,
   [ChainId.BLAST]: NativeCurrencyName.BLAST,
@@ -302,6 +309,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.MOONBEAM;
     case 324:
       return ChainName.ZKSYNC;
+    case 5000:
+      return ChainName.MANTLE;
     case 713715:
       return ChainName.SEI_TESTNET;
     case 59144:
@@ -387,6 +396,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_SCROLL!;
     case ChainId.BASE:
       return process.env.JSON_RPC_PROVIDER_BASE!;
+    case ChainId.MANTLE:
+      return process.env.JSON_RPC_PROVIDER_MANTLE!;
     default:
       throw new Error(`Chain id: ${id} not supported`);
   }
@@ -499,6 +510,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'WETH',
     'Wrapped ETH'
+  ),
+  [ChainId.MANTLE]: new Token(
+    ChainId.MANTLE,
+    '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
+    18,
+    'MNT',
+    'Wrapped Mantle'
   ),
   [ChainId.SEI_TESTNET]: new Token(
     ChainId.SEI_TESTNET,
@@ -730,6 +748,30 @@ class ZksyncNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isZksync(chainId)) throw new Error('Not zksync');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
+function isMantle(chainId: number): chainId is ChainId.MANTLE {
+  return chainId === ChainId.MANTLE;
+}
+
+class MantleNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isMantle(this.chainId)) throw new Error('Not mantle');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isMantle(chainId)) throw new Error('Not mantle');
     super(chainId, 18, 'ETH', 'Ether');
   }
 }
@@ -1009,6 +1051,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
   } else if (isZksync(chainId)) {
     cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
+  } else if (isMantle(chainId)) {
+    cachedNativeCurrency[chainId] = new MantleNativeCurrency(chainId);
   } else if (isSeiTestnet(chainId)) {
     cachedNativeCurrency[chainId] = new SeiTestnetNativeCurrency(chainId);
   } else if (isLinea(chainId)) {

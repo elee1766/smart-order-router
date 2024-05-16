@@ -30,6 +30,7 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.MOONBEAM]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].v3CoreFactoryAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].v3CoreFactoryAddress,
+  [ChainId.MANTLE]: CHAIN_TO_ADDRESSES_MAP[ChainId.MANTLE].v3CoreFactoryAddress,
   [ChainId.SEI_TESTNET]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.SEI_TESTNET].v3CoreFactoryAddress,
   [ChainId.LINEA]: CHAIN_TO_ADDRESSES_MAP[ChainId.LINEA].v3CoreFactoryAddress,
@@ -63,6 +64,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.AVALANCHE]: CHAIN_TO_ADDRESSES_MAP[ChainId.AVALANCHE].quoterAddress,
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].quoterAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].quoterAddress,
+  [ChainId.MANTLE]: CHAIN_TO_ADDRESSES_MAP[ChainId.MANTLE].quoterAddress,
   [ChainId.SEI_TESTNET]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.SEI_TESTNET].quoterAddress,
   [ChainId.LINEA]: CHAIN_TO_ADDRESSES_MAP[ChainId.LINEA].quoterAddress,
@@ -104,6 +106,7 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.AVALANCHE].multicallAddress,
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].multicallAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].multicallAddress,
+  [ChainId.MANTLE]: CHAIN_TO_ADDRESSES_MAP[ChainId.MANTLE].multicallAddress,
   [ChainId.SEI_TESTNET]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.SEI_TESTNET].multicallAddress,
   [ChainId.LINEA]: CHAIN_TO_ADDRESSES_MAP[ChainId.LINEA].multicallAddress,
@@ -180,6 +183,13 @@ export const WETH9: {
     18,
     'WETH',
     'Wrapped Ether'
+  ),
+  [ChainId.MANTLE]: new Token(
+    ChainId.MANTLE,
+    '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
+    18,
+    'WMNT',
+    'Wrapped Mantle'
   ),
   [ChainId.BOBA]: new Token(
     ChainId.BOBA,
