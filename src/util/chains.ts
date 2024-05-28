@@ -23,6 +23,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
+  ChainId.TAIKO,
   ChainId.MANTLE,
   ChainId.SEI_TESTNET,
   ChainId.LINEA,
@@ -92,6 +93,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.MOONBEAM;
     case 324:
       return ChainId.ZKSYNC;
+    case 167000:
+      return ChainId.TAIKO;
     case 5000:
       return ChainId.MANTLE;
     case 713715:
@@ -136,6 +139,7 @@ export enum ChainName {
   GNOSIS = 'gnosis-mainnet',
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
+  TAIKO = 'taiko',
   MANTLE = 'mantle',
   SEI_TESTNET = 'sei-testnet',
   LINEA = 'linea',
@@ -160,6 +164,7 @@ export enum NativeCurrencyName {
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
+  TAIKO = 'ETH',
   MANTLE = 'MNT',
   SEI_TESTNET = 'SEI',
   LINEA = 'ETH',
@@ -220,6 +225,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
+  [ChainId.TAIKO]: ['ETH'],
   [ChainId.MANTLE]: ['MNT'],
   [ChainId.SEI_TESTNET]: ['SEI'],
   [ChainId.LINEA]: ['ETH'],
@@ -262,6 +268,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
+  [ChainId.TAIKO]: NativeCurrencyName.TAIKO,
   [ChainId.MANTLE]: NativeCurrencyName.MANTLE,
   [ChainId.SEI_TESTNET]: NativeCurrencyName.SEI_TESTNET,
   [ChainId.LINEA]: NativeCurrencyName.LINEA,
@@ -309,6 +316,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.MOONBEAM;
     case 324:
       return ChainName.ZKSYNC;
+    case 167000:
+      return ChainName.TAIKO;
     case 5000:
       return ChainName.MANTLE;
     case 713715:
@@ -378,6 +387,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_MOONBEAM!;
     case ChainId.ZKSYNC:
       return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
+    case ChainId.TAIKO:
+      return process.env.JSON_RPC_PROVIDER_TAIKO!;
     case ChainId.SEI_TESTNET:
       return process.env.JSON_RPC_PROVIDER_SEI_TESTNET!;
     case ChainId.LINEA:
@@ -507,6 +518,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
   [ChainId.ZKSYNC]: new Token(
     ChainId.ZKSYNC,
     '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+    18,
+    'WETH',
+    'Wrapped ETH'
+  ),
+  [ChainId.TAIKO]: new Token(
+    ChainId.TAIKO,
+    '0xA51894664A773981C6C112C43ce576f315d5b1B6',
     18,
     'WETH',
     'Wrapped ETH'
@@ -748,6 +766,30 @@ class ZksyncNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isZksync(chainId)) throw new Error('Not zksync');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
+function isTaiko(chainId: number): chainId is ChainId.TAIKO {
+  return chainId === ChainId.TAIKO;
+}
+
+class TaikoNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isTaiko(this.chainId)) throw new Error('Not taiko');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isTaiko(chainId)) throw new Error('Not taiko');
     super(chainId, 18, 'ETH', 'Ether');
   }
 }
@@ -1051,6 +1093,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
   } else if (isZksync(chainId)) {
     cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
+  } else if (isTaiko(chainId)) {
+    cachedNativeCurrency[chainId] = new TaikoNativeCurrency(chainId);
   } else if (isMantle(chainId)) {
     cachedNativeCurrency[chainId] = new MantleNativeCurrency(chainId);
   } else if (isSeiTestnet(chainId)) {

@@ -579,6 +579,23 @@ export const WETH_ZKSYNC = new Token(
   'Wrapped ETH'
 );
 
+// taiko
+export const USDC_TAIKO = new Token(
+  ChainId.TAIKO,
+  '0x07d83526730c7438048D55A4fc0b850e2aaB6f0b',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const WETH_TAIKO = new Token(
+  ChainId.TAIKO,
+  '0xA51894664A773981C6C112C43ce576f315d5b1B6',
+  18,
+  'WETH',
+  'Wrapped ETH'
+);
+
 // mantle
 export const USDC_MANTLE = new Token(
   ChainId.MANTLE,
@@ -880,7 +897,7 @@ export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
     protected multicall2Provider: IMulticallProvider
-  ) {}
+  ) { }
 
   private async getTokenSymbol(
     addresses: string[],
@@ -1025,10 +1042,8 @@ export class TokenProvider implements ITokenProvider {
       }
 
       log.info(
-        `Got token symbol and decimals for ${
-          Object.values(addressToToken).length
-        } out of ${addresses.length} tokens on-chain ${
-          providerConfig ? `as of: ${providerConfig?.blockNumber}` : ''
+        `Got token symbol and decimals for ${Object.values(addressToToken).length
+        } out of ${addresses.length} tokens on-chain ${providerConfig ? `as of: ${providerConfig?.blockNumber}` : ''
         }`
       );
     }
@@ -1145,6 +1160,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_MOONBEAM;
     case ChainId.ZKSYNC:
       return USDC_ZKSYNC;
+    case ChainId.TAIKO:
+      return USDC_TAIKO;
     case ChainId.MANTLE:
       return USDC_MANTLE;
     case ChainId.SEI_TESTNET:
