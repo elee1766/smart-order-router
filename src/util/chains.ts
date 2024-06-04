@@ -24,6 +24,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
   ChainId.TAIKO,
+  ChainId.SEI,
   ChainId.MANTLE,
   ChainId.SEI_TESTNET,
   ChainId.LINEA,
@@ -95,6 +96,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.ZKSYNC;
     case 167000:
       return ChainId.TAIKO;
+    case 1329:
+      return ChainId.SEI;
     case 5000:
       return ChainId.MANTLE;
     case 713715:
@@ -140,6 +143,7 @@ export enum ChainName {
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
   TAIKO = 'taiko',
+  SEI = 'sei',
   MANTLE = 'mantle',
   SEI_TESTNET = 'sei-testnet',
   LINEA = 'linea',
@@ -165,6 +169,7 @@ export enum NativeCurrencyName {
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
   TAIKO = 'ETH',
+  SEI = 'SEI',
   MANTLE = 'MNT',
   SEI_TESTNET = 'SEI',
   LINEA = 'ETH',
@@ -226,6 +231,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
   [ChainId.TAIKO]: ['ETH'],
+  [ChainId.SEI]: ['SEI'],
   [ChainId.MANTLE]: ['MNT'],
   [ChainId.SEI_TESTNET]: ['SEI'],
   [ChainId.LINEA]: ['ETH'],
@@ -269,6 +275,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
   [ChainId.TAIKO]: NativeCurrencyName.TAIKO,
+  [ChainId.SEI]: NativeCurrencyName.SEI,
   [ChainId.MANTLE]: NativeCurrencyName.MANTLE,
   [ChainId.SEI_TESTNET]: NativeCurrencyName.SEI_TESTNET,
   [ChainId.LINEA]: NativeCurrencyName.LINEA,
@@ -318,6 +325,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.ZKSYNC;
     case 167000:
       return ChainName.TAIKO;
+    case 1329:
+      return ChainName.SEI;
     case 5000:
       return ChainName.MANTLE;
     case 713715:
@@ -389,6 +398,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
     case ChainId.TAIKO:
       return process.env.JSON_RPC_PROVIDER_TAIKO!;
+    case ChainId.SEI:
+      return process.env.JSON_RPC_PROVIDER_SEI!;
     case ChainId.SEI_TESTNET:
       return process.env.JSON_RPC_PROVIDER_SEI_TESTNET!;
     case ChainId.LINEA:
@@ -528,6 +539,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'WETH',
     'Wrapped ETH'
+  ),
+  [ChainId.SEI]: new Token(
+    ChainId.SEI,
+    '0xE30feDd158A2e3b13e9badaeABaFc5516e95e8C7',
+    18,
+    'WSEI',
+    'Wrapped SEI'
   ),
   [ChainId.MANTLE]: new Token(
     ChainId.MANTLE,
@@ -790,6 +808,30 @@ class TaikoNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isTaiko(chainId)) throw new Error('Not taiko');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
+function isSei(chainId: number): chainId is ChainId.SEI {
+  return chainId === ChainId.SEI;
+}
+
+class SeiNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isSei(this.chainId)) throw new Error('Not sei');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isSei(chainId)) throw new Error('Not sei');
     super(chainId, 18, 'ETH', 'Ether');
   }
 }
@@ -1095,6 +1137,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
   } else if (isTaiko(chainId)) {
     cachedNativeCurrency[chainId] = new TaikoNativeCurrency(chainId);
+  } else if (isSei(chainId)) {
+    cachedNativeCurrency[chainId] = new SeiNativeCurrency(chainId);
   } else if (isMantle(chainId)) {
     cachedNativeCurrency[chainId] = new MantleNativeCurrency(chainId);
   } else if (isSeiTestnet(chainId)) {

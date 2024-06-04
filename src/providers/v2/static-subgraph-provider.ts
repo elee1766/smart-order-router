@@ -40,6 +40,7 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.MOONBEAM]: [],
   [ChainId.ZKSYNC]: [],
   [ChainId.TAIKO]: [],
+  [ChainId.SEI]: [],
   [ChainId.MANTLE]: [],
   [ChainId.SEI_TESTNET]: [],
   [ChainId.LINEA]: [],
@@ -69,7 +70,7 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
  * @class StaticV2SubgraphProvider
  */
 export class StaticV2SubgraphProvider implements IV2SubgraphProvider {
-  constructor(private chainId: ChainId) {}
+  constructor(private chainId: ChainId) { }
 
   public async getPools(
     tokenIn?: Token,
