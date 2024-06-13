@@ -832,7 +832,7 @@ class SeiNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isSei(chainId)) throw new Error('Not sei');
-    super(chainId, 18, 'ETH', 'Ether');
+    super(chainId, 18, 'SEI', 'Sei');
   }
 }
 
@@ -856,7 +856,7 @@ class MantleNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isMantle(chainId)) throw new Error('Not mantle');
-    super(chainId, 18, 'ETH', 'Ether');
+    super(chainId, 18, 'MNT', 'Mantle');
   }
 }
 
@@ -880,7 +880,7 @@ class SeiTestnetNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isSeiTestnet(chainId)) throw new Error('Not sei testnet');
-    super(chainId, 18, 'SEI', 'SEI');
+    super(chainId, 18, 'SEI', 'Sei');
   }
 }
 
@@ -1000,7 +1000,7 @@ class FilecoinNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isFilecoin(chainId)) throw new Error('Not filecoin');
-    super(chainId, 18, 'ETH', 'Ether');
+    super(chainId, 18, 'FIL', 'Filecoin');
   }
 }
 
@@ -1024,7 +1024,7 @@ class RootstockNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isRootstock(chainId)) throw new Error('Not rootstock');
-    super(chainId, 18, 'ETH', 'Ether');
+    super(chainId, 18, 'RBTC', 'Rootstock Bitcoin');
   }
 }
 
