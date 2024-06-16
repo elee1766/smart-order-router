@@ -683,6 +683,27 @@ export class AlphaRouter
             }
           );
           break;
+        case ChainId.ZKSYNC:
+          this.onChainQuoteProvider = new OnChainQuoteProvider(
+            chainId,
+            provider,
+            this.multicall2Provider,
+            {
+              retries: 2,
+              minTimeout: 100,
+              maxTimeout: 1000,
+            },
+            {
+              multicallChunk: 120,
+              gasLimitPerCall: 705_000,
+              quoteMinSuccessRate: 0,
+            },
+            {
+              gasLimitOverride: 2_000_000,
+              multicallChunk: 60,
+            }
+          );
+          break;
         default:
           this.onChainQuoteProvider = new OnChainQuoteProvider(
             chainId,
