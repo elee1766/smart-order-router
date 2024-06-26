@@ -679,7 +679,7 @@ export class AlphaRouter
             },
             {
               gasLimitOverride: 2_000_000,
-              multicallChunk: 40,
+              multicallChunk: 5,
             }
           );
           break;
@@ -701,6 +701,27 @@ export class AlphaRouter
             {
               gasLimitOverride: 2_000_000,
               multicallChunk: 60,
+            }
+          );
+          break;
+        case ChainId.SEI:
+          this.onChainQuoteProvider = new OnChainQuoteProvider(
+            chainId,
+            provider,
+            this.multicall2Provider,
+            {
+              retries: 2,
+              minTimeout: 100,
+              maxTimeout: 1000,
+            },
+            {
+              multicallChunk: 10,
+              gasLimitPerCall: 705_000,
+              quoteMinSuccessRate: 0,
+            },
+            {
+              gasLimitOverride: 2_000_000,
+              multicallChunk: 5,
             }
           );
           break;
