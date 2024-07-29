@@ -23,6 +23,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
+  ChainId.ZKLINK,
   ChainId.TAIKO,
   ChainId.SEI,
   ChainId.MANTLE,
@@ -94,6 +95,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.MOONBEAM;
     case 324:
       return ChainId.ZKSYNC;
+    case 810180:
+      return ChainId.ZKLINK;
     case 167000:
       return ChainId.TAIKO;
     case 1329:
@@ -142,6 +145,7 @@ export enum ChainName {
   GNOSIS = 'gnosis-mainnet',
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
+  ZKLINK = 'zklink',
   TAIKO = 'taiko',
   SEI = 'sei',
   MANTLE = 'mantle',
@@ -168,6 +172,7 @@ export enum NativeCurrencyName {
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
+  ZKLINK = 'ETH',
   TAIKO = 'ETH',
   SEI = 'SEI',
   MANTLE = 'MNT',
@@ -230,6 +235,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
+  [ChainId.ZKLINK]: ['ETH'],
   [ChainId.TAIKO]: ['ETH'],
   [ChainId.SEI]: ['SEI'],
   [ChainId.MANTLE]: ['MNT'],
@@ -274,6 +280,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
+  [ChainId.ZKLINK]: NativeCurrencyName.ZKLINK,
   [ChainId.TAIKO]: NativeCurrencyName.TAIKO,
   [ChainId.SEI]: NativeCurrencyName.SEI,
   [ChainId.MANTLE]: NativeCurrencyName.MANTLE,
@@ -323,6 +330,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.MOONBEAM;
     case 324:
       return ChainName.ZKSYNC;
+    case 810180:
+      return ChainName.ZKLINK;
     case 167000:
       return ChainName.TAIKO;
     case 1329:
@@ -396,6 +405,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_MOONBEAM!;
     case ChainId.ZKSYNC:
       return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
+    case ChainId.ZKLINK:
+      return process.env.JSON_RPC_PROVIDER_ZKLINK!;
     case ChainId.TAIKO:
       return process.env.JSON_RPC_PROVIDER_TAIKO!;
     case ChainId.SEI:
@@ -529,6 +540,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
   [ChainId.ZKSYNC]: new Token(
     ChainId.ZKSYNC,
     '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+    18,
+    'WETH',
+    'Wrapped ETH'
+  ),
+  [ChainId.ZKLINK]: new Token(
+    ChainId.ZKLINK,
+    '0x8280a4e7D5B3B658ec4580d3Bc30f5e50454F169',
     18,
     'WETH',
     'Wrapped ETH'
@@ -784,6 +802,30 @@ class ZksyncNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isZksync(chainId)) throw new Error('Not zksync');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
+function isZklink(chainId: number): chainId is ChainId.ZKLINK {
+  return chainId === ChainId.ZKLINK;
+}
+
+class ZklinkNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isZklink(this.chainId)) throw new Error('Not zklink');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isZklink(chainId)) throw new Error('Not zklink');
     super(chainId, 18, 'ETH', 'Ether');
   }
 }
@@ -1135,6 +1177,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
   } else if (isZksync(chainId)) {
     cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
+  } else if (isZklink(chainId)) {
+    cachedNativeCurrency[chainId] = new ZklinkNativeCurrency(chainId);
   } else if (isTaiko(chainId)) {
     cachedNativeCurrency[chainId] = new TaikoNativeCurrency(chainId);
   } else if (isSei(chainId)) {

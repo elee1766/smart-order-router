@@ -43,6 +43,7 @@ import {
   USDC_SEI_TESTNET,
   USDC_SEPOLIA,
   USDC_TAIKO,
+  USDC_ZKLINK,
   USDC_ZKSYNC,
   USDT_ARBITRUM,
   USDT_BNB,
@@ -55,6 +56,7 @@ import {
   USDT_POLYGON_ZKEVM,
   USDT_ROOTSTOCK,
   USDT_SCROLL,
+  USDT_ZKLINK,
   USDT_ZKSYNC,
   WBTC_GOERLI,
 } from '../../../providers/token-provider';
@@ -93,6 +95,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.CELO_ALFAJORES]: [CUSD_CELO_ALFAJORES],
   [ChainId.GNOSIS]: [USDC_ETHEREUM_GNOSIS],
   [ChainId.MOONBEAM]: [USDC_MOONBEAM, USDC_MC_MOONBEAM],
+  [ChainId.ZKLINK]: [USDC_ZKLINK, USDT_ZKLINK],
   [ChainId.ZKSYNC]: [USDC_ZKSYNC, USDT_ZKSYNC],
   [ChainId.TAIKO]: [USDC_TAIKO],
   [ChainId.SEI]: [USDC_SEI],

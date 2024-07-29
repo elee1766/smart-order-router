@@ -56,6 +56,7 @@ import {
   USDC_SEI_TESTNET,
   USDC_SEPOLIA,
   USDC_TAIKO,
+  USDC_ZKLINK,
   USDC_ZKSYNC,
   USDT_ARBITRUM,
   USDT_BNB,
@@ -68,6 +69,7 @@ import {
   USDT_POLYGON_ZKEVM,
   USDT_ROOTSTOCK,
   USDT_SCROLL,
+  USDT_ZKLINK,
   USDT_ZKSYNC,
   WBTC_ARBITRUM,
   WBTC_FILECOIN,
@@ -80,11 +82,13 @@ import {
   WBTC_OPTIMISM_GOERLI,
   WBTC_POLYGON_ZKEVM,
   WBTC_SCROLL,
+  WBTC_ZKLINK,
   WBTC_ZKSYNC,
   WETH_BLAST,
   WETH_FILECOIN,
   WETH_MANTLE,
   WETH_TAIKO,
+  WETH_ZKLINK,
   WETH_ZKSYNC,
   WFIL_FILECOIN,
   WGLMR_MOONBEAM,
@@ -211,6 +215,7 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
     WBTC_MOONBEAM,
     WGLMR_MOONBEAM,
   ],
+  [ChainId.ZKLINK]: [USDC_ZKLINK, WBTC_ZKLINK, USDT_ZKLINK, WETH_ZKLINK],
   [ChainId.ZKSYNC]: [USDC_ZKSYNC, WBTC_ZKSYNC, USDT_ZKSYNC, WETH_ZKSYNC],
   [ChainId.TAIKO]: [USDC_TAIKO, WETH_TAIKO],
   [ChainId.SEI]: [USDC_SEI, WSEI_SEI],
@@ -264,7 +269,7 @@ class SubcategorySelectionPools<SubgraphPool> {
   constructor(
     public pools: SubgraphPool[],
     public readonly poolsNeeded: number
-  ) {}
+  ) { }
 
   public hasEnoughPools(): boolean {
     return this.pools.length >= this.poolsNeeded;
@@ -605,8 +610,7 @@ export async function getV3CandidatePools({
   });
 
   const printV3SubgraphPool = (s: V3SubgraphPool) =>
-    `${tokenAccessor.getTokenByAddress(s.token0.id)?.symbol ?? s.token0.id}/${
-      tokenAccessor.getTokenByAddress(s.token1.id)?.symbol ?? s.token1.id
+    `${tokenAccessor.getTokenByAddress(s.token0.id)?.symbol ?? s.token0.id}/${tokenAccessor.getTokenByAddress(s.token1.id)?.symbol ?? s.token1.id
     }/${s.feeTier}`;
 
   log.info(
@@ -645,10 +649,8 @@ export async function getV3CandidatePools({
 
     if (!tokenA || !tokenB) {
       log.info(
-        `Dropping candidate pool for ${subgraphPool.token0.id}/${
-          subgraphPool.token1.id
-        }/${fee} because ${
-          tokenA ? subgraphPool.token1.id : subgraphPool.token0.id
+        `Dropping candidate pool for ${subgraphPool.token0.id}/${subgraphPool.token1.id
+        }/${fee} because ${tokenA ? subgraphPool.token1.id : subgraphPool.token0.id
         } not found by token provider`
       );
       return undefined;
@@ -1197,8 +1199,7 @@ export async function getV2CandidatePools({
   });
 
   const printV2SubgraphPool = (s: V2SubgraphPool) =>
-    `${tokenAccessor.getTokenByAddress(s.token0.id)?.symbol ?? s.token0.id}/${
-      tokenAccessor.getTokenByAddress(s.token1.id)?.symbol ?? s.token1.id
+    `${tokenAccessor.getTokenByAddress(s.token0.id)?.symbol ?? s.token0.id}/${tokenAccessor.getTokenByAddress(s.token1.id)?.symbol ?? s.token1.id
     }`;
 
   log.info(
@@ -1409,10 +1410,8 @@ export async function getMixedRouteCandidatePools({
 
     if (!tokenA || !tokenB) {
       log.info(
-        `Dropping candidate pool for ${subgraphPool.token0.id}/${
-          subgraphPool.token1.id
-        }/${fee} because ${
-          tokenA ? subgraphPool.token1.id : subgraphPool.token0.id
+        `Dropping candidate pool for ${subgraphPool.token0.id}/${subgraphPool.token1.id
+        }/${fee} because ${tokenA ? subgraphPool.token1.id : subgraphPool.token0.id
         } not found by token provider`
       );
       return undefined;

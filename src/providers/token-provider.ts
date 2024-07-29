@@ -579,6 +579,39 @@ export const WETH_ZKSYNC = new Token(
   'Wrapped ETH'
 );
 
+// zklink
+export const USDC_ZKLINK = new Token(
+  ChainId.ZKLINK,
+  '0x1a1A3b2ff016332e866787B311fcB63928464509',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const USDT_ZKLINK = new Token(
+  ChainId.ZKLINK,
+  '0x2F8A25ac62179B31D62D7F80884AE57464699059',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
+export const WBTC_ZKLINK = new Token(
+  ChainId.ZKLINK,
+  '0xDa4AaEd3A53962c83B35697Cd138cc6df43aF71f',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+);
+
+export const WETH_ZKLINK = new Token(
+  ChainId.ZKLINK,
+  '0x8280a4e7D5B3B658ec4580d3Bc30f5e50454F169',
+  18,
+  'WETH',
+  'Wrapped ETH'
+);
+
 // taiko
 export const USDC_TAIKO = new Token(
   ChainId.TAIKO,
@@ -1136,6 +1169,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_BNB;
     case ChainId.ZKSYNC:
       return USDT_ZKSYNC;
+    case ChainId.ZKLINK:
+      return USDT_ZKLINK;
     case ChainId.MANTLE:
       return USDT_MANTLE;
     case ChainId.MANTA:
@@ -1179,6 +1214,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_MOONBEAM;
     case ChainId.ZKSYNC:
       return USDC_ZKSYNC;
+    case ChainId.ZKLINK:
+      return USDC_ZKLINK;
     case ChainId.TAIKO:
       return USDC_TAIKO;
     case ChainId.SEI:
