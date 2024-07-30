@@ -31,6 +31,7 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].v3CoreFactoryAddress,
   [ChainId.ZKLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKLINK].v3CoreFactoryAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].v3CoreFactoryAddress,
+  [ChainId.LISK]: CHAIN_TO_ADDRESSES_MAP[ChainId.LISK].v3CoreFactoryAddress,
   [ChainId.TAIKO]: CHAIN_TO_ADDRESSES_MAP[ChainId.TAIKO].v3CoreFactoryAddress,
   [ChainId.SEI]: CHAIN_TO_ADDRESSES_MAP[ChainId.SEI].v3CoreFactoryAddress,
   [ChainId.MANTLE]: CHAIN_TO_ADDRESSES_MAP[ChainId.MANTLE].v3CoreFactoryAddress,
@@ -68,6 +69,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].quoterAddress,
   [ChainId.ZKLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKLINK].quoterAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].quoterAddress,
+  [ChainId.LISK]: CHAIN_TO_ADDRESSES_MAP[ChainId.LISK].quoterAddress,
   [ChainId.TAIKO]: CHAIN_TO_ADDRESSES_MAP[ChainId.TAIKO].quoterAddress,
   [ChainId.SEI]: CHAIN_TO_ADDRESSES_MAP[ChainId.SEI].quoterAddress,
   [ChainId.MANTLE]: CHAIN_TO_ADDRESSES_MAP[ChainId.MANTLE].quoterAddress,
@@ -112,6 +114,7 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.AVALANCHE].multicallAddress,
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].multicallAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].multicallAddress,
+  [ChainId.LISK]: CHAIN_TO_ADDRESSES_MAP[ChainId.LISK].multicallAddress,
   [ChainId.ZKLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKLINK].multicallAddress,
   [ChainId.TAIKO]: CHAIN_TO_ADDRESSES_MAP[ChainId.TAIKO].multicallAddress,
   [ChainId.SEI]: CHAIN_TO_ADDRESSES_MAP[ChainId.SEI].multicallAddress,
@@ -210,6 +213,13 @@ export const WETH9: {
   [ChainId.ZKLINK]: new Token(
     ChainId.ZKLINK,
     '0x8280a4e7D5B3B658ec4580d3Bc30f5e50454F169',
+    18,
+    'WETH',
+    'Wrapped Ether'
+  ),
+  [ChainId.LISK]: new Token(
+    ChainId.LISK,
+    '0x4200000000000000000000000000000000000006',
     18,
     'WETH',
     'Wrapped Ether'
