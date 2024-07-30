@@ -89,7 +89,7 @@ export class V3PoolProvider implements IV3PoolProvider {
       minTimeout: 50,
       maxTimeout: 500,
     }
-  ) { }
+  ) {}
 
   public async getPools(
     tokenPairs: [Token, Token, FeeAmount][],
@@ -131,9 +131,10 @@ export class V3PoolProvider implements IV3PoolProvider {
     ]);
 
     log.info(
-      `Got liquidity and slot0s for ${poolAddressSet.size} pools ${providerConfig?.blockNumber
-        ? `as of block: ${providerConfig?.blockNumber}.`
-        : ``
+      `Got liquidity and slot0s for ${poolAddressSet.size} pools ${
+        providerConfig?.blockNumber
+          ? `as of block: ${providerConfig?.blockNumber}.`
+          : ``
       }`
     );
 
@@ -224,28 +225,18 @@ export class V3PoolProvider implements IV3PoolProvider {
       return { poolAddress: cachedAddress, token0, token1 };
     }
 
-    let poolAddress = '';
+    const computeAddress =
+      this.chainId === ChainId.ZKSYNC || this.chainId === ChainId.ZKLINK
+        ? computeZkPoolAddress
+        : computePoolAddress;
 
-    switch (this.chainId) {
-      case (ChainId.ZKSYNC, ChainId.ZKLINK): {
-        poolAddress = computeZkPoolAddress({
-          factoryAddress: V3_CORE_FACTORY_ADDRESSES[this.chainId]!,
-          tokenA: token0,
-          tokenB: token1,
-          fee: feeAmount,
-        });
-        break;
-      }
-      default: {
-        poolAddress = computePoolAddress({
-          factoryAddress: V3_CORE_FACTORY_ADDRESSES[this.chainId]!,
-          tokenA: token0,
-          tokenB: token1,
-          fee: feeAmount,
-        });
-        break;
-      }
-    }
+    const poolAddress = computeAddress({
+      factoryAddress: V3_CORE_FACTORY_ADDRESSES[this.chainId]!,
+      tokenA: token0,
+      tokenB: token1,
+      fee: feeAmount,
+    });
+
     this.POOL_ADDRESS_CACHE[cacheKey] = poolAddress;
 
     return { poolAddress, token0, token1 };
