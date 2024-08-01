@@ -791,7 +791,7 @@ export const MANTA_MANTA = new Token(
 // polylgon zkevm
 export const USDC_POLYGON_ZKEVM = new Token(
   ChainId.POLYGON_ZKEVM,
-  '0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035',
+  '0x37eaa0ef3549a5bb7d431be78a3d99bd360d19e5',
   6,
   'USDC',
   'USD Coin'
@@ -799,7 +799,7 @@ export const USDC_POLYGON_ZKEVM = new Token(
 
 export const DAI_POLYGON_ZKEVM = new Token(
   ChainId.POLYGON_ZKEVM,
-  '0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4',
+  '0x744C5860ba161b5316F7E80D9Ec415e2727e5bD5',
   18,
   'DAI',
   'Dai Stablecoin'
@@ -964,7 +964,7 @@ export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
     protected multicall2Provider: IMulticallProvider
-  ) { }
+  ) {}
 
   private async getTokenSymbol(
     addresses: string[],
@@ -1109,8 +1109,10 @@ export class TokenProvider implements ITokenProvider {
       }
 
       log.info(
-        `Got token symbol and decimals for ${Object.values(addressToToken).length
-        } out of ${addresses.length} tokens on-chain ${providerConfig ? `as of: ${providerConfig?.blockNumber}` : ''
+        `Got token symbol and decimals for ${
+          Object.values(addressToToken).length
+        } out of ${addresses.length} tokens on-chain ${
+          providerConfig ? `as of: ${providerConfig?.blockNumber}` : ''
         }`
       );
     }
