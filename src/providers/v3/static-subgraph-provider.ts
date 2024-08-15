@@ -42,6 +42,7 @@ import {
   USDC_AVAX,
   USDC_BASE,
   USDC_BNB,
+  USDC_BOB,
   USDC_BOBA,
   USDC_ETHEREUM_GNOSIS,
   USDC_FILECOIN,
@@ -64,6 +65,7 @@ import {
   USDC_ZKSYNC,
   USDT_ARBITRUM,
   USDT_BNB,
+  USDT_BOB,
   USDT_FILECOIN,
   USDT_GOERLI,
   USDT_LISK,
@@ -193,6 +195,7 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     USDC_ZKSYNC,
     WBTC_ZKSYNC,
   ],
+  [ChainId.BOB]: [WRAPPED_NATIVE_CURRENCY[ChainId.BOB], USDC_BOB, USDT_BOB],
   [ChainId.LISK]: [WRAPPED_NATIVE_CURRENCY[ChainId.LISK], USDT_LISK],
   [ChainId.ZKLINK]: [
     WRAPPED_NATIVE_CURRENCY[ChainId.ZKLINK],
@@ -271,7 +274,7 @@ export class StaticV3SubgraphProvider implements IV3SubgraphProvider {
   constructor(
     private chainId: ChainId,
     private poolProvider: IV3PoolProvider
-  ) {}
+  ) { }
 
   public async getPools(
     tokenIn?: Token,

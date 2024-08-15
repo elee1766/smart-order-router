@@ -579,6 +579,29 @@ export const WETH_ZKSYNC = new Token(
   'Wrapped ETH'
 );
 
+// bob
+export const USDC_BOB = new Token(
+  ChainId.BOB,
+  '0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0',
+  6,
+  'USDC.e',
+  'Bridged USDC (BOB)'
+);
+export const USDT_BOB = new Token(
+  ChainId.BOB,
+  '0x05D032ac25d322df992303dCa074EE7392C117b9',
+  6,
+  'USDT',
+  'Tether USD'
+);
+export const WETH_BOB = new Token(
+  ChainId.BOB,
+  '0x4200000000000000000000000000000000000006',
+  18,
+  'WETH',
+  'Wrapped Ether'
+);
+
 // lisk
 export const USDT_LISK = new Token(
   ChainId.LISK,
@@ -1186,6 +1209,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_BNB;
     case ChainId.ZKSYNC:
       return USDT_ZKSYNC;
+    case ChainId.BOB:
+      return USDT_BOB;
     case ChainId.LISK:
       return USDT_LISK;
     case ChainId.ZKLINK:
@@ -1233,6 +1258,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_MOONBEAM;
     case ChainId.ZKSYNC:
       return USDC_ZKSYNC;
+    case ChainId.BOB:
+      return USDC_BOB;
     case ChainId.ZKLINK:
       return USDC_ZKLINK;
     case ChainId.TAIKO:
