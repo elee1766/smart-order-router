@@ -481,7 +481,7 @@ export const USDC_BASE_GOERLI = new Token(
 );
 
 // Gnosis Tokens
-export const USDC_ETHEREUM_GNOSIS = new Token(
+export const USDC_GNOSIS = new Token(
   ChainId.GNOSIS,
   '0xddafbb505ad214d7b80b1f830fccc89b60fb7a83',
   6,
@@ -503,6 +503,14 @@ export const WBTC_GNOSIS = new Token(
   8,
   'WBTC',
   'Wrapped BTC from Ethereum on Gnosis'
+);
+
+export const USDT_GNOSIS = new Token(
+  ChainId.GNOSIS,
+  '0x4ecaba5870353805a9f068101a40e0f32ed605c6',
+  6,
+  'USDT',
+  'Tether USD on xDai'
 );
 
 // Moonbeam Tokens
@@ -577,6 +585,39 @@ export const WETH_ZKSYNC = new Token(
   18,
   'WETH',
   'Wrapped ETH'
+);
+
+// xlayer
+export const USDC_XLAYER = new Token(
+  ChainId.XLAYER,
+  '0x74b7f16337b8972027f6196a17a631ac6de26d22',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const USDT_XLAYER = new Token(
+  ChainId.XLAYER,
+  '0x1e4a5963abfd975d8c9021ce480b42188849d41d',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
+export const WBTC_XLAYER = new Token(
+  ChainId.XLAYER,
+  '0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+);
+
+export const WETH_XLAYER = new Token(
+  ChainId.XLAYER,
+  '0xe538905cf8410324e03a5a23c1c177a474d59b2b',
+  18,
+  'WOKB',
+  'Wrapped OKB'
 );
 
 // bob
@@ -1213,6 +1254,10 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_BOB;
     case ChainId.LISK:
       return USDT_LISK;
+    case ChainId.GNOSIS:
+      return USDT_GNOSIS;
+    case ChainId.XLAYER:
+      return USDT_XLAYER;
     case ChainId.ZKLINK:
       return USDT_ZKLINK;
     case ChainId.MANTLE:
@@ -1253,11 +1298,13 @@ export const USDC_ON = (chainId: ChainId): Token => {
     case ChainId.POLYGON_MUMBAI:
       return USDC_POLYGON_MUMBAI;
     case ChainId.GNOSIS:
-      return USDC_ETHEREUM_GNOSIS;
+      return USDC_GNOSIS;
     case ChainId.MOONBEAM:
       return USDC_MOONBEAM;
     case ChainId.ZKSYNC:
       return USDC_ZKSYNC;
+    case ChainId.XLAYER:
+      return USDC_XLAYER;
     case ChainId.BOB:
       return USDC_BOB;
     case ChainId.ZKLINK:

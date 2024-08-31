@@ -39,8 +39,8 @@ import {
   USDC_BNB,
   USDC_BOB,
   USDC_BOBA,
-  USDC_ETHEREUM_GNOSIS,
   USDC_FILECOIN,
+  USDC_GNOSIS,
   USDC_LINEA,
   USDC_MAINNET,
   USDC_MANTA,
@@ -55,12 +55,14 @@ import {
   USDC_SEI_TESTNET,
   USDC_SEPOLIA,
   USDC_TAIKO,
+  USDC_XLAYER,
   USDC_ZKLINK,
   USDC_ZKSYNC,
   USDT_ARBITRUM,
   USDT_BNB,
   USDT_BOB,
   USDT_FILECOIN,
+  USDT_GNOSIS,
   USDT_LISK,
   USDT_MAINNET,
   USDT_MANTA,
@@ -70,10 +72,12 @@ import {
   USDT_POLYGON_ZKEVM,
   USDT_ROOTSTOCK,
   USDT_SCROLL,
+  USDT_XLAYER,
   USDT_ZKLINK,
   USDT_ZKSYNC,
   WBTC_ARBITRUM,
   WBTC_FILECOIN,
+  WBTC_GNOSIS,
   WBTC_LINEA,
   WBTC_MAINNET,
   WBTC_MANTA,
@@ -82,6 +86,7 @@ import {
   WBTC_OPTIMISM_GOERLI,
   WBTC_POLYGON_ZKEVM,
   WBTC_SCROLL,
+  WBTC_XLAYER,
   WBTC_ZKLINK,
   WBTC_ZKSYNC,
   WMATIC_POLYGON,
@@ -155,7 +160,15 @@ export const CACHE_SEED_TOKENS: {
   },
   [ChainId.GNOSIS]: {
     WXDAI: WRAPPED_NATIVE_CURRENCY[ChainId.GNOSIS],
-    USDC_ETHEREUM_GNOSIS: USDC_ETHEREUM_GNOSIS,
+    USDC: USDC_GNOSIS,
+    USDT: USDT_GNOSIS,
+    WBTC: WBTC_GNOSIS,
+  },
+  [ChainId.XLAYER]: {
+    WOKB: WRAPPED_NATIVE_CURRENCY[ChainId.XLAYER],
+    USDC: USDC_XLAYER,
+    USDT: USDT_XLAYER,
+    WBTC: WBTC_XLAYER,
   },
   [ChainId.MOONBEAM]: {
     USDC: USDC_MOONBEAM,
@@ -288,7 +301,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
     private tokenCache: ICache<Token>,
     protected primaryTokenProvider: ITokenProvider,
     protected fallbackTokenProvider?: ITokenProvider
-  ) { }
+  ) {}
 
   public async getTokens(_addresses: string[]): Promise<TokenAccessor> {
     const seedTokens = CACHE_SEED_TOKENS[this.chainId];
@@ -327,10 +340,12 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
 
     log.info(
       { addressesToFindInPrimary },
-      `Found ${addresses.length - addressesToFindInPrimary.length} out of ${addresses.length
-      } tokens in local cache. ${addressesToFindInPrimary.length > 0
-        ? `Checking primary token provider for ${addressesToFindInPrimary.length} tokens`
-        : ``
+      `Found ${addresses.length - addressesToFindInPrimary.length} out of ${
+        addresses.length
+      } tokens in local cache. ${
+        addressesToFindInPrimary.length > 0
+          ? `Checking primary token provider for ${addressesToFindInPrimary.length} tokens`
+          : ``
       }
       `
     );
@@ -357,10 +372,12 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
 
       log.info(
         { addressesToFindInSecondary },
-        `Found ${addressesToFindInPrimary.length - addressesToFindInSecondary.length
-        } tokens in primary. ${this.fallbackTokenProvider
-          ? `Checking secondary token provider for ${addressesToFindInSecondary.length} tokens`
-          : `No fallback token provider specified. About to return.`
+        `Found ${
+          addressesToFindInPrimary.length - addressesToFindInSecondary.length
+        } tokens in primary. ${
+          this.fallbackTokenProvider
+            ? `Checking secondary token provider for ${addressesToFindInSecondary.length} tokens`
+            : `No fallback token provider specified. About to return.`
         }`
       );
     }

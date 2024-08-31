@@ -23,6 +23,8 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
+  ChainId.GNOSIS,
+  ChainId.XLAYER,
   ChainId.BOB,
   ChainId.LISK,
   ChainId.ZKLINK,
@@ -39,7 +41,6 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.SCROLL,
   ChainId.BOBA,
   ChainId.BASE,
-  // Gnosis don't yet have contracts deployed yet
 ];
 
 export const V2_SUPPORTED = [ChainId.MAINNET, ChainId.GOERLI, ChainId.SEPOLIA];
@@ -97,6 +98,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.MOONBEAM;
     case 324:
       return ChainId.ZKSYNC;
+    case 196:
+      return ChainId.XLAYER;
     case 60808:
       return ChainId.BOB;
     case 1135:
@@ -148,9 +151,10 @@ export enum ChainName {
   POLYGON_MUMBAI = 'polygon-mumbai',
   CELO = 'celo-mainnet',
   CELO_ALFAJORES = 'celo-alfajores',
-  GNOSIS = 'gnosis-mainnet',
+  GNOSIS = 'gnosis',
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
+  XLAYER = 'xlayer',
   BOB = 'bob',
   LISK = 'lisk',
   ZKLINK = 'zklink',
@@ -180,6 +184,7 @@ export enum NativeCurrencyName {
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
+  XLAYER = 'OKB',
   BOB = 'ETH',
   LISK = 'ETH',
   ZKLINK = 'ETH',
@@ -245,6 +250,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
+  [ChainId.XLAYER]: ['OKB'],
   [ChainId.BOB]: ['ETH'],
   [ChainId.LISK]: ['ETH'],
   [ChainId.ZKLINK]: ['ETH'],
@@ -292,6 +298,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
+  [ChainId.XLAYER]: NativeCurrencyName.XLAYER,
   [ChainId.BOB]: NativeCurrencyName.BOB,
   [ChainId.LISK]: NativeCurrencyName.LISK,
   [ChainId.ZKLINK]: NativeCurrencyName.ZKLINK,
@@ -344,6 +351,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.MOONBEAM;
     case 324:
       return ChainName.ZKSYNC;
+    case 196:
+      return ChainName.XLAYER;
     case 60808:
       return ChainName.BOB;
     case 1135:
@@ -423,6 +432,10 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_MOONBEAM!;
     case ChainId.ZKSYNC:
       return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
+    case ChainId.XLAYER:
+      return process.env.JSON_RPC_PROVIDER_XLAYER!;
+    case ChainId.GNOSIS:
+      return process.env.JSON_RPC_PROVIDER_GNOSIS!;
     case ChainId.BOB:
       return process.env.JSON_RPC_PROVIDER_BOB!;
     case ChainId.LISK:
@@ -565,6 +578,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'WETH',
     'Wrapped ETH'
+  ),
+  [ChainId.XLAYER]: new Token(
+    ChainId.XLAYER,
+    '0xe538905cf8410324e03a5a23c1c177a474d59b2b',
+    18,
+    'WOKB',
+    'Wrapped OKB'
   ),
   [ChainId.BOB]: new Token(
     ChainId.BOB,
@@ -838,6 +858,30 @@ class ZksyncNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isZksync(chainId)) throw new Error('Not zksync');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
+function isXlayer(chainId: number): chainId is ChainId.XLAYER {
+  return chainId === ChainId.XLAYER;
+}
+
+class XlayerNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isXlayer(this.chainId)) throw new Error('Not xlayer');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isXlayer(chainId)) throw new Error('Not xlayer');
     super(chainId, 18, 'ETH', 'Ether');
   }
 }
@@ -1257,6 +1301,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new CeloNativeCurrency(chainId);
   } else if (isGnosis(chainId)) {
     cachedNativeCurrency[chainId] = new GnosisNativeCurrency(chainId);
+  } else if (isXlayer(chainId)) {
+    cachedNativeCurrency[chainId] = new XlayerNativeCurrency(chainId);
   } else if (isMoonbeam(chainId)) {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
   } else if (isZksync(chainId)) {

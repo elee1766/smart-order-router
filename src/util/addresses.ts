@@ -31,6 +31,8 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].v3CoreFactoryAddress,
   [ChainId.ZKLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKLINK].v3CoreFactoryAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].v3CoreFactoryAddress,
+  [ChainId.XLAYER]: CHAIN_TO_ADDRESSES_MAP[ChainId.XLAYER].v3CoreFactoryAddress,
+  [ChainId.GNOSIS]: CHAIN_TO_ADDRESSES_MAP[ChainId.GNOSIS].v3CoreFactoryAddress,
   [ChainId.BOB]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOB].v3CoreFactoryAddress,
   [ChainId.LISK]: CHAIN_TO_ADDRESSES_MAP[ChainId.LISK].v3CoreFactoryAddress,
   [ChainId.TAIKO]: CHAIN_TO_ADDRESSES_MAP[ChainId.TAIKO].v3CoreFactoryAddress,
@@ -48,11 +50,9 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.ROOTSTOCK]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.ROOTSTOCK].v3CoreFactoryAddress,
   [ChainId.SCROLL]: CHAIN_TO_ADDRESSES_MAP[ChainId.SCROLL].v3CoreFactoryAddress,
-  // [ChainId.BASE_GOERLI]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].v3CoreFactoryAddress
   [ChainId.BASE_GOERLI]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].v3CoreFactoryAddress,
   [ChainId.BASE]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE].v3CoreFactoryAddress,
-  // TODO: Gnosis + Moonbeam contracts to be deployed
 };
 
 export const QUOTER_V2_ADDRESSES: AddressMap = {
@@ -70,6 +70,8 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].quoterAddress,
   [ChainId.ZKLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKLINK].quoterAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].quoterAddress,
+  [ChainId.XLAYER]: CHAIN_TO_ADDRESSES_MAP[ChainId.XLAYER].quoterAddress,
+  [ChainId.GNOSIS]: CHAIN_TO_ADDRESSES_MAP[ChainId.GNOSIS].quoterAddress,
   [ChainId.BOB]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOB].quoterAddress,
   [ChainId.LISK]: CHAIN_TO_ADDRESSES_MAP[ChainId.LISK].quoterAddress,
   [ChainId.TAIKO]: CHAIN_TO_ADDRESSES_MAP[ChainId.TAIKO].quoterAddress,
@@ -86,12 +88,9 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.ROOTSTOCK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ROOTSTOCK].quoterAddress,
   [ChainId.SCROLL]: CHAIN_TO_ADDRESSES_MAP[ChainId.SCROLL].quoterAddress,
   [ChainId.BOBA]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOBA].quoterAddress,
-  //[ChainId.BASE_GOERLI]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].quoterAddress
-  // TODO: Gnosis contracts to be deployed
   [ChainId.BASE_GOERLI]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].quoterAddress,
   [ChainId.BASE]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE].quoterAddress,
-  // TODO: Gnosis + Moonbeam contracts to be deployed
 };
 
 export const MIXED_ROUTE_QUOTER_V1_ADDRESSES: AddressMap = {
@@ -116,6 +115,8 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.AVALANCHE].multicallAddress,
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].multicallAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].multicallAddress,
+  [ChainId.XLAYER]: CHAIN_TO_ADDRESSES_MAP[ChainId.XLAYER].multicallAddress,
+  [ChainId.GNOSIS]: CHAIN_TO_ADDRESSES_MAP[ChainId.GNOSIS].multicallAddress,
   [ChainId.BOB]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOB].multicallAddress,
   [ChainId.LISK]: CHAIN_TO_ADDRESSES_MAP[ChainId.LISK].multicallAddress,
   [ChainId.ZKLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKLINK].multicallAddress,
@@ -138,7 +139,6 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
   [ChainId.BASE_GOERLI]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].multicallAddress,
   [ChainId.BASE]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE].multicallAddress,
-  // TODO: Gnosis contracts to be deployed
 };
 
 export const SWAP_ROUTER_02_ADDRESSES = (chainId: number): string => {
@@ -182,7 +182,6 @@ export const WETH9: {
     | ChainId.POLYGON_MUMBAI
     | ChainId.CELO
     | ChainId.CELO_ALFAJORES
-    | ChainId.GNOSIS
     | ChainId.MOONBEAM
     | ChainId.ZKSYNC
     | ChainId.SEI_TESTNET
@@ -345,5 +344,19 @@ export const WETH9: {
     18,
     'WETH',
     'Wrapped Ether'
+  ),
+  [ChainId.XLAYER]: new Token(
+    ChainId.XLAYER,
+    '0xe538905cf8410324e03a5a23c1c177a474d59b2b',
+    18,
+    'WOKB',
+    'Wrapped OKB'
+  ),
+  [ChainId.GNOSIS]: new Token(
+    ChainId.GNOSIS,
+    '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
+    18,
+    'WXDAI',
+    'Wrapped xDai'
   ),
 };

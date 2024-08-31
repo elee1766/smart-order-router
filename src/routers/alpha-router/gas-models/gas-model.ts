@@ -26,8 +26,8 @@ import {
   USDC_BNB,
   USDC_BOB,
   USDC_BOBA,
-  USDC_ETHEREUM_GNOSIS,
   USDC_FILECOIN,
+  USDC_GNOSIS,
   USDC_GOERLI,
   USDC_LINEA,
   USDC_MAINNET,
@@ -44,11 +44,13 @@ import {
   USDC_SEI_TESTNET,
   USDC_SEPOLIA,
   USDC_TAIKO,
+  USDC_XLAYER,
   USDC_ZKLINK,
   USDC_ZKSYNC,
   USDT_ARBITRUM,
   USDT_BNB,
   USDT_BOB,
+  USDT_GNOSIS,
   USDT_GOERLI,
   USDT_LISK,
   USDT_MAINNET,
@@ -59,6 +61,7 @@ import {
   USDT_POLYGON_ZKEVM,
   USDT_ROOTSTOCK,
   USDT_SCROLL,
+  USDT_XLAYER,
   USDT_ZKLINK,
   USDT_ZKSYNC,
   WBTC_GOERLI,
@@ -96,7 +99,8 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.POLYGON_MUMBAI]: [DAI_POLYGON_MUMBAI],
   [ChainId.CELO]: [CUSD_CELO],
   [ChainId.CELO_ALFAJORES]: [CUSD_CELO_ALFAJORES],
-  [ChainId.GNOSIS]: [USDC_ETHEREUM_GNOSIS],
+  [ChainId.GNOSIS]: [USDC_GNOSIS, USDT_GNOSIS],
+  [ChainId.XLAYER]: [USDC_XLAYER, USDT_XLAYER],
   [ChainId.MOONBEAM]: [USDC_MOONBEAM, USDC_MC_MOONBEAM],
   [ChainId.ZKLINK]: [USDC_ZKLINK, USDT_ZKLINK],
   [ChainId.ZKSYNC]: [USDC_ZKSYNC, USDT_ZKSYNC],
@@ -138,8 +142,8 @@ export type BuildOnChainGasModelFactoryType = {
   quoteToken: Token;
   v2poolProvider: IV2PoolProvider;
   l2GasDataProvider?:
-    | IL2GasDataProvider<OptimismGasData>
-    | IL2GasDataProvider<ArbitrumGasData>;
+  | IL2GasDataProvider<OptimismGasData>
+  | IL2GasDataProvider<ArbitrumGasData>;
   providerConfig?: ProviderConfig;
 };
 

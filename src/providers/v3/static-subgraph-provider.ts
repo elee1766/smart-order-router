@@ -44,8 +44,8 @@ import {
   USDC_BNB,
   USDC_BOB,
   USDC_BOBA,
-  USDC_ETHEREUM_GNOSIS,
   USDC_FILECOIN,
+  USDC_GNOSIS,
   USDC_GOERLI,
   USDC_LINEA,
   USDC_MAINNET,
@@ -61,12 +61,14 @@ import {
   USDC_SEI_TESTNET,
   USDC_SEPOLIA,
   USDC_TAIKO,
+  USDC_XLAYER,
   USDC_ZKLINK,
   USDC_ZKSYNC,
   USDT_ARBITRUM,
   USDT_BNB,
   USDT_BOB,
   USDT_FILECOIN,
+  USDT_GNOSIS,
   USDT_GOERLI,
   USDT_LISK,
   USDT_MAINNET,
@@ -77,6 +79,7 @@ import {
   USDT_POLYGON_ZKEVM,
   USDT_ROOTSTOCK,
   USDT_SCROLL,
+  USDT_XLAYER,
   USDT_ZKLINK,
   USDT_ZKSYNC,
   WBTC_ARBITRUM,
@@ -91,6 +94,7 @@ import {
   WBTC_OPTIMISM_GOERLI,
   WBTC_POLYGON_ZKEVM,
   WBTC_SCROLL,
+  WBTC_XLAYER,
   WBTC_ZKLINK,
   WBTC_ZKSYNC,
   WETH_FILECOIN,
@@ -167,7 +171,14 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     WRAPPED_NATIVE_CURRENCY[ChainId.GNOSIS],
     WBTC_GNOSIS,
     WXDAI_GNOSIS,
-    USDC_ETHEREUM_GNOSIS,
+    USDC_GNOSIS,
+    USDT_GNOSIS,
+  ],
+  [ChainId.XLAYER]: [
+    WRAPPED_NATIVE_CURRENCY[ChainId.XLAYER],
+    USDC_XLAYER,
+    WBTC_XLAYER,
+    USDT_XLAYER,
   ],
   [ChainId.BNB]: [
     WRAPPED_NATIVE_CURRENCY[ChainId.BNB],
@@ -274,7 +285,7 @@ export class StaticV3SubgraphProvider implements IV3SubgraphProvider {
   constructor(
     private chainId: ChainId,
     private poolProvider: IV3PoolProvider
-  ) { }
+  ) {}
 
   public async getPools(
     tokenIn?: Token,
