@@ -30,6 +30,7 @@ import {
   ITokenProvider,
   LUSD_SCROLL,
   RIF_ROOTSTOCK,
+  SOLVBTC_BOB,
   TokenAccessor,
   USDB_BLAST,
   USDC_ARBITRUM,
@@ -187,6 +188,7 @@ export const CACHE_SEED_TOKENS: {
     USDC: USDC_BOB,
     USDT: USDT_BOB,
     WBTC: WBTC_BOB,
+    SOLVBTC: SOLVBTC_BOB,
     WETH: WRAPPED_NATIVE_CURRENCY[ChainId.BOB],
   },
   [ChainId.LISK]: {

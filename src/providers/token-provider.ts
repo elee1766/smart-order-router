@@ -649,6 +649,13 @@ export const WBTC_BOB = new Token(
   'WBTC',
   'Wrapped BTC'
 );
+export const SOLVBTC_BOB = new Token(
+  ChainId.BOB,
+  '0x541fd749419ca806a8bc7da8ac23d346f2df8b77',
+  8,
+  'SolvBTC',
+  'Solv Protocol SolvBTC'
+);
 
 // lisk
 export const USDT_LISK = new Token(
