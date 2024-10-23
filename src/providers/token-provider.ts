@@ -642,6 +642,13 @@ export const WETH_BOB = new Token(
   'WETH',
   'Wrapped Ether'
 );
+export const WBTC_BOB = new Token(
+  ChainId.BOB,
+  '0x03c7054bcb39f7b2e5b2c7acb37583e32d70cfa3',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+);
 
 // lisk
 export const USDT_LISK = new Token(

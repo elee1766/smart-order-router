@@ -76,6 +76,7 @@ import {
   USDT_ZKLINK,
   USDT_ZKSYNC,
   WBTC_ARBITRUM,
+  WBTC_BOB,
   WBTC_FILECOIN,
   WBTC_GNOSIS,
   WBTC_LINEA,
@@ -185,6 +186,7 @@ export const CACHE_SEED_TOKENS: {
   [ChainId.BOB]: {
     USDC: USDC_BOB,
     USDT: USDT_BOB,
+    WBTC: WBTC_BOB,
     WETH: WRAPPED_NATIVE_CURRENCY[ChainId.BOB],
   },
   [ChainId.LISK]: {
