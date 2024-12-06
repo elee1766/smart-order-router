@@ -26,6 +26,7 @@ import {
   USDC_BNB,
   USDC_BOB,
   USDC_BOBA,
+  USDC_CORN,
   USDC_FILECOIN,
   USDC_GNOSIS,
   USDC_GOERLI,
@@ -34,6 +35,7 @@ import {
   USDC_MANTA,
   USDC_MANTLE,
   USDC_MC_MOONBEAM,
+  USDC_METAL,
   USDC_MOONBEAM,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
@@ -126,6 +128,8 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.BOBA]: [USDC_BOBA],
   [ChainId.AVALANCHE]: [DAI_AVAX, USDC_AVAX],
   [ChainId.BASE]: [USDC_BASE],
+  [ChainId.METAL]: [USDC_METAL],
+  [ChainId.CORN]: [USDC_CORN],
 };
 
 export type L1ToL2GasCosts = {
@@ -142,8 +146,8 @@ export type BuildOnChainGasModelFactoryType = {
   quoteToken: Token;
   v2poolProvider: IV2PoolProvider;
   l2GasDataProvider?:
-  | IL2GasDataProvider<OptimismGasData>
-  | IL2GasDataProvider<ArbitrumGasData>;
+    | IL2GasDataProvider<OptimismGasData>
+    | IL2GasDataProvider<ArbitrumGasData>;
   providerConfig?: ProviderConfig;
 };
 

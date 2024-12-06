@@ -59,6 +59,8 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.BOBA]: [],
   [ChainId.BASE_GOERLI]: [],
   [ChainId.BASE]: [],
+  [ChainId.CORN]: [],
+  [ChainId.METAL]: [],
 };
 
 /**

@@ -40,12 +40,14 @@ import {
   USDC_BNB,
   USDC_BOB,
   USDC_BOBA,
+  USDC_CORN,
   USDC_FILECOIN,
   USDC_GNOSIS,
   USDC_LINEA,
   USDC_MAINNET,
   USDC_MANTA,
   USDC_MANTLE,
+  USDC_METAL,
   USDC_MOONBEAM,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
@@ -281,6 +283,14 @@ export const CACHE_SEED_TOKENS: {
   [ChainId.BASE]: {
     USDC: USDC_BASE,
     WETH: WRAPPED_NATIVE_CURRENCY[ChainId.BASE],
+  },
+  [ChainId.CORN]: {
+    USDC: USDC_CORN,
+    WETH: WRAPPED_NATIVE_CURRENCY[ChainId.CORN],
+  },
+  [ChainId.METAL]: {
+    USDC: USDC_METAL,
+    WETH: WRAPPED_NATIVE_CURRENCY[ChainId.METAL],
   },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis
   // testnet

@@ -41,6 +41,8 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.SCROLL,
   ChainId.BOBA,
   ChainId.BASE,
+  ChainId.CORN,
+  ChainId.METAL,
 ];
 
 export const V2_SUPPORTED = [ChainId.MAINNET, ChainId.GOERLI, ChainId.SEPOLIA];
@@ -134,6 +136,10 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.BASE;
     case 84531:
       return ChainId.BASE_GOERLI;
+    case 21000000:
+      return ChainId.CORN;
+    case 1750:
+      return ChainId.METAL;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
@@ -174,6 +180,8 @@ export enum ChainName {
   BOBA = 'boba-mainnet',
   BASE = 'base-mainnet',
   BASE_GOERLI = 'base-goerli',
+  CORN = 'corn',
+  METAL = 'metal',
 }
 
 export enum NativeCurrencyName {
@@ -202,6 +210,8 @@ export enum NativeCurrencyName {
   BNB = 'BNB',
   AVALANCHE = 'AVAX',
   BOBA = 'BOBA',
+  CORN = 'BTCN',
+  METAL = 'ETH',
 }
 
 export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
@@ -281,6 +291,8 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
     'ETHER',
     '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
   ],
+  [ChainId.CORN]: ['BTCN'],
+  [ChainId.METAL]: ['ETH'],
 };
 
 export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
@@ -317,6 +329,8 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.AVALANCHE]: NativeCurrencyName.AVALANCHE,
   [ChainId.BOBA]: NativeCurrencyName.BOBA,
   [ChainId.BASE]: NativeCurrencyName.ETHER,
+  [ChainId.CORN]: NativeCurrencyName.CORN,
+  [ChainId.METAL]: NativeCurrencyName.METAL,
 };
 
 export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
@@ -389,6 +403,10 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.BASE;
     case 84531:
       return ChainName.BASE_GOERLI;
+    case 21000000:
+      return ChainName.CORN;
+    case 1750:
+      return ChainName.METAL;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
@@ -466,6 +484,10 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_BASE!;
     case ChainId.MANTLE:
       return process.env.JSON_RPC_PROVIDER_MANTLE!;
+    case ChainId.CORN:
+      return process.env.JSON_RPC_PROVIDER_CORN!;
+    case ChainId.METAL:
+      return process.env.JSON_RPC_PROVIDER_METAL!;
     default:
       throw new Error(`Chain id: ${id} not supported`);
   }
@@ -707,6 +729,20 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
   ),
   [ChainId.BASE_GOERLI]: new Token(
     ChainId.BASE_GOERLI,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'WETH',
+    'Wrapped Ether'
+  ),
+  [ChainId.CORN]: new Token(
+    ChainId.CORN,
+    '0xda5dDd7270381A7C2717aD10D1c0ecB19e3CDFb2',
+    18,
+    'WBTCN',
+    'Wrapped BTCN'
+  ),
+  [ChainId.METAL]: new Token(
+    ChainId.METAL,
     '0x4200000000000000000000000000000000000006',
     18,
     'WETH',
@@ -1270,6 +1306,54 @@ class BobaNativeCurrency extends NativeCurrency {
   }
 }
 
+function isCorn(chainId: number): chainId is ChainId.CORN {
+  return chainId === ChainId.CORN;
+}
+
+class CornNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isCorn(this.chainId)) throw new Error('Not corn');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isCorn(chainId)) throw new Error('Not corn');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
+function isMetal(chainId: number): chainId is ChainId.METAL {
+  return chainId === ChainId.METAL;
+}
+
+class MetalNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isMetal(this.chainId)) throw new Error('Not metal');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isMetal(chainId)) throw new Error('Not metal');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
 export class ExtendedEther extends Ether {
   public get wrapped(): Token {
     if (this.chainId in WRAPPED_NATIVE_CURRENCY) {
@@ -1341,6 +1425,10 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new AvalancheNativeCurrency(chainId);
   } else if (isBoba(chainId)) {
     cachedNativeCurrency[chainId] = new BobaNativeCurrency(chainId);
+  } else if (isCorn(chainId)) {
+    cachedNativeCurrency[chainId] = new CornNativeCurrency(chainId);
+  } else if (isMetal(chainId)) {
+    cachedNativeCurrency[chainId] = new MetalNativeCurrency(chainId);
   } else {
     cachedNativeCurrency[chainId] = ExtendedEther.onChain(chainId);
   }

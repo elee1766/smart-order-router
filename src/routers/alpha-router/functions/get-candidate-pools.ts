@@ -42,12 +42,14 @@ import {
   USDC_BNB,
   USDC_BOB,
   USDC_BOBA,
+  USDC_CORN,
   USDC_FILECOIN,
   USDC_GNOSIS,
   USDC_LINEA,
   USDC_MAINNET,
   USDC_MANTA,
   USDC_MANTLE,
+  USDC_METAL,
   USDC_MOONBEAM,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
@@ -281,6 +283,8 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.AVALANCHE]: [DAI_AVAX, USDC_AVAX],
   [ChainId.BOBA]: [USDC_BOBA],
   [ChainId.BASE]: [USDC_BASE],
+  [ChainId.CORN]: [USDC_CORN],
+  [ChainId.METAL]: [USDC_METAL],
 };
 
 class SubcategorySelectionPools<SubgraphPool> {

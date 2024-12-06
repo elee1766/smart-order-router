@@ -1038,6 +1038,24 @@ export const USDC_BOBA = new Token(
   'USD Coin'
 );
 
+// Corn Tokens
+export const USDC_CORN = new Token(
+  ChainId.CORN,
+  '0xDF0B24095e15044538866576754F3C964e902Ee6',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+// Metal Tokens
+export const USDC_METAL = new Token(
+  ChainId.METAL,
+  '0x51E85d70944256710cb141847F1a04f568C1Db0e',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
 export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
@@ -1349,6 +1367,10 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_BASE_GOERLI;
     case ChainId.SCROLL:
       return USDC_SCROLL;
+    case ChainId.CORN:
+      return USDC_CORN;
+    case ChainId.METAL:
+      return USDC_METAL;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
