@@ -57,6 +57,7 @@ import {
   USDC_SEI,
   USDC_SEI_TESTNET,
   USDC_SEPOLIA,
+  USDC_SONIC,
   USDC_TAIKO,
   USDC_XLAYER,
   USDC_ZKLINK,
@@ -291,6 +292,10 @@ export const CACHE_SEED_TOKENS: {
   [ChainId.METAL]: {
     USDC: USDC_METAL,
     WETH: WRAPPED_NATIVE_CURRENCY[ChainId.METAL],
+  },
+  [ChainId.SONIC]: {
+    USDC: USDC_SONIC,
+    WETH: WRAPPED_NATIVE_CURRENCY[ChainId.SONIC],
   },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis
   // testnet

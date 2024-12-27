@@ -59,6 +59,7 @@ import {
   USDC_SEI,
   USDC_SEI_TESTNET,
   USDC_SEPOLIA,
+  USDC_SONIC,
   USDC_TAIKO,
   USDC_XLAYER,
   USDC_ZKLINK,
@@ -285,6 +286,7 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.BASE]: [USDC_BASE],
   [ChainId.CORN]: [USDC_CORN],
   [ChainId.METAL]: [USDC_METAL],
+  [ChainId.SONIC]: [USDC_SONIC],
 };
 
 class SubcategorySelectionPools<SubgraphPool> {

@@ -1056,6 +1056,15 @@ export const USDC_METAL = new Token(
   'USD Coin'
 );
 
+// Sonic Tokens
+export const USDC_SONIC = new Token(
+  ChainId.SONIC,
+  '0x29219dd400f2bf60e5a23d13be72b486d4038894',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
 export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
@@ -1371,6 +1380,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_CORN;
     case ChainId.METAL:
       return USDC_METAL;
+    case ChainId.SONIC:
+      return USDC_SONIC;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }

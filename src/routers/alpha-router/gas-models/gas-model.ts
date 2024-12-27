@@ -45,6 +45,7 @@ import {
   USDC_SEI,
   USDC_SEI_TESTNET,
   USDC_SEPOLIA,
+  USDC_SONIC,
   USDC_TAIKO,
   USDC_XLAYER,
   USDC_ZKLINK,
@@ -130,6 +131,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.BASE]: [USDC_BASE],
   [ChainId.METAL]: [USDC_METAL],
   [ChainId.CORN]: [USDC_CORN],
+  [ChainId.SONIC]: [USDC_SONIC],
 };
 
 export type L1ToL2GasCosts = {
