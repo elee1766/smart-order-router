@@ -500,6 +500,23 @@ export class AlphaRouter
             }
           );
           break;
+        case ChainId.LISK:
+          this.onChainQuoteProvider = new OnChainQuoteProvider(
+            chainId,
+            provider,
+            this.multicall2Provider,
+            {
+              retries: 2,
+              minTimeout: 100,
+              maxTimeout: 1000,
+            },
+            {
+              multicallChunk: 70,
+              gasLimitPerCall: 705_000,
+              quoteMinSuccessRate: 0,
+            }
+          );
+          break;
         case ChainId.OPTIMISM:
         case ChainId.OPTIMISM_GOERLI:
           this.onChainQuoteProvider = new OnChainQuoteProvider(
