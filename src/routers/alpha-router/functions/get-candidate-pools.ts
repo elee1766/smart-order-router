@@ -18,6 +18,7 @@ import {
   DAI_ARBITRUM,
   DAI_AVAX,
   DAI_BNB,
+  DAI_HEMI,
   DAI_LINEA,
   DAI_MAINNET,
   DAI_MOONBEAM,
@@ -45,6 +46,7 @@ import {
   USDC_CORN,
   USDC_FILECOIN,
   USDC_GNOSIS,
+  USDC_HEMI,
   USDC_LINEA,
   USDC_MAINNET,
   USDC_MANTA,
@@ -68,6 +70,7 @@ import {
   USDT_BNB,
   USDT_BOB,
   USDT_FILECOIN,
+  USDT_HEMI,
   USDT_LISK,
   USDT_MAINNET,
   USDT_MANTA,
@@ -84,6 +87,7 @@ import {
   WBTC_BOB,
   WBTC_FILECOIN,
   WBTC_GNOSIS,
+  WBTC_HEMI,
   WBTC_LINEA,
   WBTC_MAINNET,
   WBTC_MANTA,
@@ -287,6 +291,13 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.CORN]: [USDC_CORN],
   [ChainId.METAL]: [USDC_METAL],
   [ChainId.SONIC]: [USDC_SONIC],
+  [ChainId.HEMI]: [
+    USDC_HEMI,
+    USDT_HEMI,
+    DAI_HEMI,
+    WBTC_HEMI,
+    WRAPPED_NATIVE_CURRENCY[ChainId.HEMI],
+  ],
 };
 
 class SubcategorySelectionPools<SubgraphPool> {

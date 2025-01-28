@@ -44,6 +44,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.CORN,
   ChainId.METAL,
   ChainId.SONIC,
+  ChainId.HEMI,
 ];
 
 export const V2_SUPPORTED = [ChainId.MAINNET, ChainId.GOERLI, ChainId.SEPOLIA];
@@ -143,6 +144,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.METAL;
     case 146:
       return ChainId.SONIC;
+    case 43111:
+      return ChainId.HEMI;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
@@ -186,6 +189,7 @@ export enum ChainName {
   CORN = 'corn',
   METAL = 'metal',
   SONIC = 'sonic',
+  HEMI = 'hemi',
 }
 
 export enum NativeCurrencyName {
@@ -217,6 +221,7 @@ export enum NativeCurrencyName {
   CORN = 'BTCN',
   METAL = 'ETH',
   SONIC = 'SONIC',
+  HEMI = 'ETH',
 }
 
 export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
@@ -299,6 +304,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.CORN]: ['BTCN'],
   [ChainId.METAL]: ['ETH'],
   [ChainId.SONIC]: ['SONIC'],
+  [ChainId.HEMI]: ['ETH'],
 };
 
 export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
@@ -338,6 +344,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.CORN]: NativeCurrencyName.CORN,
   [ChainId.METAL]: NativeCurrencyName.METAL,
   [ChainId.SONIC]: NativeCurrencyName.SONIC,
+  [ChainId.HEMI]: NativeCurrencyName.HEMI,
 };
 
 export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
@@ -416,6 +423,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.METAL;
     case 146:
       return ChainName.SONIC;
+    case 43111:
+      return ChainName.HEMI;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
@@ -499,6 +508,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_METAL!;
     case ChainId.SONIC:
       return process.env.JSON_RPC_PROVIDER_SONIC!;
+    case ChainId.HEMI:
+      return process.env.JSON_RPC_PROVIDER_HEMI!;
     default:
       throw new Error(`Chain id: ${id} not supported`);
   }
@@ -765,6 +776,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'wS',
     'Wrapped Sonic'
+  ),
+  [ChainId.HEMI]: new Token(
+    ChainId.HEMI,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'WETH',
+    'Wrapped Ether'
   ),
 };
 
@@ -1396,6 +1414,30 @@ class SonicNativeCurrency extends NativeCurrency {
   }
 }
 
+function isHemi(chainId: number): chainId is ChainId.HEMI {
+  return chainId === ChainId.HEMI;
+}
+
+class HemiNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isHemi(this.chainId)) throw new Error('Not hemi');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isHemi(chainId)) throw new Error('Not hemi');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
 export class ExtendedEther extends Ether {
   public get wrapped(): Token {
     if (this.chainId in WRAPPED_NATIVE_CURRENCY) {
@@ -1473,6 +1515,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MetalNativeCurrency(chainId);
   } else if (isSonic(chainId)) {
     cachedNativeCurrency[chainId] = new SonicNativeCurrency(chainId);
+  } else if (isHemi(chainId)) {
+    cachedNativeCurrency[chainId] = new HemiNativeCurrency(chainId);
   } else {
     cachedNativeCurrency[chainId] = ExtendedEther.onChain(chainId);
   }

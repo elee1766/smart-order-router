@@ -18,6 +18,7 @@ import {
   DAI_BNB,
   DAI_CELO,
   DAI_CELO_ALFAJORES,
+  DAI_HEMI,
   DAI_LINEA,
   DAI_MAINNET,
   DAI_MOONBEAM,
@@ -43,6 +44,7 @@ import {
   USDC_CORN,
   USDC_FILECOIN,
   USDC_GNOSIS,
+  USDC_HEMI,
   USDC_LINEA,
   USDC_MAINNET,
   USDC_MANTA,
@@ -67,6 +69,7 @@ import {
   USDT_BOB,
   USDT_FILECOIN,
   USDT_GNOSIS,
+  USDT_HEMI,
   USDT_LISK,
   USDT_MAINNET,
   USDT_MANTA,
@@ -83,6 +86,7 @@ import {
   WBTC_BOB,
   WBTC_FILECOIN,
   WBTC_GNOSIS,
+  WBTC_HEMI,
   WBTC_LINEA,
   WBTC_MAINNET,
   WBTC_MANTA,
@@ -296,6 +300,13 @@ export const CACHE_SEED_TOKENS: {
   [ChainId.SONIC]: {
     USDC: USDC_SONIC,
     WETH: WRAPPED_NATIVE_CURRENCY[ChainId.SONIC],
+  },
+  [ChainId.HEMI]: {
+    USDC: USDC_HEMI,
+    USDT: USDT_HEMI,
+    WBTC: WBTC_HEMI,
+    DAI: DAI_HEMI,
+    WETH: WRAPPED_NATIVE_CURRENCY[ChainId.HEMI],
   },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis
   // testnet

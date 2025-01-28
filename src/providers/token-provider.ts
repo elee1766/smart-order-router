@@ -1065,6 +1065,36 @@ export const USDC_SONIC = new Token(
   'USD Coin'
 );
 
+// Hemi Tokens
+export const USDC_HEMI = new Token(
+  ChainId.HEMI,
+  '0xad11a8BEb98bbf61dbb1aa0F6d6F2ECD87b35afA',
+  6,
+  'USDC',
+  'USD Coin'
+);
+export const USDT_HEMI = new Token(
+  ChainId.HEMI,
+  '0xbB0D083fb1be0A9f6157ec484b6C79E0A4e31C2e',
+  6,
+  'USDT',
+  'Tether USD'
+);
+export const DAI_HEMI = new Token(
+  ChainId.HEMI,
+  '0x6c851F501a3F24E29A8E39a29591cddf09369080',
+  18,
+  'DAI',
+  'Dai Stablecoin'
+);
+export const WBTC_HEMI = new Token(
+  ChainId.HEMI,
+  '0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+);
+
 export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
@@ -1270,6 +1300,8 @@ export const DAI_ON = (chainId: ChainId): Token => {
       return DAI_LINEA;
     case ChainId.SCROLL:
       return DAI_SCROLL;
+    case ChainId.HEMI:
+      return DAI_HEMI;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -1311,6 +1343,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_ROOTSTOCK;
     case ChainId.SCROLL:
       return USDT_SCROLL;
+    case ChainId.HEMI:
+      return USDT_HEMI;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -1382,6 +1416,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_METAL;
     case ChainId.SONIC:
       return USDC_SONIC;
+    case ChainId.HEMI:
+      return USDC_HEMI;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }

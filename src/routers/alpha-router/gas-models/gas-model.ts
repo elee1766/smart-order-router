@@ -10,6 +10,7 @@ import {
   DAI_AVAX,
   DAI_BNB,
   DAI_GOERLI,
+  DAI_HEMI,
   DAI_LINEA,
   DAI_MAINNET,
   DAI_OPTIMISM,
@@ -30,6 +31,7 @@ import {
   USDC_FILECOIN,
   USDC_GNOSIS,
   USDC_GOERLI,
+  USDC_HEMI,
   USDC_LINEA,
   USDC_MAINNET,
   USDC_MANTA,
@@ -55,6 +57,7 @@ import {
   USDT_BOB,
   USDT_GNOSIS,
   USDT_GOERLI,
+  USDT_HEMI,
   USDT_LISK,
   USDT_MAINNET,
   USDT_MANTA,
@@ -132,6 +135,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.METAL]: [USDC_METAL],
   [ChainId.CORN]: [USDC_CORN],
   [ChainId.SONIC]: [USDC_SONIC],
+  [ChainId.HEMI]: [USDC_HEMI, USDT_HEMI, DAI_HEMI],
 };
 
 export type L1ToL2GasCosts = {
