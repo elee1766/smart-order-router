@@ -15,11 +15,14 @@ import {
   USDC_HEMI,
   USDC_MAINNET,
   USDC_MANTLE,
+  USDC_TELOS,
   USDT_BNB,
   USDT_HEMI,
   USDT_MAINNET,
+  USDT_TELOS,
   WBTC_HEMI,
   WBTC_MAINNET,
+  WBTC_TELOS,
   WMATIC_POLYGON,
   WMATIC_POLYGON_MUMBAI,
 } from '../../providers/token-provider';
@@ -91,6 +94,12 @@ export const BASES_TO_CHECK_TRADES_AGAINST = (
     [ChainId.CORN]: [WRAPPED_NATIVE_CURRENCY[ChainId.CORN]!],
     [ChainId.METAL]: [WRAPPED_NATIVE_CURRENCY[ChainId.METAL]!],
     [ChainId.SONIC]: [WRAPPED_NATIVE_CURRENCY[ChainId.SONIC]!],
+    [ChainId.TELOS]: [
+      WRAPPED_NATIVE_CURRENCY[ChainId.TELOS]!,
+      USDC_TELOS,
+      USDT_TELOS,
+      WBTC_TELOS,
+    ],
     [ChainId.HEMI]: [
       WRAPPED_NATIVE_CURRENCY[ChainId.HEMI]!,
       USDC_HEMI,

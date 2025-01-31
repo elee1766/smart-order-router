@@ -1065,6 +1065,31 @@ export const USDC_SONIC = new Token(
   'USD Coin'
 );
 
+// Telos Tokens
+export const USDC_TELOS = new Token(
+  ChainId.TELOS,
+  '0x8D97Cea50351Fb4329d591682b148D43a0C3611b',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const USDT_TELOS = new Token(
+  ChainId.TELOS,
+  '0x975Ed13fa16857E83e7C493C7741D556eaaD4A3f',
+  6,
+  'USDT',
+  'USD Tether'
+);
+
+export const WBTC_TELOS = new Token(
+  ChainId.TELOS,
+  '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+);
+
 // Hemi Tokens
 export const USDC_HEMI = new Token(
   ChainId.HEMI,
@@ -1345,6 +1370,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_SCROLL;
     case ChainId.HEMI:
       return USDT_HEMI;
+    case ChainId.TELOS:
+      return USDT_TELOS;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -1416,6 +1443,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_METAL;
     case ChainId.SONIC:
       return USDC_SONIC;
+    case ChainId.TELOS:
+      return USDC_TELOS;
     case ChainId.HEMI:
       return USDC_HEMI;
     default:

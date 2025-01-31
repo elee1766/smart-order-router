@@ -56,6 +56,7 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].v3CoreFactoryAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].v3CoreFactoryAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].v3CoreFactoryAddress,
+  [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].v3CoreFactoryAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].v3CoreFactoryAddress,
 };
 
@@ -98,6 +99,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].quoterAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].quoterAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].quoterAddress,
+  [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].quoterAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].quoterAddress,
 };
 
@@ -150,6 +152,7 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].multicallAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].multicallAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].multicallAddress,
+  [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].multicallAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].multicallAddress,
 };
 
@@ -391,6 +394,13 @@ export const WETH9: {
     18,
     'wS',
     'Wrapped Sonic'
+  ),
+  [ChainId.TELOS]: new Token(
+    ChainId.TELOS,
+    '0xD102cE6A4dB07D247fcc28F366A623Df0938CA9E',
+    18,
+    'WTLOS',
+    'Wrapped TLOS'
   ),
   [ChainId.HEMI]: new Token(
     ChainId.HEMI,

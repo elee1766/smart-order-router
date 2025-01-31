@@ -49,6 +49,7 @@ import {
   USDC_SEPOLIA,
   USDC_SONIC,
   USDC_TAIKO,
+  USDC_TELOS,
   USDC_XLAYER,
   USDC_ZKLINK,
   USDC_ZKSYNC,
@@ -67,6 +68,7 @@ import {
   USDT_POLYGON_ZKEVM,
   USDT_ROOTSTOCK,
   USDT_SCROLL,
+  USDT_TELOS,
   USDT_XLAYER,
   USDT_ZKLINK,
   USDT_ZKSYNC,
@@ -135,6 +137,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.METAL]: [USDC_METAL],
   [ChainId.CORN]: [USDC_CORN],
   [ChainId.SONIC]: [USDC_SONIC],
+  [ChainId.TELOS]: [USDC_TELOS, USDT_TELOS],
   [ChainId.HEMI]: [USDC_HEMI, USDT_HEMI, DAI_HEMI],
 };
 
