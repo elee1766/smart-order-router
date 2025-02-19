@@ -1047,6 +1047,56 @@ export const USDC_CORN = new Token(
   'USD Coin'
 );
 
+// Redbelly Tokens
+export const USDT_REDBELLY = new Token(
+  ChainId.REDBELLY,
+  '0x8C4aCd74Ff4385f3B7911432FA6787Aa14406f8B',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
+export const USDC_REDBELLY = new Token(
+  ChainId.REDBELLY,
+  '0x8201c02d4AB2214471E8C3AD6475C8b0CD9F2D06',
+  6,
+  'USDC.e',
+  'USD Coin'
+);
+
+export const WETH_REDBELLY = new Token(
+  ChainId.REDBELLY,
+  '0x0Fa205c0446cD9EeDCc7538c9E24BC55AD08207f',
+  18,
+  'WETH',
+  'Wrapped Ether'
+);
+
+// Goat Tokens
+export const USDT_GOAT = new Token(
+  ChainId.GOAT,
+  '0xE1AD845D93853fff44990aE0DcecD8575293681e',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
+export const USDC_GOAT = new Token(
+  ChainId.GOAT,
+  '0x3022b87ac063DE95b1570F46f5e470F8B53112D8',
+  6,
+  'USDC.e',
+  'USD Coin'
+);
+
+export const WETH_GOAT = new Token(
+  ChainId.GOAT,
+  '0x3a1293Bdb83bBbDd5Ebf4fAc96605aD2021BbC0f',
+  18,
+  'WETH',
+  'Wrapped Ether'
+);
+
 // Metal Tokens
 export const USDC_METAL = new Token(
   ChainId.METAL,
@@ -1372,6 +1422,10 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_HEMI;
     case ChainId.TELOS:
       return USDT_TELOS;
+    case ChainId.REDBELLY:
+      return USDT_REDBELLY;
+    case ChainId.GOAT:
+      return USDT_GOAT;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -1443,6 +1497,10 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_METAL;
     case ChainId.SONIC:
       return USDC_SONIC;
+    case ChainId.REDBELLY:
+      return USDC_REDBELLY;
+    case ChainId.GOAT:
+      return USDC_GOAT;
     case ChainId.TELOS:
       return USDC_TELOS;
     case ChainId.HEMI:

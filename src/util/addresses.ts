@@ -56,6 +56,9 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].v3CoreFactoryAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].v3CoreFactoryAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].v3CoreFactoryAddress,
+  [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].v3CoreFactoryAddress,
+  [ChainId.REDBELLY]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.REDBELLY].v3CoreFactoryAddress,
   [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].v3CoreFactoryAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].v3CoreFactoryAddress,
 };
@@ -99,6 +102,8 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].quoterAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].quoterAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].quoterAddress,
+  [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].quoterAddress,
+  [ChainId.REDBELLY]: CHAIN_TO_ADDRESSES_MAP[ChainId.REDBELLY].quoterAddress,
   [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].quoterAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].quoterAddress,
 };
@@ -152,6 +157,8 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].multicallAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].multicallAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].multicallAddress,
+  [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].multicallAddress,
+  [ChainId.REDBELLY]: CHAIN_TO_ADDRESSES_MAP[ChainId.REDBELLY].multicallAddress,
   [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].multicallAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].multicallAddress,
 };
@@ -394,6 +401,20 @@ export const WETH9: {
     18,
     'wS',
     'Wrapped Sonic'
+  ),
+  [ChainId.GOAT]: new Token(
+    ChainId.GOAT,
+    '0xbC10000000000000000000000000000000000000',
+    18,
+    'WGBTC',
+    'Wrapped Goat Bitcoin'
+  ),
+  [ChainId.REDBELLY]: new Token(
+    ChainId.REDBELLY,
+    '0x6ed1F491e2d31536D6561f6bdB2AdC8F092a6076',
+    18,
+    'WRBNT',
+    'Wrapped RBNT'
   ),
   [ChainId.TELOS]: new Token(
     ChainId.TELOS,

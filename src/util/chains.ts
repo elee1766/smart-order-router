@@ -44,6 +44,8 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.CORN,
   ChainId.METAL,
   ChainId.SONIC,
+  ChainId.GOAT,
+  ChainId.REDBELLY,
   ChainId.TELOS,
   ChainId.HEMI,
 ];
@@ -145,6 +147,10 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.METAL;
     case 146:
       return ChainId.SONIC;
+    case 2345:
+      return ChainId.GOAT;
+    case 151:
+      return ChainId.REDBELLY;
     case 40:
       return ChainId.TELOS;
     case 43111:
@@ -192,6 +198,8 @@ export enum ChainName {
   CORN = 'corn',
   METAL = 'metal',
   SONIC = 'sonic',
+  GOAT = 'goat',
+  REDBELLY = 'redbelly',
   TELOS = 'telos',
   HEMI = 'hemi',
 }
@@ -225,6 +233,8 @@ export enum NativeCurrencyName {
   CORN = 'BTCN',
   METAL = 'ETH',
   SONIC = 'SONIC',
+  GOAT = 'BTC',
+  REDBELLY = 'RBNT',
   TELOS = 'TLOS',
   HEMI = 'ETH',
 }
@@ -309,6 +319,8 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.CORN]: ['BTCN'],
   [ChainId.METAL]: ['ETH'],
   [ChainId.SONIC]: ['SONIC'],
+  [ChainId.GOAT]: ['BTC'],
+  [ChainId.REDBELLY]: ['RBNT'],
   [ChainId.TELOS]: ['TLOS'],
   [ChainId.HEMI]: ['ETH'],
 };
@@ -350,6 +362,8 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.CORN]: NativeCurrencyName.CORN,
   [ChainId.METAL]: NativeCurrencyName.METAL,
   [ChainId.SONIC]: NativeCurrencyName.SONIC,
+  [ChainId.GOAT]: NativeCurrencyName.GOAT,
+  [ChainId.REDBELLY]: NativeCurrencyName.REDBELLY,
   [ChainId.TELOS]: NativeCurrencyName.TELOS,
   [ChainId.HEMI]: NativeCurrencyName.HEMI,
 };
@@ -430,6 +444,10 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.METAL;
     case 146:
       return ChainName.SONIC;
+    case 2345:
+      return ChainName.GOAT;
+    case 151:
+      return ChainName.REDBELLY;
     case 40:
       return ChainName.TELOS;
     case 43111:
@@ -517,6 +535,10 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_METAL!;
     case ChainId.SONIC:
       return process.env.JSON_RPC_PROVIDER_SONIC!;
+    case ChainId.GOAT:
+      return process.env.JSON_RPC_PROVIDER_GOAT!;
+    case ChainId.REDBELLY:
+      return process.env.JSON_RPC_PROVIDER_REDBELLY!;
     case ChainId.TELOS:
       return process.env.JSON_RPC_PROVIDER_TELOS!;
     case ChainId.HEMI:
@@ -787,6 +809,20 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'wS',
     'Wrapped Sonic'
+  ),
+  [ChainId.GOAT]: new Token(
+    ChainId.GOAT,
+    '0xbC10000000000000000000000000000000000000',
+    18,
+    'WGBTC',
+    'Wrapped Goat Bitcoin'
+  ),
+  [ChainId.REDBELLY]: new Token(
+    ChainId.REDBELLY,
+    '0x6ed1F491e2d31536D6561f6bdB2AdC8F092a6076',
+    18,
+    'WRBNT',
+    'Wrapped RBNT'
   ),
   [ChainId.TELOS]: new Token(
     ChainId.TELOS,
@@ -1432,6 +1468,54 @@ class SonicNativeCurrency extends NativeCurrency {
   }
 }
 
+function isGoat(chainId: number): chainId is ChainId.GOAT {
+  return chainId === ChainId.GOAT;
+}
+
+class GoatNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isGoat(this.chainId)) throw new Error('Not goat');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isGoat(chainId)) throw new Error('Not goat');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
+function isRedbelly(chainId: number): chainId is ChainId.REDBELLY {
+  return chainId === ChainId.REDBELLY;
+}
+
+class RedbellyNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isRedbelly(this.chainId)) throw new Error('Not redbelly');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isRedbelly(chainId)) throw new Error('Not redbelly');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
 function isTelos(chainId: number): chainId is ChainId.TELOS {
   return chainId === ChainId.TELOS;
 }
@@ -1557,6 +1641,10 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MetalNativeCurrency(chainId);
   } else if (isSonic(chainId)) {
     cachedNativeCurrency[chainId] = new SonicNativeCurrency(chainId);
+  } else if (isGoat(chainId)) {
+    cachedNativeCurrency[chainId] = new GoatNativeCurrency(chainId);
+  } else if (isRedbelly(chainId)) {
+    cachedNativeCurrency[chainId] = new RedbellyNativeCurrency(chainId);
   } else if (isTelos(chainId)) {
     cachedNativeCurrency[chainId] = new TelosNativeCurrency(chainId);
   } else if (isHemi(chainId)) {
