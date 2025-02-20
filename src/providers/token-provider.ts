@@ -1072,6 +1072,31 @@ export const WETH_REDBELLY = new Token(
   'Wrapped Ether'
 );
 
+// Saga Tokens
+export const USDT_SAGA = new Token(
+  ChainId.SAGA,
+  '0xC8fe3C1de344854f4429bB333AFFAeF97eF88CEa',
+  6,
+  'USDT',
+  'Usdt'
+);
+
+export const USDC_SAGA = new Token(
+  ChainId.SAGA,
+  '0xfc960C233B8E98e0Cf282e29BDE8d3f105fc24d5',
+  6,
+  'USDC',
+  'Usdc'
+);
+
+export const ETH_SAGA = new Token(
+  ChainId.SAGA,
+  '0xeb41D53F14Cb9a67907f2b8b5DBc223944158cCb',
+  18,
+  'ETH-WEI',
+  'Eth-wei'
+);
+
 // Goat Tokens
 export const USDT_GOAT = new Token(
   ChainId.GOAT,
@@ -1424,6 +1449,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_TELOS;
     case ChainId.REDBELLY:
       return USDT_REDBELLY;
+    case ChainId.SAGA:
+      return USDT_SAGA;
     case ChainId.GOAT:
       return USDT_GOAT;
     default:
@@ -1499,6 +1526,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_SONIC;
     case ChainId.REDBELLY:
       return USDC_REDBELLY;
+    case ChainId.SAGA:
+      return USDC_SAGA;
     case ChainId.GOAT:
       return USDC_GOAT;
     case ChainId.TELOS:

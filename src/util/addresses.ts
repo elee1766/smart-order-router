@@ -59,6 +59,7 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].v3CoreFactoryAddress,
   [ChainId.REDBELLY]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.REDBELLY].v3CoreFactoryAddress,
+  [ChainId.SAGA]: CHAIN_TO_ADDRESSES_MAP[ChainId.SAGA].v3CoreFactoryAddress,
   [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].v3CoreFactoryAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].v3CoreFactoryAddress,
 };
@@ -104,6 +105,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].quoterAddress,
   [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].quoterAddress,
   [ChainId.REDBELLY]: CHAIN_TO_ADDRESSES_MAP[ChainId.REDBELLY].quoterAddress,
+  [ChainId.SAGA]: CHAIN_TO_ADDRESSES_MAP[ChainId.SAGA].quoterAddress,
   [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].quoterAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].quoterAddress,
 };
@@ -159,6 +161,7 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].multicallAddress,
   [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].multicallAddress,
   [ChainId.REDBELLY]: CHAIN_TO_ADDRESSES_MAP[ChainId.REDBELLY].multicallAddress,
+  [ChainId.SAGA]: CHAIN_TO_ADDRESSES_MAP[ChainId.SAGA].multicallAddress,
   [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].multicallAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].multicallAddress,
 };
@@ -415,6 +418,13 @@ export const WETH9: {
     18,
     'WRBNT',
     'Wrapped RBNT'
+  ),
+  [ChainId.SAGA]: new Token(
+    ChainId.SAGA,
+    '0xE3dbcD53f4Ce1b06Ab200f4912BD35672e68f1FA',
+    18,
+    'wGAS',
+    'Wrapped Gas'
   ),
   [ChainId.TELOS]: new Token(
     ChainId.TELOS,

@@ -28,6 +28,7 @@ import {
   DAI_POLYGON_ZKEVM,
   DAI_SCROLL,
   ETH_BNB,
+  ETH_SAGA,
   ITokenProvider,
   LUSD_SCROLL,
   RIF_ROOTSTOCK,
@@ -57,6 +58,7 @@ import {
   USDC_POLYGON,
   USDC_POLYGON_ZKEVM,
   USDC_REDBELLY,
+  USDC_SAGA,
   USDC_SCROLL,
   USDC_SEI,
   USDC_SEI_TESTNET,
@@ -83,6 +85,7 @@ import {
   USDT_POLYGON_ZKEVM,
   USDT_REDBELLY,
   USDT_ROOTSTOCK,
+  USDT_SAGA,
   USDT_SCROLL,
   USDT_TELOS,
   USDT_XLAYER,
@@ -334,6 +337,11 @@ export const CACHE_SEED_TOKENS: {
     USDT: USDT_REDBELLY,
     WETH: WETH_REDBELLY,
     WRBNT: WRAPPED_NATIVE_CURRENCY[ChainId.REDBELLY],
+  },
+  [ChainId.SAGA]: {
+    USDC: USDC_SAGA,
+    USDT: USDT_SAGA,
+    ETH: ETH_SAGA,
   },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis
   // testnet

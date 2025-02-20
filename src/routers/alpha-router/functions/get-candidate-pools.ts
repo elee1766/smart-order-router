@@ -28,6 +28,7 @@ import {
   DAI_POLYGON_ZKEVM,
   DAI_SCROLL,
   DAI_SEPOLIA,
+  ETH_SAGA,
   FEI_MAINNET,
   ITokenProvider,
   LUSD_SCROLL,
@@ -59,6 +60,7 @@ import {
   USDC_POLYGON,
   USDC_POLYGON_ZKEVM,
   USDC_REDBELLY,
+  USDC_SAGA,
   USDC_SCROLL,
   USDC_SEI,
   USDC_SEI_TESTNET,
@@ -84,6 +86,7 @@ import {
   USDT_POLYGON_ZKEVM,
   USDT_REDBELLY,
   USDT_ROOTSTOCK,
+  USDT_SAGA,
   USDT_SCROLL,
   USDT_TELOS,
   USDT_XLAYER,
@@ -324,6 +327,12 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
     USDT_REDBELLY,
     WETH_REDBELLY,
     WRAPPED_NATIVE_CURRENCY[ChainId.REDBELLY],
+  ],
+  [ChainId.SAGA]: [
+    USDC_SAGA,
+    USDT_SAGA,
+    ETH_SAGA,
+    WRAPPED_NATIVE_CURRENCY[ChainId.SAGA],
   ],
 };
 

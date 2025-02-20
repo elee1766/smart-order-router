@@ -45,6 +45,7 @@ import {
   USDC_POLYGON,
   USDC_POLYGON_ZKEVM,
   USDC_REDBELLY,
+  USDC_SAGA,
   USDC_SCROLL,
   USDC_SEI,
   USDC_SEI_TESTNET,
@@ -71,6 +72,7 @@ import {
   USDT_POLYGON_ZKEVM,
   USDT_REDBELLY,
   USDT_ROOTSTOCK,
+  USDT_SAGA,
   USDT_SCROLL,
   USDT_TELOS,
   USDT_XLAYER,
@@ -145,6 +147,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.HEMI]: [USDC_HEMI, USDT_HEMI, DAI_HEMI],
   [ChainId.GOAT]: [USDC_GOAT, USDT_GOAT],
   [ChainId.REDBELLY]: [USDC_REDBELLY, USDT_REDBELLY],
+  [ChainId.SAGA]: [USDC_SAGA, USDT_SAGA],
 };
 
 export type L1ToL2GasCosts = {
