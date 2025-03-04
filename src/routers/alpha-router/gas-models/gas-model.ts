@@ -33,6 +33,7 @@ import {
   USDC_GOAT,
   USDC_GOERLI,
   USDC_HEMI,
+  USDC_LIGHTLINK,
   USDC_LINEA,
   USDC_MAINNET,
   USDC_MANTA,
@@ -63,6 +64,7 @@ import {
   USDT_GOAT,
   USDT_GOERLI,
   USDT_HEMI,
+  USDT_LIGHTLINK,
   USDT_LISK,
   USDT_MAINNET,
   USDT_MANTA,
@@ -148,6 +150,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.GOAT]: [USDC_GOAT, USDT_GOAT],
   [ChainId.REDBELLY]: [USDC_REDBELLY, USDT_REDBELLY],
   [ChainId.SAGA]: [USDC_SAGA, USDT_SAGA],
+  [ChainId.LIGHTLINK]: [USDC_LIGHTLINK, USDT_LIGHTLINK],
 };
 
 export type L1ToL2GasCosts = {

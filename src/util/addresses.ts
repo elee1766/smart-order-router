@@ -56,6 +56,8 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].v3CoreFactoryAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].v3CoreFactoryAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].v3CoreFactoryAddress,
+  [ChainId.LIGHTLINK]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.LIGHTLINK].v3CoreFactoryAddress,
   [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].v3CoreFactoryAddress,
   [ChainId.REDBELLY]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.REDBELLY].v3CoreFactoryAddress,
@@ -103,6 +105,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].quoterAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].quoterAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].quoterAddress,
+  [ChainId.LIGHTLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.LIGHTLINK].quoterAddress,
   [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].quoterAddress,
   [ChainId.REDBELLY]: CHAIN_TO_ADDRESSES_MAP[ChainId.REDBELLY].quoterAddress,
   [ChainId.SAGA]: CHAIN_TO_ADDRESSES_MAP[ChainId.SAGA].quoterAddress,
@@ -159,6 +162,8 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].multicallAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].multicallAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].multicallAddress,
+  [ChainId.LIGHTLINK]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.LIGHTLINK].multicallAddress,
   [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].multicallAddress,
   [ChainId.REDBELLY]: CHAIN_TO_ADDRESSES_MAP[ChainId.REDBELLY].multicallAddress,
   [ChainId.SAGA]: CHAIN_TO_ADDRESSES_MAP[ChainId.SAGA].multicallAddress,
@@ -404,6 +409,13 @@ export const WETH9: {
     18,
     'wS',
     'Wrapped Sonic'
+  ),
+  [ChainId.LIGHTLINK]: new Token(
+    ChainId.LIGHTLINK,
+    '0x7EbeF2A4b1B09381Ec5B9dF8C5c6f2dBECA59c73',
+    18,
+    'WETH',
+    'Wrapped Ether'
   ),
   [ChainId.GOAT]: new Token(
     ChainId.GOAT,

@@ -1097,6 +1097,39 @@ export const ETH_SAGA = new Token(
   'Eth-wei'
 );
 
+// Lightlink Tokens
+export const USDT_LIGHTLINK = new Token(
+  ChainId.LIGHTLINK,
+  '0x808d7c71ad2ba3FA531b068a2417C63106BC0949',
+  6,
+  'USDT',
+  'Usdt'
+);
+
+export const USDC_LIGHTLINK = new Token(
+  ChainId.LIGHTLINK,
+  '0xbCF8C1B03bBDDA88D579330BDF236B58F8bb2cFd',
+  6,
+  'USDC',
+  'Usdc'
+);
+
+export const WBTC_LIGHTLINK = new Token(
+  ChainId.LIGHTLINK,
+  '0x46A5e3Fa4a02B9Ae43D9dF9408C86eD643144A67',
+  18,
+  'ETH-WEI',
+  'Eth-wei'
+);
+
+export const LIGHTLINK_LIGHTLINK = new Token(
+  ChainId.LIGHTLINK,
+  '0xd9d7123552fA2bEdB2348bB562576D67f6E8e96E',
+  18,
+  'LL.e',
+  'Lightlink'
+);
+
 // Goat Tokens
 export const USDT_GOAT = new Token(
   ChainId.GOAT,
@@ -1453,6 +1486,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_SAGA;
     case ChainId.GOAT:
       return USDT_GOAT;
+    case ChainId.LIGHTLINK:
+      return USDT_LIGHTLINK;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -1534,6 +1569,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_TELOS;
     case ChainId.HEMI:
       return USDC_HEMI;
+    case ChainId.LIGHTLINK:
+      return USDC_LIGHTLINK;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }

@@ -62,6 +62,7 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.CORN]: [],
   [ChainId.METAL]: [],
   [ChainId.SONIC]: [],
+  [ChainId.LIGHTLINK]: [],
   [ChainId.TELOS]: [],
   [ChainId.HEMI]: [],
   [ChainId.GOAT]: [],
