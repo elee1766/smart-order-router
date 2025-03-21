@@ -957,12 +957,20 @@ export const WFIL_FILECOIN = new Token(
 );
 
 //rootstock
-export const USDT_ROOTSTOCK = new Token(
+export const RUSDT_ROOTSTOCK = new Token(
   ChainId.ROOTSTOCK,
   '0xef213441a85df4d7acbdae0cf78004e1e486bb96',
   18,
   'RUSDT',
   'Rootstock USDT'
+);
+
+export const USDT_ROOTSTOCK = new Token(
+  ChainId.ROOTSTOCK,
+  '0xaf368c91793cb22739386dfcbbb2f1a9e4bcbebf',
+  6,
+  'USDT',
+  'Tether USD'
 );
 
 export const RIF_ROOTSTOCK = new Token(
