@@ -1184,7 +1184,7 @@ export const USDC_SONIC = new Token(
 // Telos Tokens
 export const USDC_TELOS = new Token(
   ChainId.TELOS,
-  '0x8D97Cea50351Fb4329d591682b148D43a0C3611b',
+  '0xf1815bd50389c46847f0bda824ec8da914045d14',
   6,
   'USDC',
   'USD Coin'
@@ -1192,7 +1192,7 @@ export const USDC_TELOS = new Token(
 
 export const USDT_TELOS = new Token(
   ChainId.TELOS,
-  '0x975Ed13fa16857E83e7C493C7741D556eaaD4A3f',
+  '0x674843C06FF83502ddb4D37c2E09C01cdA38cbc8',
   6,
   'USDT',
   'USD Tether'
@@ -1204,6 +1204,14 @@ export const WBTC_TELOS = new Token(
   8,
   'WBTC',
   'Wrapped BTC'
+);
+
+export const WETH_TELOS = new Token(
+  ChainId.TELOS,
+  '0xbab93b7ad7fe8692a878b95a8e689423437cc500',
+  18,
+  'WETH',
+  'Wrapped Ether'
 );
 
 // Hemi Tokens
