@@ -1181,6 +1181,31 @@ export const USDC_SONIC = new Token(
   'USD Coin'
 );
 
+// WorldChain Tokens
+export const USDC_WORLDCHAIN = new Token(
+  ChainId.WORLDCHAIN,
+  '0x79A02482A880bCE3F13e09Da970dC34db4CD24d1',
+  6,
+  'USDC.e',
+  'Bridged USDC (world-chain-mainnet)'
+);
+
+export const WLD_WORLDCHAIN = new Token(
+  ChainId.WORLDCHAIN,
+  '0x2cFc85d8E48F8EAB294be644d9E25C3030863003',
+  18,
+  'WLD',
+  'Worldcoin'
+);
+
+export const WBTC_WORLDCHAIN = new Token(
+  ChainId.WORLDCHAIN,
+  '0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+);
+
 // Telos Tokens
 export const USDC_TELOS = new Token(
   ChainId.TELOS,
@@ -1248,7 +1273,7 @@ export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
     protected multicall2Provider: IMulticallProvider
-  ) {}
+  ) { }
 
   private async getTokenSymbol(
     addresses: string[],
@@ -1393,10 +1418,8 @@ export class TokenProvider implements ITokenProvider {
       }
 
       log.info(
-        `Got token symbol and decimals for ${
-          Object.values(addressToToken).length
-        } out of ${addresses.length} tokens on-chain ${
-          providerConfig ? `as of: ${providerConfig?.blockNumber}` : ''
+        `Got token symbol and decimals for ${Object.values(addressToToken).length
+        } out of ${addresses.length} tokens on-chain ${providerConfig ? `as of: ${providerConfig?.blockNumber}` : ''
         }`
       );
     }
@@ -1587,6 +1610,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_HEMI;
     case ChainId.LIGHTLINK:
       return USDC_LIGHTLINK;
+    case ChainId.WORLDCHAIN:
+      return USDC_WORLDCHAIN;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }

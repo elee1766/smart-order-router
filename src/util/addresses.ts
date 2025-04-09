@@ -56,6 +56,8 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].v3CoreFactoryAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].v3CoreFactoryAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].v3CoreFactoryAddress,
+  [ChainId.WORLDCHAIN]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.WORLDCHAIN].v3CoreFactoryAddress,
   [ChainId.LIGHTLINK]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.LIGHTLINK].v3CoreFactoryAddress,
   [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].v3CoreFactoryAddress,
@@ -105,6 +107,8 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].quoterAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].quoterAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].quoterAddress,
+  [ChainId.WORLDCHAIN]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.WORLDCHAIN].quoterAddress,
   [ChainId.LIGHTLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.LIGHTLINK].quoterAddress,
   [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].quoterAddress,
   [ChainId.REDBELLY]: CHAIN_TO_ADDRESSES_MAP[ChainId.REDBELLY].quoterAddress,
@@ -162,6 +166,8 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].multicallAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].multicallAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].multicallAddress,
+  [ChainId.WORLDCHAIN]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.WORLDCHAIN].multicallAddress,
   [ChainId.LIGHTLINK]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.LIGHTLINK].multicallAddress,
   [ChainId.GOAT]: CHAIN_TO_ADDRESSES_MAP[ChainId.GOAT].multicallAddress,
@@ -409,6 +415,13 @@ export const WETH9: {
     18,
     'wS',
     'Wrapped Sonic'
+  ),
+  [ChainId.WORLDCHAIN]: new Token(
+    ChainId.WORLDCHAIN,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'WETH',
+    'Wrapped Ether'
   ),
   [ChainId.LIGHTLINK]: new Token(
     ChainId.LIGHTLINK,

@@ -54,6 +54,7 @@ import {
   USDC_SONIC,
   USDC_TAIKO,
   USDC_TELOS,
+  USDC_WORLDCHAIN,
   USDC_XLAYER,
   USDC_ZKLINK,
   USDC_ZKSYNC,
@@ -120,6 +121,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.MOONBEAM]: [USDC_MOONBEAM, USDC_MC_MOONBEAM],
   [ChainId.ZKLINK]: [USDC_ZKLINK, USDT_ZKLINK],
   [ChainId.ZKSYNC]: [USDC_ZKSYNC, USDT_ZKSYNC],
+  [ChainId.WORLDCHAIN]: [USDC_WORLDCHAIN],
   [ChainId.BOB]: [USDC_BOB, USDT_BOB],
   [ChainId.LISK]: [USDT_LISK],
   [ChainId.TAIKO]: [USDC_TAIKO],
@@ -167,8 +169,8 @@ export type BuildOnChainGasModelFactoryType = {
   quoteToken: Token;
   v2poolProvider: IV2PoolProvider;
   l2GasDataProvider?:
-    | IL2GasDataProvider<OptimismGasData>
-    | IL2GasDataProvider<ArbitrumGasData>;
+  | IL2GasDataProvider<OptimismGasData>
+  | IL2GasDataProvider<ArbitrumGasData>;
   providerConfig?: ProviderConfig;
 };
 

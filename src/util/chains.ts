@@ -44,6 +44,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.CORN,
   ChainId.METAL,
   ChainId.SONIC,
+  ChainId.WORLDCHAIN,
   ChainId.LIGHTLINK,
   ChainId.GOAT,
   ChainId.REDBELLY,
@@ -149,6 +150,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.METAL;
     case 146:
       return ChainId.SONIC;
+    case 480:
+      return ChainId.WORLDCHAIN;
     case 1890:
       return ChainId.LIGHTLINK;
     case 2345:
@@ -204,6 +207,7 @@ export enum ChainName {
   CORN = 'corn',
   METAL = 'metal',
   SONIC = 'sonic',
+  WORLDCHAIN = 'worldchain',
   LIGHTLINK = 'lightlink',
   GOAT = 'goat',
   REDBELLY = 'redbelly',
@@ -241,6 +245,7 @@ export enum NativeCurrencyName {
   CORN = 'BTCN',
   METAL = 'ETH',
   SONIC = 'SONIC',
+  WORLDCHAIN = 'ETH',
   LIGHTLINK = 'ETH',
   GOAT = 'BTC',
   REDBELLY = 'RBNT',
@@ -329,6 +334,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.CORN]: ['BTCN'],
   [ChainId.METAL]: ['ETH'],
   [ChainId.SONIC]: ['SONIC'],
+  [ChainId.WORLDCHAIN]: ['ETH'],
   [ChainId.LIGHTLINK]: ['ETH'],
   [ChainId.GOAT]: ['BTC'],
   [ChainId.REDBELLY]: ['RBNT'],
@@ -374,6 +380,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.CORN]: NativeCurrencyName.CORN,
   [ChainId.METAL]: NativeCurrencyName.METAL,
   [ChainId.SONIC]: NativeCurrencyName.SONIC,
+  [ChainId.WORLDCHAIN]: NativeCurrencyName.WORLDCHAIN,
   [ChainId.LIGHTLINK]: NativeCurrencyName.LIGHTLINK,
   [ChainId.GOAT]: NativeCurrencyName.GOAT,
   [ChainId.REDBELLY]: NativeCurrencyName.REDBELLY,
@@ -458,6 +465,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.METAL;
     case 146:
       return ChainName.SONIC;
+    case 480:
+      return ChainName.WORLDCHAIN;
     case 1890:
       return ChainName.LIGHTLINK;
     case 2345:
@@ -553,6 +562,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_METAL!;
     case ChainId.SONIC:
       return process.env.JSON_RPC_PROVIDER_SONIC!;
+    case ChainId.WORLDCHAIN:
+      return process.env.JSON_RPC_PROVIDER_WORLDCHAIN!;
     case ChainId.LIGHTLINK:
       return process.env.JSON_RPC_PROVIDER_LIGHTLINK!;
     case ChainId.GOAT:
@@ -831,6 +842,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'wS',
     'Wrapped Sonic'
+  ),
+  [ChainId.WORLDCHAIN]: new Token(
+    ChainId.WORLDCHAIN,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'WETH',
+    'Wrapped Ether'
   ),
   [ChainId.LIGHTLINK]: new Token(
     ChainId.LIGHTLINK,
@@ -1504,6 +1522,30 @@ class SonicNativeCurrency extends NativeCurrency {
   }
 }
 
+function isWorldchain(chainId: number): chainId is ChainId.WORLDCHAIN {
+  return chainId === ChainId.WORLDCHAIN;
+}
+
+class WorldchainNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isWorldchain(this.chainId)) throw new Error('Not worldchain');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isWorldchain(chainId)) throw new Error('Not worldchain');
+    super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
 function isLightlink(chainId: number): chainId is ChainId.LIGHTLINK {
   return chainId === ChainId.LIGHTLINK;
 }
@@ -1725,6 +1767,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MetalNativeCurrency(chainId);
   } else if (isSonic(chainId)) {
     cachedNativeCurrency[chainId] = new SonicNativeCurrency(chainId);
+  } else if (isWorldchain(chainId)) {
+    cachedNativeCurrency[chainId] = new WorldchainNativeCurrency(chainId);
   } else if (isLightlink(chainId)) {
     cachedNativeCurrency[chainId] = new LightlinkNativeCurrency(chainId);
   } else if (isGoat(chainId)) {

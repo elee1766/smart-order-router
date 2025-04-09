@@ -75,6 +75,7 @@ import {
   USDC_SONIC,
   USDC_TAIKO,
   USDC_TELOS,
+  USDC_WORLDCHAIN,
   USDC_XLAYER,
   USDC_ZKLINK,
   USDC_ZKSYNC,
@@ -118,6 +119,7 @@ import {
   WBTC_POLYGON_ZKEVM,
   WBTC_SCROLL,
   WBTC_TELOS,
+  WBTC_WORLDCHAIN,
   WBTC_XLAYER,
   WBTC_ZKLINK,
   WBTC_ZKSYNC,
@@ -125,6 +127,7 @@ import {
   WETH_GOAT,
   WETH_POLYGON,
   WETH_REDBELLY,
+  WLD_WORLDCHAIN,
   WMATIC_POLYGON,
   WMATIC_POLYGON_MUMBAI,
   WXDAI_GNOSIS,
@@ -231,6 +234,12 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     USDT_ZKSYNC,
     USDC_ZKSYNC,
     WBTC_ZKSYNC,
+  ],
+  [ChainId.WORLDCHAIN]: [
+    WRAPPED_NATIVE_CURRENCY[ChainId.WORLDCHAIN]!,
+    USDC_WORLDCHAIN,
+    WLD_WORLDCHAIN,
+    WBTC_WORLDCHAIN,
   ],
   [ChainId.BOB]: [
     WRAPPED_NATIVE_CURRENCY[ChainId.BOB],
@@ -359,7 +368,7 @@ export class StaticV3SubgraphProvider implements IV3SubgraphProvider {
   constructor(
     private chainId: ChainId,
     private poolProvider: IV3PoolProvider
-  ) {}
+  ) { }
 
   public async getPools(
     tokenIn?: Token,
