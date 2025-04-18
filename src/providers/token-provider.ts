@@ -1181,6 +1181,15 @@ export const USDC_SONIC = new Token(
   'USD Coin'
 );
 
+// XDC Tokens
+export const USDC_XDC = new Token(
+  ChainId.XDC,
+  '0x2A8E898b6242355c290E1f4Fc966b8788729A4D4',
+  6,
+  'USDC.e',
+  'USD Coin'
+);
+
 // WorldChain Tokens
 export const USDC_WORLDCHAIN = new Token(
   ChainId.WORLDCHAIN,
@@ -1598,6 +1607,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_METAL;
     case ChainId.SONIC:
       return USDC_SONIC;
+    case ChainId.XDC:
+      return USDC_XDC;
     case ChainId.REDBELLY:
       return USDC_REDBELLY;
     case ChainId.SAGA:

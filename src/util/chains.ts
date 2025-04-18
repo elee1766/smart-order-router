@@ -44,6 +44,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.CORN,
   ChainId.METAL,
   ChainId.SONIC,
+  ChainId.XDC,
   ChainId.WORLDCHAIN,
   ChainId.LIGHTLINK,
   ChainId.GOAT,
@@ -150,6 +151,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.METAL;
     case 146:
       return ChainId.SONIC;
+    case 50:
+      return ChainId.XDC;
     case 480:
       return ChainId.WORLDCHAIN;
     case 1890:
@@ -207,6 +210,7 @@ export enum ChainName {
   CORN = 'corn',
   METAL = 'metal',
   SONIC = 'sonic',
+  XDC = 'xdc',
   WORLDCHAIN = 'worldchain',
   LIGHTLINK = 'lightlink',
   GOAT = 'goat',
@@ -245,6 +249,7 @@ export enum NativeCurrencyName {
   CORN = 'BTCN',
   METAL = 'ETH',
   SONIC = 'SONIC',
+  XDC = 'XDC',
   WORLDCHAIN = 'ETH',
   LIGHTLINK = 'ETH',
   GOAT = 'BTC',
@@ -334,6 +339,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.CORN]: ['BTCN'],
   [ChainId.METAL]: ['ETH'],
   [ChainId.SONIC]: ['SONIC'],
+  [ChainId.XDC]: ['XDC'],
   [ChainId.WORLDCHAIN]: ['ETH'],
   [ChainId.LIGHTLINK]: ['ETH'],
   [ChainId.GOAT]: ['BTC'],
@@ -380,6 +386,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.CORN]: NativeCurrencyName.CORN,
   [ChainId.METAL]: NativeCurrencyName.METAL,
   [ChainId.SONIC]: NativeCurrencyName.SONIC,
+  [ChainId.XDC]: NativeCurrencyName.XDC,
   [ChainId.WORLDCHAIN]: NativeCurrencyName.WORLDCHAIN,
   [ChainId.LIGHTLINK]: NativeCurrencyName.LIGHTLINK,
   [ChainId.GOAT]: NativeCurrencyName.GOAT,
@@ -465,6 +472,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.METAL;
     case 146:
       return ChainName.SONIC;
+    case 50:
+      return ChainName.XDC;
     case 480:
       return ChainName.WORLDCHAIN;
     case 1890:
@@ -562,6 +571,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_METAL!;
     case ChainId.SONIC:
       return process.env.JSON_RPC_PROVIDER_SONIC!;
+    case ChainId.XDC:
+      return process.env.JSON_RPC_PROVIDER_XDC!;
     case ChainId.WORLDCHAIN:
       return process.env.JSON_RPC_PROVIDER_WORLDCHAIN!;
     case ChainId.LIGHTLINK:
@@ -842,6 +853,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'wS',
     'Wrapped Sonic'
+  ),
+  [ChainId.XDC]: new Token(
+    ChainId.XDC,
+    '0x951857744785e80e2de051c32ee7b25f9c458c42',
+    18,
+    'WXDC',
+    'Wrapped XDC'
   ),
   [ChainId.WORLDCHAIN]: new Token(
     ChainId.WORLDCHAIN,
@@ -1522,6 +1540,30 @@ class SonicNativeCurrency extends NativeCurrency {
   }
 }
 
+function isXdc(chainId: number): chainId is ChainId.XDC {
+  return chainId === ChainId.XDC;
+}
+
+class XdcNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isXdc(this.chainId)) throw new Error('Not xdc');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isXdc(chainId)) throw new Error('Not xdc');
+    super(chainId, 18, 'XDC', 'XDC');
+  }
+}
+
 function isWorldchain(chainId: number): chainId is ChainId.WORLDCHAIN {
   return chainId === ChainId.WORLDCHAIN;
 }
@@ -1767,6 +1809,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MetalNativeCurrency(chainId);
   } else if (isSonic(chainId)) {
     cachedNativeCurrency[chainId] = new SonicNativeCurrency(chainId);
+  } else if (isXdc(chainId)) {
+    cachedNativeCurrency[chainId] = new XdcNativeCurrency(chainId);
   } else if (isWorldchain(chainId)) {
     cachedNativeCurrency[chainId] = new WorldchainNativeCurrency(chainId);
   } else if (isLightlink(chainId)) {
