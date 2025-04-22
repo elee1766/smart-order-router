@@ -587,6 +587,23 @@ export const WETH_ZKSYNC = new Token(
   'Wrapped ETH'
 );
 
+// lens
+export const USDC_LENS = new Token(
+  ChainId.LENS,
+  '0x88F08E304EC4f90D644Cec3Fb69b8aD414acf884',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const WETH_LENS = new Token(
+  ChainId.LENS,
+  '0xE5ecd226b3032910CEaa43ba92EE8232f8237553',
+  18,
+  'WETH',
+  'Wrapped Ether'
+);
+
 // xlayer
 export const USDC_XLAYER = new Token(
   ChainId.XLAYER,
@@ -1569,6 +1586,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_MOONBEAM;
     case ChainId.ZKSYNC:
       return USDC_ZKSYNC;
+    case ChainId.LENS:
+      return USDC_LENS;
     case ChainId.XLAYER:
       return USDC_XLAYER;
     case ChainId.BOB:

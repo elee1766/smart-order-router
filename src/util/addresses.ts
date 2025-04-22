@@ -31,6 +31,7 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].v3CoreFactoryAddress,
   [ChainId.ZKLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKLINK].v3CoreFactoryAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].v3CoreFactoryAddress,
+  [ChainId.LENS]: CHAIN_TO_ADDRESSES_MAP[ChainId.LENS].v3CoreFactoryAddress,
   [ChainId.XLAYER]: CHAIN_TO_ADDRESSES_MAP[ChainId.XLAYER].v3CoreFactoryAddress,
   [ChainId.GNOSIS]: CHAIN_TO_ADDRESSES_MAP[ChainId.GNOSIS].v3CoreFactoryAddress,
   [ChainId.BOB]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOB].v3CoreFactoryAddress,
@@ -84,6 +85,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].quoterAddress,
   [ChainId.ZKLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKLINK].quoterAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].quoterAddress,
+  [ChainId.LENS]: CHAIN_TO_ADDRESSES_MAP[ChainId.LENS].quoterAddress,
   [ChainId.XLAYER]: CHAIN_TO_ADDRESSES_MAP[ChainId.XLAYER].quoterAddress,
   [ChainId.GNOSIS]: CHAIN_TO_ADDRESSES_MAP[ChainId.GNOSIS].quoterAddress,
   [ChainId.BOB]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOB].quoterAddress,
@@ -141,6 +143,7 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.AVALANCHE].multicallAddress,
   [ChainId.MOONBEAM]: CHAIN_TO_ADDRESSES_MAP[ChainId.MOONBEAM].multicallAddress,
   [ChainId.ZKSYNC]: CHAIN_TO_ADDRESSES_MAP[ChainId.ZKSYNC].multicallAddress,
+  [ChainId.LENS]: CHAIN_TO_ADDRESSES_MAP[ChainId.LENS].multicallAddress,
   [ChainId.XLAYER]: CHAIN_TO_ADDRESSES_MAP[ChainId.XLAYER].multicallAddress,
   [ChainId.GNOSIS]: CHAIN_TO_ADDRESSES_MAP[ChainId.GNOSIS].multicallAddress,
   [ChainId.BOB]: CHAIN_TO_ADDRESSES_MAP[ChainId.BOB].multicallAddress,
@@ -474,5 +477,12 @@ export const WETH9: {
     18,
     'WETH',
     'Wrapped Ether'
+  ),
+  [ChainId.LENS]: new Token(
+    ChainId.LENS,
+    '0x6bDc36E20D267Ff0dd6097799f82e78907105e2F',
+    18,
+    'WGHO',
+    'Wrapped GHO'
   ),
 };

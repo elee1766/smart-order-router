@@ -23,6 +23,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.AVALANCHE,
   ChainId.MOONBEAM,
   ChainId.ZKSYNC,
+  ChainId.LENS,
   ChainId.GNOSIS,
   ChainId.XLAYER,
   ChainId.BOB,
@@ -109,6 +110,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.MOONBEAM;
     case 324:
       return ChainId.ZKSYNC;
+    case 232:
+      return ChainId.LENS;
     case 196:
       return ChainId.XLAYER;
     case 60808:
@@ -187,6 +190,7 @@ export enum ChainName {
   GNOSIS = 'gnosis',
   MOONBEAM = 'moonbeam-mainnet',
   ZKSYNC = 'zksync',
+  LENS = 'lens',
   XLAYER = 'xlayer',
   BOB = 'bob',
   LISK = 'lisk',
@@ -228,6 +232,7 @@ export enum NativeCurrencyName {
   GNOSIS = 'XDAI',
   MOONBEAM = 'GLMR',
   ZKSYNC = 'ETH',
+  LENS = 'GHO',
   XLAYER = 'OKB',
   BOB = 'ETH',
   LISK = 'ETH',
@@ -305,6 +310,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.GNOSIS]: ['XDAI'],
   [ChainId.MOONBEAM]: ['GLMR'],
   [ChainId.ZKSYNC]: ['ETH'],
+  [ChainId.LENS]: ['GHO'],
   [ChainId.XLAYER]: ['OKB'],
   [ChainId.BOB]: ['ETH'],
   [ChainId.LISK]: ['ETH'],
@@ -364,6 +370,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.GNOSIS]: NativeCurrencyName.GNOSIS,
   [ChainId.MOONBEAM]: NativeCurrencyName.MOONBEAM,
   [ChainId.ZKSYNC]: NativeCurrencyName.ZKSYNC,
+  [ChainId.LENS]: NativeCurrencyName.LENS,
   [ChainId.XLAYER]: NativeCurrencyName.XLAYER,
   [ChainId.BOB]: NativeCurrencyName.BOB,
   [ChainId.LISK]: NativeCurrencyName.LISK,
@@ -428,6 +435,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.MOONBEAM;
     case 324:
       return ChainName.ZKSYNC;
+    case 232:
+      return ChainName.LENS;
     case 196:
       return ChainName.XLAYER;
     case 60808:
@@ -531,6 +540,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_MOONBEAM!;
     case ChainId.ZKSYNC:
       return process.env.JSON_RPC_PROVIDER_ZKSYNC!;
+    case ChainId.LENS:
+      return process.env.JSON_RPC_PROVIDER_LENS!;
     case ChainId.XLAYER:
       return process.env.JSON_RPC_PROVIDER_XLAYER!;
     case ChainId.GNOSIS:
@@ -699,6 +710,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'WETH',
     'Wrapped ETH'
+  ),
+  [ChainId.LENS]: new Token(
+    ChainId.LENS,
+    '0x6bDc36E20D267Ff0dd6097799f82e78907105e2F',
+    18,
+    'WGHO',
+    'Wrapped GHO'
   ),
   [ChainId.XLAYER]: new Token(
     ChainId.XLAYER,
@@ -1057,6 +1075,30 @@ class ZksyncNativeCurrency extends NativeCurrency {
   public constructor(chainId: number) {
     if (!isZksync(chainId)) throw new Error('Not zksync');
     super(chainId, 18, 'ETH', 'Ether');
+  }
+}
+
+function isLens(chainId: number): chainId is ChainId.LENS {
+  return chainId === ChainId.LENS;
+}
+
+class LensNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isLens(this.chainId)) throw new Error('Not lens');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isLens(chainId)) throw new Error('Not lens');
+    super(chainId, 18, 'GHO', 'GHO');
   }
 }
 
@@ -1769,6 +1811,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new MoonbeamNativeCurrency(chainId);
   } else if (isZksync(chainId)) {
     cachedNativeCurrency[chainId] = new ZksyncNativeCurrency(chainId);
+  } else if (isLens(chainId)) {
+    cachedNativeCurrency[chainId] = new LensNativeCurrency(chainId);
   } else if (isBob(chainId)) {
     cachedNativeCurrency[chainId] = new BobNativeCurrency(chainId);
   } else if (isLisk(chainId)) {
