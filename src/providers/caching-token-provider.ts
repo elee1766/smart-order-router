@@ -380,7 +380,7 @@ export const CACHE_SEED_TOKENS: {
   },
   [ChainId.NIBIRU]: {
     USDC: USDC_NIBIRU,
-    WETH: WRAPPED_NATIVE_CURRENCY[ChainId.NIBIRU],
+    WNIBI: WRAPPED_NATIVE_CURRENCY[ChainId.NIBIRU],
   },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis
   // testnet

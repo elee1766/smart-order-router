@@ -1812,7 +1812,7 @@ class NibiruNativeCurrency extends NativeCurrency {
 
   public constructor(chainId: number) {
     if (!isNibiru(chainId)) throw new Error('Not nibiru');
-    super(chainId, 18, 'ETH', 'Ether');
+    super(chainId, 18, 'NIBI', 'Nibiru');
   }
 }
 
