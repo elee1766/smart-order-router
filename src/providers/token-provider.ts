@@ -1295,6 +1295,15 @@ export const WBTC_HEMI = new Token(
   'Wrapped BTC'
 );
 
+//Nibiru
+export const USDC_NIBIRU = new Token(
+  ChainId.NIBIRU,
+  '0x0829F361A05D993d5CEb035cA6DF3446b060970b',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
 export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
@@ -1642,6 +1651,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_LIGHTLINK;
     case ChainId.WORLDCHAIN:
       return USDC_WORLDCHAIN;
+    case ChainId.NIBIRU:
+      return USDC_NIBIRU;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }

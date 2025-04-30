@@ -53,6 +53,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.SAGA,
   ChainId.TELOS,
   ChainId.HEMI,
+  ChainId.NIBIRU,
 ];
 
 export const V2_SUPPORTED = [ChainId.MAINNET, ChainId.GOERLI, ChainId.SEPOLIA];
@@ -170,6 +171,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.TELOS;
     case 43111:
       return ChainId.HEMI;
+    case 6900:
+      return ChainId.NIBIRU;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
@@ -222,6 +225,7 @@ export enum ChainName {
   SAGA = 'saga',
   TELOS = 'telos',
   HEMI = 'hemi',
+  NIBIRU = 'nibiru',
 }
 
 export enum NativeCurrencyName {
@@ -262,6 +266,7 @@ export enum NativeCurrencyName {
   SAGA = 'GAS',
   TELOS = 'TLOS',
   HEMI = 'ETH',
+  NIBIRU = 'NIBI',
 }
 
 export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
@@ -353,6 +358,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.SAGA]: ['GAS'],
   [ChainId.TELOS]: ['TLOS'],
   [ChainId.HEMI]: ['ETH'],
+  [ChainId.NIBIRU]: ['NIBI'],
 };
 
 export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
@@ -401,6 +407,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.SAGA]: NativeCurrencyName.SAGA,
   [ChainId.TELOS]: NativeCurrencyName.TELOS,
   [ChainId.HEMI]: NativeCurrencyName.HEMI,
+  [ChainId.NIBIRU]: NativeCurrencyName.NIBIRU,
 };
 
 export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
@@ -497,6 +504,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.TELOS;
     case 43111:
       return ChainName.HEMI;
+    case 6900:
+      return ChainName.NIBIRU;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
@@ -598,6 +607,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_TELOS!;
     case ChainId.HEMI:
       return process.env.JSON_RPC_PROVIDER_HEMI!;
+    case ChainId.NIBIRU:
+      return process.env.JSON_RPC_PROVIDER_NIBIRU!;
     default:
       throw new Error(`Chain id: ${id} not supported`);
   }
@@ -927,6 +938,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'WETH',
     'Wrapped Ether'
+  ),
+  [ChainId.NIBIRU]: new Token(
+    ChainId.NIBIRU,
+    '0x1429B38e58b97de646ACd65fdb8a4502c2131484',
+    18,
+    'WNIBI',
+    'Wrapped NIBI'
   ),
 };
 
@@ -1774,6 +1792,30 @@ class HemiNativeCurrency extends NativeCurrency {
   }
 }
 
+function isNibiru(chainId: number): chainId is ChainId.NIBIRU {
+  return chainId === ChainId.NIBIRU;
+}
+
+class NibiruNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isNibiru(this.chainId)) throw new Error('Not nibiru');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isNibiru(chainId)) throw new Error('Not nibiru');
+    super(chainId, 18, 'NIBI', 'Nibiru');
+  }
+}
+
 export class ExtendedEther extends Ether {
   public get wrapped(): Token {
     if (this.chainId in WRAPPED_NATIVE_CURRENCY) {
@@ -1869,6 +1911,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new TelosNativeCurrency(chainId);
   } else if (isHemi(chainId)) {
     cachedNativeCurrency[chainId] = new HemiNativeCurrency(chainId);
+  } else if (isNibiru(chainId)) {
+    cachedNativeCurrency[chainId] = new NibiruNativeCurrency(chainId);
   } else {
     cachedNativeCurrency[chainId] = ExtendedEther.onChain(chainId);
   }

@@ -42,6 +42,7 @@ import {
   USDC_MC_MOONBEAM,
   USDC_METAL,
   USDC_MOONBEAM,
+  USDC_NIBIRU,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
   USDC_POLYGON,
@@ -157,6 +158,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.REDBELLY]: [USDC_REDBELLY, USDT_REDBELLY],
   [ChainId.SAGA]: [USDC_SAGA, USDT_SAGA],
   [ChainId.LIGHTLINK]: [USDC_LIGHTLINK, USDT_LIGHTLINK],
+  [ChainId.NIBIRU]: [USDC_NIBIRU],
 };
 
 export type L1ToL2GasCosts = {

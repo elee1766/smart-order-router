@@ -68,6 +68,7 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.SAGA]: CHAIN_TO_ADDRESSES_MAP[ChainId.SAGA].v3CoreFactoryAddress,
   [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].v3CoreFactoryAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].v3CoreFactoryAddress,
+  [ChainId.NIBIRU]: CHAIN_TO_ADDRESSES_MAP[ChainId.NIBIRU].v3CoreFactoryAddress,
 };
 
 export const QUOTER_V2_ADDRESSES: AddressMap = {
@@ -119,6 +120,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.SAGA]: CHAIN_TO_ADDRESSES_MAP[ChainId.SAGA].quoterAddress,
   [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].quoterAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].quoterAddress,
+  [ChainId.NIBIRU]: CHAIN_TO_ADDRESSES_MAP[ChainId.NIBIRU].quoterAddress,
 };
 
 export const MIXED_ROUTE_QUOTER_V1_ADDRESSES: AddressMap = {
@@ -181,6 +183,7 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
   [ChainId.SAGA]: CHAIN_TO_ADDRESSES_MAP[ChainId.SAGA].multicallAddress,
   [ChainId.TELOS]: CHAIN_TO_ADDRESSES_MAP[ChainId.TELOS].multicallAddress,
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].multicallAddress,
+  [ChainId.NIBIRU]: CHAIN_TO_ADDRESSES_MAP[ChainId.NIBIRU].multicallAddress,
 };
 
 export const SWAP_ROUTER_02_ADDRESSES = (chainId: number): string => {
@@ -484,5 +487,12 @@ export const WETH9: {
     18,
     'WGHO',
     'Wrapped GHO'
+  ),
+  [ChainId.NIBIRU]: new Token(
+    ChainId.NIBIRU,
+    '0x1429B38e58b97de646ACd65fdb8a4502c2131484',
+    18,
+    'WNIBI',
+    'Wrapped NIBI'
   ),
 };

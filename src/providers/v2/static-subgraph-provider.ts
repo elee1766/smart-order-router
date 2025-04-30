@@ -71,6 +71,7 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.GOAT]: [],
   [ChainId.REDBELLY]: [],
   [ChainId.SAGA]: [],
+  [ChainId.NIBIRU]: [],
 };
 
 /**

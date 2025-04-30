@@ -59,6 +59,7 @@ import {
   USDC_MANTLE,
   USDC_METAL,
   USDC_MOONBEAM,
+  USDC_NIBIRU,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
   USDC_POLYGON,
@@ -360,6 +361,10 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
     WBTC_LIGHTLINK,
     LIGHTLINK_LIGHTLINK,
     WRAPPED_NATIVE_CURRENCY[ChainId.LIGHTLINK],
+  ],
+  [ChainId.NIBIRU]: [
+    USDC_NIBIRU,
+    WRAPPED_NATIVE_CURRENCY[ChainId.NIBIRU],
   ],
 };
 
