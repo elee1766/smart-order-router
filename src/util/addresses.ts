@@ -55,6 +55,8 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].v3CoreFactoryAddress,
   [ChainId.BASE]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE].v3CoreFactoryAddress,
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].v3CoreFactoryAddress,
+  [ChainId.ETHERLINK]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.ETHERLINK].v3CoreFactoryAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].v3CoreFactoryAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].v3CoreFactoryAddress,
   [ChainId.XDC]: CHAIN_TO_ADDRESSES_MAP[ChainId.XDC].v3CoreFactoryAddress,
@@ -109,6 +111,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].quoterAddress,
   [ChainId.BASE]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE].quoterAddress,
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].quoterAddress,
+  [ChainId.ETHERLINK]: CHAIN_TO_ADDRESSES_MAP[ChainId.ETHERLINK].quoterAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].quoterAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].quoterAddress,
   [ChainId.XDC]: CHAIN_TO_ADDRESSES_MAP[ChainId.XDC].quoterAddress,
@@ -171,6 +174,8 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
     CHAIN_TO_ADDRESSES_MAP[ChainId.BASE_GOERLI].multicallAddress,
   [ChainId.BASE]: CHAIN_TO_ADDRESSES_MAP[ChainId.BASE].multicallAddress,
   [ChainId.CORN]: CHAIN_TO_ADDRESSES_MAP[ChainId.CORN].multicallAddress,
+  [ChainId.ETHERLINK]:
+    CHAIN_TO_ADDRESSES_MAP[ChainId.ETHERLINK].multicallAddress,
   [ChainId.METAL]: CHAIN_TO_ADDRESSES_MAP[ChainId.METAL].multicallAddress,
   [ChainId.SONIC]: CHAIN_TO_ADDRESSES_MAP[ChainId.SONIC].multicallAddress,
   [ChainId.XDC]: CHAIN_TO_ADDRESSES_MAP[ChainId.XDC].multicallAddress,
@@ -410,6 +415,13 @@ export const WETH9: {
     18,
     'WBTCN',
     'Wrapped BTCN'
+  ),
+  [ChainId.ETHERLINK]: new Token(
+    ChainId.ETHERLINK,
+    '0xc9B53AB2679f573e480d01e0f49e2B5CFB7a3EAb',
+    18,
+    'WXTZ',
+    'Wrapped XTZ'
   ),
   [ChainId.METAL]: new Token(
     ChainId.METAL,

@@ -47,6 +47,7 @@ import {
   USDC_BOB,
   USDC_BOBA,
   USDC_CORN,
+  USDC_ETHERLINK,
   USDC_FILECOIN,
   USDC_GNOSIS,
   USDC_GOAT,
@@ -80,6 +81,7 @@ import {
   USDT_ARBITRUM,
   USDT_BNB,
   USDT_BOB,
+  USDT_ETHERLINK,
   USDT_FILECOIN,
   USDT_GOAT,
   USDT_HEMI,
@@ -119,6 +121,7 @@ import {
   WBTC_ZKSYNC,
   WETH_BLAST,
   WETH_BOB,
+  WETH_ETHERLINK,
   WETH_FILECOIN,
   WETH_GOAT,
   WETH_LENS,
@@ -321,6 +324,12 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.BOBA]: [USDC_BOBA],
   [ChainId.BASE]: [USDC_BASE],
   [ChainId.CORN]: [USDC_CORN],
+  [ChainId.ETHERLINK]: [
+    USDC_ETHERLINK,
+    USDT_ETHERLINK,
+    WETH_ETHERLINK,
+    WRAPPED_NATIVE_CURRENCY[ChainId.ETHERLINK],
+  ],
   [ChainId.METAL]: [USDC_METAL],
   [ChainId.SONIC]: [USDC_SONIC],
   [ChainId.XDC]: [USDC_XDC],
@@ -362,10 +371,7 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
     LIGHTLINK_LIGHTLINK,
     WRAPPED_NATIVE_CURRENCY[ChainId.LIGHTLINK],
   ],
-  [ChainId.NIBIRU]: [
-    USDC_NIBIRU,
-    WRAPPED_NATIVE_CURRENCY[ChainId.NIBIRU],
-  ],
+  [ChainId.NIBIRU]: [USDC_NIBIRU, WRAPPED_NATIVE_CURRENCY[ChainId.NIBIRU]],
 };
 
 class SubcategorySelectionPools<SubgraphPool> {

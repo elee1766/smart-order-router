@@ -1072,6 +1072,31 @@ export const USDC_CORN = new Token(
   'USD Coin'
 );
 
+// Etherlink Tokens
+export const USDC_ETHERLINK = new Token(
+  ChainId.ETHERLINK,
+  '0x796Ea11Fa2dD751eD01b53C372fFDB4AAa8f00F9',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const USDT_ETHERLINK = new Token(
+  ChainId.ETHERLINK,
+  '0x2C03058C8AFC06713be23e58D2febC8337dbfE6A',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
+export const WETH_ETHERLINK = new Token(
+  ChainId.ETHERLINK,
+  '0xfc24f770F94edBca6D6f885E12d4317320BcB401',
+  18,
+  'WETH',
+  'Wrapped Ether'
+);
+
 // Redbelly Tokens
 export const USDT_REDBELLY = new Token(
   ChainId.REDBELLY,
@@ -1562,6 +1587,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_GOAT;
     case ChainId.LIGHTLINK:
       return USDT_LIGHTLINK;
+    case ChainId.ETHERLINK:
+      return USDT_ETHERLINK;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -1631,6 +1658,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_SCROLL;
     case ChainId.CORN:
       return USDC_CORN;
+    case ChainId.ETHERLINK:
+      return USDC_ETHERLINK;
     case ChainId.METAL:
       return USDC_METAL;
     case ChainId.SONIC:
