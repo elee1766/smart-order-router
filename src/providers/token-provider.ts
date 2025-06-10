@@ -1290,6 +1290,22 @@ export const WETH_TELOS = new Token(
   'Wrapped Ether'
 );
 
+export const MST_TELOS = new Token(
+  ChainId.TELOS,
+  '0x568524da340579887db50ecf602cd1ba8451b243',
+  18,
+  'MST',
+  'MST'
+);
+
+export const USDM_TELOS = new Token(
+  ChainId.TELOS,
+  '0x8f7d64ea96d729ef24a0f30b4526d47b80d877b9',
+  18,
+  'USDM',
+  'USDM Stablecoin'
+);
+
 // Hemi Tokens
 export const USDC_HEMI = new Token(
   ChainId.HEMI,

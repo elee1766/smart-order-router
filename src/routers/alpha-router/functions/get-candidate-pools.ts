@@ -35,6 +35,7 @@ import {
   LUSD_SCROLL,
   MANTA_MANTA,
   MATIC_POLYGON_ZKEVM,
+  MST_TELOS,
   RIF_ROOTSTOCK,
   RUSDT_ROOTSTOCK,
   SOLVBTC_BOB,
@@ -78,6 +79,7 @@ import {
   USDC_XLAYER,
   USDC_ZKLINK,
   USDC_ZKSYNC,
+  USDM_TELOS,
   USDT_ARBITRUM,
   USDT_BNB,
   USDT_BOB,
@@ -336,7 +338,9 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.TELOS]: [
     USDC_TELOS,
     USDT_TELOS,
+    USDM_TELOS,
     WBTC_TELOS,
+    MST_TELOS,
     WRAPPED_NATIVE_CURRENCY[ChainId.TELOS],
   ],
   [ChainId.HEMI]: [
