@@ -28,6 +28,7 @@ import {
   DAI_POLYGON_ZKEVM,
   DAI_SCROLL,
   DAI_SEPOLIA,
+  DAI_UNICHAIN,
   ETH_SAGA,
   FEI_MAINNET,
   ITokenProvider,
@@ -75,6 +76,7 @@ import {
   USDC_SONIC,
   USDC_TAIKO,
   USDC_TELOS,
+  USDC_UNICHAIN,
   USDC_XDC,
   USDC_XLAYER,
   USDC_ZKLINK,
@@ -100,6 +102,7 @@ import {
   USDT_SAGA,
   USDT_SCROLL,
   USDT_TELOS,
+  USDT_UNICHAIN,
   USDT_XLAYER,
   USDT_ZKLINK,
   USDT_ZKSYNC,
@@ -376,6 +379,12 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
     WRAPPED_NATIVE_CURRENCY[ChainId.LIGHTLINK],
   ],
   [ChainId.NIBIRU]: [USDC_NIBIRU, WRAPPED_NATIVE_CURRENCY[ChainId.NIBIRU]],
+  [ChainId.UNICHAIN]: [
+    USDC_UNICHAIN,
+    USDT_UNICHAIN,
+    DAI_UNICHAIN,
+    WRAPPED_NATIVE_CURRENCY[ChainId.UNICHAIN],
+  ],
 };
 
 class SubcategorySelectionPools<SubgraphPool> {

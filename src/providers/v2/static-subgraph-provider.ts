@@ -73,6 +73,7 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.SAGA]: [],
   [ChainId.NIBIRU]: [],
   [ChainId.ETHERLINK]: [],
+  [ChainId.UNICHAIN]: [],
 };
 
 /**

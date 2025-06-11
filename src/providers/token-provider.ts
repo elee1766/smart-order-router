@@ -1345,6 +1345,31 @@ export const USDC_NIBIRU = new Token(
   'USD Coin'
 );
 
+//Unichain
+export const USDC_UNICHAIN = new Token(
+  ChainId.UNICHAIN,
+  '0x078D782b760474a361dDA0AF3839290b0EF57AD6',
+  6,
+  'USDC',
+  'USD Token'
+);
+
+export const DAI_UNICHAIN = new Token(
+  ChainId.UNICHAIN,
+  '0x20CAb320A855b39F724131C69424240519573f81',
+  18,
+  'DAI',
+  'Dai Stablecoin'
+);
+
+export const USDT_UNICHAIN = new Token(
+  ChainId.UNICHAIN,
+  '0x9151434b16b9763660705744891fa906f660ecc5',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
 export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
@@ -1548,6 +1573,8 @@ export const DAI_ON = (chainId: ChainId): Token => {
       return DAI_LINEA;
     case ChainId.SCROLL:
       return DAI_SCROLL;
+    case ChainId.UNICHAIN:
+      return DAI_UNICHAIN;
     case ChainId.HEMI:
       return DAI_HEMI;
     default:
@@ -1605,6 +1632,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_LIGHTLINK;
     case ChainId.ETHERLINK:
       return USDT_ETHERLINK;
+    case ChainId.UNICHAIN:
+      return USDT_UNICHAIN;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -1698,6 +1727,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_WORLDCHAIN;
     case ChainId.NIBIRU:
       return USDC_NIBIRU;
+    case ChainId.UNICHAIN:
+      return USDC_UNICHAIN;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
