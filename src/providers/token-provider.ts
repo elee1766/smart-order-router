@@ -1345,6 +1345,14 @@ export const USDC_NIBIRU = new Token(
   'USD Coin'
 );
 
+export const STNIBI_NIBIRU = new Token(
+  ChainId.NIBIRU,
+  '0xca0a9fb5fbf692fa12fd13c0a900ec56bb3f0a7b',
+  6,
+  'stNIBI',
+  'Liquid Staked Nibiru'
+);
+
 //Unichain
 export const USDC_UNICHAIN = new Token(
   ChainId.UNICHAIN,

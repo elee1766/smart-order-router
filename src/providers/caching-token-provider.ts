@@ -37,6 +37,7 @@ import {
   RIF_ROOTSTOCK,
   RUSDT_ROOTSTOCK,
   SOLVBTC_BOB,
+  STNIBI_NIBIRU,
   TokenAccessor,
   USDB_BLAST,
   USDC_ARBITRUM,
@@ -402,6 +403,7 @@ export const CACHE_SEED_TOKENS: {
   },
   [ChainId.NIBIRU]: {
     USDC: USDC_NIBIRU,
+    STNIBI: STNIBI_NIBIRU,
     WNIBI: WRAPPED_NATIVE_CURRENCY[ChainId.NIBIRU],
   },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis
