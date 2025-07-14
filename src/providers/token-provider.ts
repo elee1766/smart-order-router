@@ -1395,14 +1395,6 @@ export const USDT_MATCHAIN = new Token(
   'Tether USD'
 );
 
-export const MAT_MATCHAIN = new Token(
-  ChainId.MATCHAIN,
-  '0x44a83a012B926853DFc1BBE2ec5BEf37126067e8',
-  18,
-  'MAT',
-  'Matchain Token'
-);
-
 export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
