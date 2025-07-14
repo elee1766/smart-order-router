@@ -484,6 +484,7 @@ export class AlphaRouter
     } else {
       switch (chainId) {
         case ChainId.ROOTSTOCK:
+        case ChainId.ETHERLINK:
         case ChainId.UNICHAIN:
           this.onChainQuoteProvider = new OnChainQuoteProvider(
             chainId,
