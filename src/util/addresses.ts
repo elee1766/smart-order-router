@@ -521,8 +521,8 @@ export const WETH9: {
     'ETH',
     'Wrapped Ether'
   ),
-  [ChainId.UNICHAIN]: new Token(
-    ChainId.UNICHAIN,
+  [ChainId.MATCHAIN]: new Token(
+    ChainId.MATCHAIN,
     '0x4200000000000000000000000000000000000006',
     18,
     'BNB',
