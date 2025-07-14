@@ -411,6 +411,7 @@ export const CACHE_SEED_TOKENS: {
   [ChainId.MATCHAIN]: {
     USDC: USDC_MATCHAIN,
     USDT: USDT_MATCHAIN,
+    WBNB: WRAPPED_NATIVE_CURRENCY[ChainId.MATCHAIN],
   },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis
   // testnet
