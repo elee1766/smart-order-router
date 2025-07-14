@@ -73,6 +73,7 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   [ChainId.NIBIRU]: CHAIN_TO_ADDRESSES_MAP[ChainId.NIBIRU].v3CoreFactoryAddress,
   [ChainId.UNICHAIN]:
     CHAIN_TO_ADDRESSES_MAP[ChainId.UNICHAIN].v3CoreFactoryAddress,
+  [ChainId.MATCHAIN]: CHAIN_TO_ADDRESSES_MAP[ChainId.MATCHAIN].v3CoreFactoryAddress,
 };
 
 export const QUOTER_V2_ADDRESSES: AddressMap = {
@@ -127,6 +128,7 @@ export const QUOTER_V2_ADDRESSES: AddressMap = {
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].quoterAddress,
   [ChainId.NIBIRU]: CHAIN_TO_ADDRESSES_MAP[ChainId.NIBIRU].quoterAddress,
   [ChainId.UNICHAIN]: CHAIN_TO_ADDRESSES_MAP[ChainId.UNICHAIN].quoterAddress,
+  [ChainId.MATCHAIN]: CHAIN_TO_ADDRESSES_MAP[ChainId.MATCHAIN].quoterAddress,
 };
 
 export const MIXED_ROUTE_QUOTER_V1_ADDRESSES: AddressMap = {
@@ -193,6 +195,7 @@ export const UNISWAP_MULTICALL_ADDRESSES: AddressMap = {
   [ChainId.HEMI]: CHAIN_TO_ADDRESSES_MAP[ChainId.HEMI].multicallAddress,
   [ChainId.NIBIRU]: CHAIN_TO_ADDRESSES_MAP[ChainId.NIBIRU].multicallAddress,
   [ChainId.UNICHAIN]: CHAIN_TO_ADDRESSES_MAP[ChainId.UNICHAIN].multicallAddress,
+  [ChainId.MATCHAIN]: CHAIN_TO_ADDRESSES_MAP[ChainId.MATCHAIN].multicallAddress,
 };
 
 export const SWAP_ROUTER_02_ADDRESSES = (chainId: number): string => {
@@ -243,6 +246,7 @@ export const WETH9: {
     | ChainId.ROOTSTOCK
     | ChainId.BNB
     | ChainId.AVALANCHE
+    | ChainId.MATCHAIN
   >]: Token;
 } = {
   [ChainId.MAINNET]: new Token(

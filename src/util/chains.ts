@@ -56,6 +56,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.HEMI,
   ChainId.NIBIRU,
   ChainId.UNICHAIN,
+  ChainId.MATCHAIN,
 ];
 
 export const V2_SUPPORTED = [ChainId.MAINNET, ChainId.GOERLI, ChainId.SEPOLIA];
@@ -179,6 +180,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.NIBIRU;
     case 130:
       return ChainId.UNICHAIN;
+    case 698:
+      return ChainId.MATCHAIN;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
@@ -234,6 +237,7 @@ export enum ChainName {
   HEMI = 'hemi',
   NIBIRU = 'nibiru',
   UNICHAIN = 'unichain',
+  MATCHAIN = 'matchain',
 }
 
 export enum NativeCurrencyName {
@@ -277,6 +281,7 @@ export enum NativeCurrencyName {
   HEMI = 'ETH',
   NIBIRU = 'NIBI',
   UNICHAIN = 'ETH',
+  MATCHAIN = 'BNB',
 }
 
 export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
@@ -371,6 +376,7 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.HEMI]: ['ETH'],
   [ChainId.NIBIRU]: ['NIBI'],
   [ChainId.UNICHAIN]: ['ETH'],
+  [ChainId.MATCHAIN]: ['BNB'],
 };
 
 export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
@@ -422,6 +428,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.HEMI]: NativeCurrencyName.HEMI,
   [ChainId.NIBIRU]: NativeCurrencyName.NIBIRU,
   [ChainId.UNICHAIN]: NativeCurrencyName.UNICHAIN,
+  [ChainId.MATCHAIN]: NativeCurrencyName.MATCHAIN,
 };
 
 export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
@@ -524,6 +531,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.NIBIRU;
     case 130:
       return ChainName.UNICHAIN;
+    case 698:
+      return ChainName.MATCHAIN;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
@@ -631,6 +640,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_NIBIRU!;
     case ChainId.UNICHAIN:
       return process.env.JSON_RPC_PROVIDER_UNICHAIN!;
+    case ChainId.MATCHAIN:
+      return process.env.JSON_RPC_PROVIDER_MATCHAIN!;
     default:
       throw new Error(`Chain id: ${id} not supported`);
   }
@@ -982,6 +993,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     'ETH',
     'Ether'
   ),
+  [ChainId.MATCHAIN]: new Token(
+    ChainId.MATCHAIN,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'WBNB',
+    'Wrapped BNB'
+  )
 };
 
 function isMatic(
@@ -1900,6 +1918,30 @@ class UnichainNativeCurrency extends NativeCurrency {
   }
 }
 
+function isMatchain(chainId: number): chainId is ChainId.MATCHAIN {
+  return chainId === ChainId.MATCHAIN;
+}
+
+class MatchainNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId;
+  }
+
+  get wrapped(): Token {
+    if (!isMatchain(this.chainId)) throw new Error('Not matchain');
+    const nativeCurrency = WRAPPED_NATIVE_CURRENCY[this.chainId];
+    if (nativeCurrency) {
+      return nativeCurrency;
+    }
+    throw new Error(`Does not support this chain ${this.chainId}`);
+  }
+
+  public constructor(chainId: number) {
+    if (!isMatchain(chainId)) throw new Error('Not matchain');
+    super(chainId, 18, 'BNB', 'BNB');
+  }
+}
+
 export class ExtendedEther extends Ether {
   public get wrapped(): Token {
     if (this.chainId in WRAPPED_NATIVE_CURRENCY) {
@@ -2001,6 +2043,8 @@ export function nativeOnChain(chainId: number): NativeCurrency {
     cachedNativeCurrency[chainId] = new NibiruNativeCurrency(chainId);
   } else if (isUnichain(chainId)) {
     cachedNativeCurrency[chainId] = new UnichainNativeCurrency(chainId);
+  } else if (isMatchain(chainId)) {
+    cachedNativeCurrency[chainId] = new MatchainNativeCurrency(chainId);
   } else {
     cachedNativeCurrency[chainId] = ExtendedEther.onChain(chainId);
   }

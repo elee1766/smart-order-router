@@ -1378,6 +1378,23 @@ export const USDT_UNICHAIN = new Token(
   'Tether USD'
 );
 
+//Matchain
+export const USDC_MATCHAIN = new Token(
+  ChainId.MATCHAIN,
+  '0x97eec1c29f745dC7c267F90292AA663d997a601D',
+  6,
+  'USDC',
+  'USD Token'
+);
+
+export const USDT_MATCHAIN = new Token(
+  ChainId.MATCHAIN,
+  '0xB6dc6C8b71e88642cEAD3be1025565A9eE74d1C6',
+  6,
+  'USDT',
+  'Tether USD'
+);
+
 export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
@@ -1642,6 +1659,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_ETHERLINK;
     case ChainId.UNICHAIN:
       return USDT_UNICHAIN;
+    case ChainId.MATCHAIN:
+      return USDT_MATCHAIN;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
@@ -1737,6 +1756,8 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_NIBIRU;
     case ChainId.UNICHAIN:
       return USDC_UNICHAIN;
+    case ChainId.MATCHAIN:
+      return USDC_MATCHAIN;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }
