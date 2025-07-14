@@ -246,7 +246,6 @@ export const WETH9: {
     | ChainId.ROOTSTOCK
     | ChainId.BNB
     | ChainId.AVALANCHE
-    | ChainId.MATCHAIN
   >]: Token;
 } = {
   [ChainId.MAINNET]: new Token(
@@ -521,5 +520,12 @@ export const WETH9: {
     18,
     'ETH',
     'Wrapped Ether'
+  ),
+  [ChainId.UNICHAIN]: new Token(
+    ChainId.UNICHAIN,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'BNB',
+    'Wrapped BNB'
   ),
 };
