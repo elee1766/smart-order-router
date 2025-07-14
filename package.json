@@ -31,8 +31,8 @@
     "node": ">=10"
   },
   "resolutions": {
-    "@uniswap/sdk-core": "npm:@gfxlabs/uniswap-sdk-core@4.0.9-43",
-    "@uniswap/universal-router-sdk": "npm:@gfxlabs/uniswap-universal-router-sdk@2.0.1-51"
+    "@uniswap/sdk-core": "npm:@gfxlabs/uniswap-sdk-core@4.0.9-44",
+    "@uniswap/universal-router-sdk": "npm:@gfxlabs/uniswap-universal-router-sdk@2.0.1-52"
   },
   "dependencies": {
     "@uniswap/default-token-list": "^11.2.0",
