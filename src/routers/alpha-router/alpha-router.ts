@@ -483,8 +483,24 @@ export class AlphaRouter
       this.onChainQuoteProvider = onChainQuoteProvider;
     } else {
       switch (chainId) {
-        case ChainId.ROOTSTOCK:
         case ChainId.ETHERLINK:
+          this.onChainQuoteProvider = new OnChainQuoteProvider(
+            chainId,
+            provider,
+            this.multicall2Provider,
+            {
+              retries: 2,
+              minTimeout: 100,
+              maxTimeout: 1000,
+            },
+            {
+              multicallChunk: 10,
+              gasLimitPerCall: 250_000,
+              quoteMinSuccessRate: 0,
+            }
+          );
+          break;
+        case ChainId.ROOTSTOCK:
         case ChainId.UNICHAIN:
           this.onChainQuoteProvider = new OnChainQuoteProvider(
             chainId,
