@@ -1381,7 +1381,7 @@ export const USDT_UNICHAIN = new Token(
 //Matchain
 export const USDC_MATCHAIN = new Token(
   ChainId.MATCHAIN,
-  '0x97eec1c29f745dC7c267F90292AA663d997a601D',
+  '0x679Dc08cC3A4acFeea2f7CAFAa37561aE0b41Ce7',
   6,
   'USDC',
   'USD Token'
