@@ -58,6 +58,7 @@ import {
   USDC_LINEA,
   USDC_MAINNET,
   USDC_MANTA,
+  USDC_MATCHAIN,
   USDC_MANTLE,
   USDC_METAL,
   USDC_MOONBEAM,
@@ -94,6 +95,7 @@ import {
   USDT_LISK,
   USDT_MAINNET,
   USDT_MANTA,
+  USDT_MATCHAIN,
   USDT_MANTLE,
   USDT_OPTIMISM,
   USDT_OPTIMISM_GOERLI,
@@ -405,6 +407,11 @@ export const CACHE_SEED_TOKENS: {
     USDC: USDC_NIBIRU,
     STNIBI: STNIBI_NIBIRU,
     WNIBI: WRAPPED_NATIVE_CURRENCY[ChainId.NIBIRU],
+  },
+  [ChainId.MATCHAIN]: {
+    USDC: USDC_MATCHAIN,
+    USDT: USDT_MATCHAIN,
+    WBNB: WRAPPED_NATIVE_CURRENCY[ChainId.MATCHAIN],
   },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis
   // testnet
