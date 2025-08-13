@@ -1122,6 +1122,30 @@ export const WETH_REDBELLY = new Token(
   'Wrapped Ether'
 );
 
+export const PGK_REDBELLY = new Token(
+  ChainId.REDBELLY,
+  '0xd527b16ade7adb4ad38b0a8baf17fc56050ef596',
+  18,
+  'PGK',
+  'PGK'
+);
+
+export const FJD_REDBELLY = new Token(
+  ChainId.REDBELLY,
+  '0x2c120acf414d6720b0fd7428a2feedfc06a4850c',
+  18,
+  'FJD',
+  'FJD'
+);
+
+export const RAUD_REDBELLY = new Token(
+  ChainId.REDBELLY,
+  '0x3347618acc92226b2efa6eb8c35e5cc3d56eab1f',
+  18,
+  'RAUD',
+  'RAUD'
+);
+
 // Saga Tokens
 export const USDT_SAGA = new Token(
   ChainId.SAGA,
