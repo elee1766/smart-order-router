@@ -1,11 +1,11 @@
-import { ChainId, Token } from '@uniswap/sdk-core';
-import retry from 'async-retry';
-import Timeout from 'await-timeout';
-import { gql, GraphQLClient } from 'graphql-request';
-import _ from 'lodash';
+import { ChainId, Token } from "@uniswap/sdk-core";
+import retry from "async-retry";
+import Timeout from "await-timeout";
+import { gql, GraphQLClient } from "graphql-request";
+import _ from "lodash";
 
-import { log } from '../../util/log';
-import { ProviderConfig } from '../provider';
+import { log } from "../../util/log";
+import { ProviderConfig } from "../provider";
 
 export interface V2SubgraphPool {
   id: string;
@@ -37,7 +37,7 @@ type RawV2SubgraphPool = {
 
 const SUBGRAPH_URL_BY_CHAIN: { [chainId in ChainId]?: string } = {
   [ChainId.MAINNET]:
-    'https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v2-dev',
+    "https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v2-dev",
 };
 
 const threshold = 0.025;
@@ -54,7 +54,7 @@ export interface IV2SubgraphProvider {
   getPools(
     tokenIn?: Token,
     tokenOut?: Token,
-    providerConfig?: ProviderConfig
+    providerConfig?: ProviderConfig,
   ): Promise<V2SubgraphPool[]>;
 }
 
@@ -66,7 +66,7 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
     private retries = 2,
     private timeout = 360000,
     private rollback = true,
-    private pageSize = PAGE_SIZE
+    private pageSize = PAGE_SIZE,
   ) {
     const subgraphUrl = SUBGRAPH_URL_BY_CHAIN[this.chainId];
     if (!subgraphUrl) {
@@ -78,7 +78,7 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
   public async getPools(
     _tokenIn?: Token,
     _tokenOut?: Token,
-    providerConfig?: ProviderConfig
+    providerConfig?: ProviderConfig,
   ): Promise<V2SubgraphPool[]> {
     let blockNumber = providerConfig?.blockNumber
       ? await providerConfig.blockNumber
@@ -104,11 +104,10 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
     let pools: RawV2SubgraphPool[] = [];
 
     log.info(
-      `Getting V2 pools from the subgraph with page size ${this.pageSize}${
-        providerConfig?.blockNumber
-          ? ` as of block ${providerConfig?.blockNumber}`
-          : ''
-      }.`
+      `Getting V2 pools from the subgraph with page size ${this.pageSize}${providerConfig?.blockNumber
+        ? ` as of block ${providerConfig?.blockNumber}`
+        : ""
+      }.`,
     );
 
     await retry(
@@ -116,7 +115,7 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
         const timeout = new Timeout();
 
         const getPools = async (): Promise<RawV2SubgraphPool[]> => {
-          let lastId = '';
+          let lastId = "";
           let pairs: RawV2SubgraphPool[] = [];
           let pairsPage: RawV2SubgraphPool[] = [];
 
@@ -141,10 +140,10 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
                   pools = [];
                   log.info(
                     { err },
-                    `Failed request for page of pools from subgraph. Retry attempt: ${retry}`
+                    `Failed request for page of pools from subgraph. Retry attempt: ${retry}`,
                   );
                 },
-              }
+              },
             );
           } while (pairsPage.length > 0);
 
@@ -156,7 +155,7 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
           const getPoolsPromise = getPools();
           const timerPromise = timeout.set(this.timeout).then(() => {
             throw new Error(
-              `Timed out getting pools from subgraph: ${this.timeout}`
+              `Timed out getting pools from subgraph: ${this.timeout}`,
             );
           });
           pools = await Promise.race([getPoolsPromise, timerPromise]);
@@ -174,20 +173,21 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
           if (
             this.rollback &&
             blockNumber &&
-            _.includes(err.message, 'indexed up to')
+            err instanceof Error &&
+            _.includes(err.message, "indexed up to")
           ) {
             blockNumber = blockNumber - 10;
             log.info(
-              `Detected subgraph indexing error. Rolled back block number to: ${blockNumber}`
+              `Detected subgraph indexing error. Rolled back block number to: ${blockNumber}`,
             );
           }
           pools = [];
           log.info(
             { err },
-            `Failed to get pools from subgraph. Retry attempt: ${retry}`
+            `Failed to get pools from subgraph. Retry attempt: ${retry}`,
           );
         },
-      }
+      },
     );
 
     // Filter pools that have tracked reserve ETH less than threshold.
@@ -196,7 +196,7 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
     // Which helps filter pools with manipulated prices/liquidity.
 
     // TODO: Remove. Temporary fix to ensure tokens without trackedReserveETH are in the list.
-    const FEI = '0x956f47f50a910163d8bf957cf5846d573e7f87ca';
+    const FEI = "0x956f47f50a910163d8bf957cf5846d573e7f87ca";
 
     const poolsSanitized: V2SubgraphPool[] = pools
       .filter((pool) => {
@@ -223,7 +223,7 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
       });
 
     log.info(
-      `Got ${pools.length} V2 pools from the subgraph. ${poolsSanitized.length} after filtering`
+      `Got ${pools.length} V2 pools from the subgraph. ${poolsSanitized.length} after filtering`,
     );
 
     return poolsSanitized;

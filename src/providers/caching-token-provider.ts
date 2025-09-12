@@ -1,9 +1,9 @@
-import { ChainId, Token } from '@uniswap/sdk-core';
-import _ from 'lodash';
+import { ChainId, Token } from "@uniswap/sdk-core";
+import _ from "lodash";
 
-import { log, WRAPPED_NATIVE_CURRENCY } from '../util';
+import { log, WRAPPED_NATIVE_CURRENCY } from "../util";
 
-import { ICache } from './cache';
+import { ICache } from "./cache";
 import {
   BOBA,
   BTC_BNB,
@@ -33,10 +33,10 @@ import {
   FJD_REDBELLY,
   ITokenProvider,
   LIGHTLINK_LIGHTLINK,
-  PGK_REDBELLY,
-  RAUD_REDBELLY,
   LUSD_SCROLL,
   MST_TELOS,
+  PGK_REDBELLY,
+  RAUD_REDBELLY,
   RIF_ROOTSTOCK,
   RUSDT_ROOTSTOCK,
   SOLVBTC_BOB,
@@ -61,8 +61,8 @@ import {
   USDC_LINEA,
   USDC_MAINNET,
   USDC_MANTA,
-  USDC_MATCHAIN,
   USDC_MANTLE,
+  USDC_MATCHAIN,
   USDC_METAL,
   USDC_MOONBEAM,
   USDC_NIBIRU,
@@ -98,10 +98,11 @@ import {
   USDT_LISK,
   USDT_MAINNET,
   USDT_MANTA,
-  USDT_MATCHAIN,
   USDT_MANTLE,
+  USDT_MATCHAIN,
   USDT_OPTIMISM,
   USDT_OPTIMISM_GOERLI,
+  USDT_PLASMA,
   USDT_POLYGON_ZKEVM,
   USDT_REDBELLY,
   USDT_ROOTSTOCK,
@@ -134,11 +135,12 @@ import {
   WETH_ETHERLINK,
   WETH_GOAT,
   WETH_LENS,
+  WETH_PLASMA,
   WETH_REDBELLY,
   WLD_WORLDCHAIN,
   WMATIC_POLYGON,
   WMATIC_POLYGON_MUMBAI,
-} from './token-provider';
+} from "./token-provider";
 
 // These tokens will added to the Token cache on initialization.
 export const CACHE_SEED_TOKENS: {
@@ -155,10 +157,10 @@ export const CACHE_SEED_TOKENS: {
     // cache, so we won't try to fetch it on-chain.
     RING: new Token(
       ChainId.MAINNET,
-      '0x9469D013805bFfB7D3DEBe5E7839237e535ec483',
+      "0x9469D013805bFfB7D3DEBe5E7839237e535ec483",
       18,
-      'RING',
-      'RING'
+      "RING",
+      "RING",
     ),
   },
   [ChainId.SEPOLIA]: {
@@ -419,6 +421,11 @@ export const CACHE_SEED_TOKENS: {
     USDT: USDT_MATCHAIN,
     WBNB: WRAPPED_NATIVE_CURRENCY[ChainId.MATCHAIN],
   },
+  [ChainId.PLASMA]: {
+    USDT: USDT_PLASMA,
+    WETH: WETH_PLASMA,
+    WXPL: WRAPPED_NATIVE_CURRENCY[ChainId.PLASMA],
+  },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis
   // testnet
 };
@@ -441,7 +448,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
     // checksumming.
     private tokenCache: ICache<Token>,
     protected primaryTokenProvider: ITokenProvider,
-    protected fallbackTokenProvider?: ITokenProvider
+    protected fallbackTokenProvider?: ITokenProvider,
   ) { }
 
   public async getTokens(_addresses: string[]): Promise<TokenAccessor> {
@@ -451,7 +458,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
       for (const token of Object.values(seedTokens)) {
         await this.tokenCache.set(
           this.CACHE_KEY(this.chainId, token.address.toLowerCase()),
-          token
+          token,
         );
       }
     }
@@ -470,7 +477,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
     for (const address of addresses) {
       if (await this.tokenCache.has(this.CACHE_KEY(this.chainId, address))) {
         addressToToken[address.toLowerCase()] = (await this.tokenCache.get(
-          this.CACHE_KEY(this.chainId, address)
+          this.CACHE_KEY(this.chainId, address),
         ))!;
         symbolToToken[addressToToken[address]!.symbol!] =
           (await this.tokenCache.get(this.CACHE_KEY(this.chainId, address)))!;
@@ -486,12 +493,12 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
         ? `Checking primary token provider for ${addressesToFindInPrimary.length} tokens`
         : ``
       }
-      `
+      `,
     );
 
     if (addressesToFindInPrimary.length > 0) {
       const primaryTokenAccessor = await this.primaryTokenProvider.getTokens(
-        addressesToFindInPrimary
+        addressesToFindInPrimary,
       );
 
       for (const address of addressesToFindInPrimary) {
@@ -502,7 +509,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
           symbolToToken[addressToToken[address]!.symbol!] = token;
           await this.tokenCache.set(
             this.CACHE_KEY(this.chainId, address.toLowerCase()),
-            addressToToken[address]!
+            addressToToken[address]!,
           );
         } else {
           addressesToFindInSecondary.push(address);
@@ -515,13 +522,13 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
         } tokens in primary. ${this.fallbackTokenProvider
           ? `Checking secondary token provider for ${addressesToFindInSecondary.length} tokens`
           : `No fallback token provider specified. About to return.`
-        }`
+        }`,
       );
     }
 
     if (this.fallbackTokenProvider && addressesToFindInSecondary.length > 0) {
       const secondaryTokenAccessor = await this.fallbackTokenProvider.getTokens(
-        addressesToFindInSecondary
+        addressesToFindInSecondary,
       );
 
       for (const address of addressesToFindInSecondary) {
@@ -531,7 +538,7 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
           symbolToToken[addressToToken[address]!.symbol!] = token;
           await this.tokenCache.set(
             this.CACHE_KEY(this.chainId, address.toLowerCase()),
-            addressToToken[address]!
+            addressToToken[address]!,
           );
         }
       }
