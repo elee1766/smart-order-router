@@ -3,18 +3,19 @@ import {
   Protocol,
   SwapRouter as SwapRouter02,
   Trade,
-} from '@uniswap/router-sdk';
-import { ChainId, Currency, TradeType } from '@uniswap/sdk-core';
+} from "@uniswap/router-sdk";
+import { ChainId, Currency, TradeType } from "@uniswap/sdk-core";
 import {
   SwapRouter as UniveralRouter,
   UNIVERSAL_ROUTER_ADDRESS,
-} from '@uniswap/universal-router-sdk';
-import { Route as V2RouteRaw } from '@uniswap/v2-sdk';
-import { Route as V3RouteRaw } from '@uniswap/v3-sdk';
-import _ from 'lodash';
+} from "@uniswap/universal-router-sdk";
+import { Route as V2RouteRaw } from "@uniswap/v2-sdk";
+import { Route as V3RouteRaw } from "@uniswap/v3-sdk";
+import _ from "lodash";
 
 import {
   CurrencyAmount,
+  log,
   MethodParameters,
   MixedRouteWithValidQuote,
   RouteWithValidQuote,
@@ -23,27 +24,26 @@ import {
   SwapType,
   V2RouteWithValidQuote,
   V3RouteWithValidQuote,
-  log,
-} from '..';
+} from "..";
 
 export function buildTrade<TTradeType extends TradeType>(
   tokenInCurrency: Currency,
   tokenOutCurrency: Currency,
   tradeType: TTradeType,
-  routeAmounts: RouteWithValidQuote[]
+  routeAmounts: RouteWithValidQuote[],
 ): Trade<Currency, Currency, TTradeType> {
   /// Removed partition because of new mixedRoutes
   const v3RouteAmounts = _.filter(
     routeAmounts,
-    (routeAmount) => routeAmount.protocol === Protocol.V3
+    (routeAmount) => routeAmount.protocol === Protocol.V3,
   );
   const v2RouteAmounts = _.filter(
     routeAmounts,
-    (routeAmount) => routeAmount.protocol === Protocol.V2
+    (routeAmount) => routeAmount.protocol === Protocol.V2,
   );
   const mixedRouteAmounts = _.filter(
     routeAmounts,
-    (routeAmount) => routeAmount.protocol === Protocol.MIXED
+    (routeAmount) => routeAmount.protocol === Protocol.MIXED,
   );
 
   const v3Routes = _.map<
@@ -65,18 +65,18 @@ export function buildTrade<TTradeType extends TradeType>(
         const amountCurrency = CurrencyAmount.fromFractionalAmount(
           tokenInCurrency,
           amount.numerator,
-          amount.denominator
+          amount.denominator,
         );
         const quoteCurrency = CurrencyAmount.fromFractionalAmount(
           tokenOutCurrency,
           quote.numerator,
-          quote.denominator
+          quote.denominator,
         );
 
         const routeRaw = new V3RouteRaw(
           route.pools,
           amountCurrency.currency,
-          quoteCurrency.currency
+          quoteCurrency.currency,
         );
 
         return {
@@ -88,19 +88,19 @@ export function buildTrade<TTradeType extends TradeType>(
         const quoteCurrency = CurrencyAmount.fromFractionalAmount(
           tokenInCurrency,
           quote.numerator,
-          quote.denominator
+          quote.denominator,
         );
 
         const amountCurrency = CurrencyAmount.fromFractionalAmount(
           tokenOutCurrency,
           amount.numerator,
-          amount.denominator
+          amount.denominator,
         );
 
         const routeCurrency = new V3RouteRaw(
           route.pools,
           quoteCurrency.currency,
-          amountCurrency.currency
+          amountCurrency.currency,
         );
 
         return {
@@ -109,7 +109,7 @@ export function buildTrade<TTradeType extends TradeType>(
           outputAmount: amountCurrency,
         };
       }
-    }
+    },
   );
 
   const v2Routes = _.map<
@@ -131,18 +131,18 @@ export function buildTrade<TTradeType extends TradeType>(
         const amountCurrency = CurrencyAmount.fromFractionalAmount(
           tokenInCurrency,
           amount.numerator,
-          amount.denominator
+          amount.denominator,
         );
         const quoteCurrency = CurrencyAmount.fromFractionalAmount(
           tokenOutCurrency,
           quote.numerator,
-          quote.denominator
+          quote.denominator,
         );
 
         const routeV2SDK = new V2RouteRaw(
           route.pairs,
           amountCurrency.currency,
-          quoteCurrency.currency
+          quoteCurrency.currency,
         );
 
         return {
@@ -154,19 +154,19 @@ export function buildTrade<TTradeType extends TradeType>(
         const quoteCurrency = CurrencyAmount.fromFractionalAmount(
           tokenInCurrency,
           quote.numerator,
-          quote.denominator
+          quote.denominator,
         );
 
         const amountCurrency = CurrencyAmount.fromFractionalAmount(
           tokenOutCurrency,
           amount.numerator,
-          amount.denominator
+          amount.denominator,
         );
 
         const routeV2SDK = new V2RouteRaw(
           route.pairs,
           quoteCurrency.currency,
-          amountCurrency.currency
+          amountCurrency.currency,
         );
 
         return {
@@ -175,7 +175,7 @@ export function buildTrade<TTradeType extends TradeType>(
           outputAmount: amountCurrency,
         };
       }
-    }
+    },
   );
 
   const mixedRoutes = _.map<
@@ -192,7 +192,7 @@ export function buildTrade<TTradeType extends TradeType>(
 
       if (tradeType != TradeType.EXACT_INPUT) {
         throw new Error(
-          'Mixed routes are only supported for exact input trades'
+          "Mixed routes are only supported for exact input trades",
         );
       }
 
@@ -202,18 +202,18 @@ export function buildTrade<TTradeType extends TradeType>(
       const amountCurrency = CurrencyAmount.fromFractionalAmount(
         tokenInCurrency,
         amount.numerator,
-        amount.denominator
+        amount.denominator,
       );
       const quoteCurrency = CurrencyAmount.fromFractionalAmount(
         tokenOutCurrency,
         quote.numerator,
-        quote.denominator
+        quote.denominator,
       );
 
       const routeRaw = new MixedRouteSDK(
         route.pools,
         amountCurrency.currency,
-        quoteCurrency.currency
+        quoteCurrency.currency,
       );
 
       return {
@@ -221,7 +221,7 @@ export function buildTrade<TTradeType extends TradeType>(
         inputAmount: amountCurrency,
         outputAmount: quoteCurrency,
       };
-    }
+    },
   );
 
   const trade = new Trade({ v2Routes, v3Routes, mixedRoutes, tradeType });
@@ -232,10 +232,10 @@ export function buildTrade<TTradeType extends TradeType>(
 export function buildSwapMethodParameters(
   trade: Trade<Currency, Currency, TradeType>,
   swapConfig: SwapOptions,
-  chainId: ChainId
+  chainId: ChainId,
 ): MethodParameters {
   if (swapConfig.type == SwapType.UNIVERSAL_ROUTER) {
-    log.info({swapConfig}, "building swap")
+    log.info({ swapConfig }, "building swap");
 
     return {
       ...UniveralRouter.swapERC20CallParameters(trade, swapConfig),
